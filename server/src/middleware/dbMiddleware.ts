@@ -1,3 +1,4 @@
+// middleware.ts
 import { MiddlewareHandler } from "hono";
 import { connectDB } from "../config/db";
 import type { Env } from "../types";
@@ -14,9 +15,9 @@ export const dbMiddleware: MiddlewareHandler<{ Bindings: Env }> = async (
 
   try {
     await connectDB(MONGODB_URI);
-  } catch (error) {
+  } catch (error: any) {
     console.error("Failed to connect to MongoDB:", error);
-    return c.json({ error: "Failed to connect to the database." }, 500);
+    return c.json({ error: "Failed to connect to the database: " + error.message }, 500);
   }
 
   await next();

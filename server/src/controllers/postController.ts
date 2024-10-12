@@ -1,7 +1,8 @@
 import { Context } from "hono";
-import Post, { IPost } from "../models/postModel";
 import { connectDB } from "../config/db";
+import { IPost } from "../models/postModel";
 import Joi from "joi";
+import { ObjectId } from "mongodb";
 
 const postSchema = Joi.object({
   userId: Joi.string().required(),
@@ -24,9 +25,15 @@ export const createPost = async (c: Context) => {
   }
 
   try {
-    const post = new Post(postData);
-    await post.save();
-    return c.json(post, 201);
+    const db = await connectDB(c.env.MONGODB_URI);
+    const newPost = {
+      ...postData,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    };
+
+    await db.collection("posts").insertOne(newPost);
+    return c.json(newPost, 201);
   } catch (err) {
     console.error(err);
     return c.json({ error: "Error creating post" }, 500);
@@ -47,7 +54,8 @@ export const getPosts = async (c: Context) => {
   }
 
   try {
-    const posts = await Post.find(filter).lean();
+    const db = await connectDB(c.env.MONGODB_URI);
+    const posts = await db.collection("posts").find(filter).toArray();
     return c.json(posts, 200);
   } catch (err) {
     console.error(err);
@@ -62,7 +70,10 @@ export const getPost = async (c: Context) => {
   }
 
   try {
-    const post = await Post.findById(id).lean();
+    const db = await connectDB(c.env.MONGODB_URI);
+    const post = await db
+      .collection("posts")
+      .findOne({ _id: new ObjectId(id) });
     if (!post) {
       return c.json({ error: "Post not found" }, 404);
     }
@@ -82,16 +93,18 @@ export const updatePost = async (c: Context) => {
   }
 
   try {
-    const post = await Post.findByIdAndUpdate(id, updatedData, {
-      new: true,
-      runValidators: true,
-    }).lean();
+    const db = await connectDB(c.env.MONGODB_URI);
+    const result = await db.collection("posts").findOneAndUpdate(
+      { _id: new ObjectId(id) },
+      { $set: { ...updatedData, updatedAt: new Date() } },
+      { returnDocument: "after" } // Obtiene el documento actualizado
+    );
 
-    if (!post) {
+    if (!result.value) {
       return c.json({ error: "Post not found" }, 404);
     }
 
-    return c.json(post, 200);
+    return c.json(result.value, 200);
   } catch (err) {
     console.error(err);
     return c.json({ error: "Error updating post" }, 500);
@@ -105,8 +118,12 @@ export const deletePost = async (c: Context) => {
   }
 
   try {
-    const result = await Post.findByIdAndDelete(id).lean();
-    if (!result) {
+    const db = await connectDB(c.env.MONGODB_URI);
+    const result = await db
+      .collection("posts")
+      .findOneAndDelete({ _id: new ObjectId(id) });
+
+    if (!result.value) {
       return c.json({ error: "Post not found" }, 404);
     }
     return c.json({ message: "Post deleted successfully" }, 200);
