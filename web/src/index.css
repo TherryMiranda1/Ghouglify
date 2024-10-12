@@ -1,0 +1,177 @@
+:root {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+[data-theme="dark"] {
+  --background-color: #1a1a1a;
+  --text-color: #f5f5f5;
+  --text-secondary-color: #a9a9a9;
+  --placeholder-color: #9ba1a6;
+  --text-negative-color: #11181c;
+  --background-secondary-color: #1b1b1b;
+  --background-view-color: #151718;
+  --background-card-color: #2c2c2c;
+  --tint-color: #ff7518;
+  --tint-secondary-color: #39ff14;
+  --tint-terciary-color: #6a0dad;
+  --border-color: #1b1b1b;
+}
+
+[data-variant="BUBBLE"] {
+  --border: none;
+  --shadow: 0;
+  --card-radius: 12px;
+  --tag-radius: 50px;
+  --background-view: var(--background-view-color);
+  --background-card: var(--background-card-color);
+}
+
+h1 {
+  color: var(--tint-color);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: cursive;
+  padding: 0;
+  margin: 0;
+  align-self: center;
+}
+
+a {
+  font-weight: 500;
+  color: var(--tint-color);
+  text-decoration: inherit;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  min-height: 100vh;
+  background-color: var(--background-view);
+  color: var(--text-color);
+}
+
+input {
+  box-sizing: border-box;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+
+  transition: border-color 0.25s;
+}
+
+button {
+  box-sizing: border-box;
+  border-radius: var(--card-radius);
+  border: 1px solid transparent;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: var(--tint-color);
+  color: var(--text-color);
+  cursor: pointer;
+  transition: border-color 0.25s;
+}
+button:hover {
+  border-color: #646cff;
+}
+button:focus,
+button:focus-visible {
+  outline: 4px auto -webkit-focus-ring-color;
+}
+
+.view {
+  background-color: var(--background-view);
+}
+
+.list {
+  background-color: var(--background-view);
+}
+
+.navbar {
+  background-color: var(--background-secondary-color);
+}
+
+.areaTransparent {
+  background-color: var(--background-card-transparent);
+}
+
+.selectableTag {
+  border-radius: var(--card-radius);
+}
+
+.selectableCard {
+  border-radius: var(--card-radius);
+}
+
+.card {
+  background-color: var(--background-card);
+  border: var(--border);
+  border-radius: var(--card-radius);
+  box-shadow: var(--shadow);
+}
+
+.cardTransparent {
+  background-color: var(--background-card-transparent);
+  border: var(--border);
+  border-radius: var(--card-radius);
+  box-shadow: var(--shadow);
+}
+
+.secondaryCard {
+  background-color: var(--background-view);
+  border: var(--border);
+  border-radius: var(--card-radius);
+}
+
+.elevatedCard {
+  background-color: var(--background-secondary-color);
+  border: var(--border);
+  border-radius: var(--card-radius);
+}
+
+.media {
+  border: var(--border);
+  border-radius: var(--card-radius);
+}
+
+.input {
+  background-color: var(--background-secondary-color);
+  border: var(--border);
+  border-radius: var(--card-radius);
+  box-shadow: var(--shadow);
+  color: var(--text-color);
+}
+
+.tag {
+  background-color: var(--background-secondary-color);
+  border-radius: var(--tag-radius);
+}
+
+.primaryButton {
+  background-color: var(--tint-color);
+  border-radius: var(--tag-radius);
+}
+
+.secondaryButton {
+  background-color: var(--background-secondary-color);
+  border-radius: var(--tag-radius);
+}
