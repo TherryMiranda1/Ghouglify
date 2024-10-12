@@ -3,11 +3,14 @@ import { cors } from "hono/cors";
 import { renderer } from "./renderer";
 import userRoutes from "./routes/userRoutes";
 import postRoutes from "./routes/postRoutes";
+import { Env } from "./types";
+import { dbMiddleware } from "./middleware/dbMiddleware";
 
-const app = new Hono();
+const app = new Hono<{ Bindings: Env }>();
 
 app.use(renderer);
 app.use("*", cors());
+app.use('*', dbMiddleware);
 
 app.use("*", async (c, next) => {
   try {

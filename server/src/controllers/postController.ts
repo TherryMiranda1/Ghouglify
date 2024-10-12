@@ -16,8 +16,6 @@ const postSchema = Joi.object({
 });
 
 export const createPost = async (c: Context) => {
-  await connectDB();
-
   const postData: Partial<IPost> = await c.req.json();
 
   const { error } = postSchema.validate(postData);
@@ -36,8 +34,6 @@ export const createPost = async (c: Context) => {
 };
 
 export const getPosts = async (c: Context) => {
-  await connectDB();
-
   const { userId, isPublic } = c.req.query();
 
   let filter: any = {};
@@ -60,8 +56,6 @@ export const getPosts = async (c: Context) => {
 };
 
 export const getPost = async (c: Context) => {
-  await connectDB();
-
   const id = c.req.param("id");
   if (!id) {
     return c.json({ error: "ID is required" }, 400);
@@ -80,8 +74,6 @@ export const getPost = async (c: Context) => {
 };
 
 export const updatePost = async (c: Context) => {
-  await connectDB();
-
   const id = c.req.param("id");
   const updatedData: Partial<IPost> = await c.req.json();
 
@@ -107,8 +99,6 @@ export const updatePost = async (c: Context) => {
 };
 
 export const deletePost = async (c: Context) => {
-  await connectDB();
-
   const id = c.req.param("id");
   if (!id) {
     return c.json({ error: "ID is required" }, 400);

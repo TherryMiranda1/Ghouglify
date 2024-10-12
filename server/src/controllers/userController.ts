@@ -10,8 +10,6 @@ const userSchema = Joi.object({
 });
 
 export const createUser = async (c: Context) => {
-  await connectDB();
-
   const userData: Partial<IUser> = await c.req.json();
 
   const { error } = userSchema.validate(userData);
@@ -35,8 +33,6 @@ export const createUser = async (c: Context) => {
 };
 
 export const getUsers = async (c: Context) => {
-  await connectDB();
-
   try {
     const users = await User.find().lean();
     return c.json(users, 200);
@@ -47,8 +43,6 @@ export const getUsers = async (c: Context) => {
 };
 
 export const getUser = async (c: Context) => {
-  await connectDB();
-
   const id = c.req.param("id");
   if (!id) {
     return c.json({ error: "ID is required" }, 400);
@@ -67,8 +61,6 @@ export const getUser = async (c: Context) => {
 };
 
 export const updateUser = async (c: Context) => {
-  await connectDB();
-
   const id = c.req.param("id");
   const updatedData: Partial<IUser> = await c.req.json();
 
@@ -94,8 +86,6 @@ export const updateUser = async (c: Context) => {
 };
 
 export const deleteUser = async (c: Context) => {
-  await connectDB();
-
   const id = c.req.param("id");
   if (!id) {
     return c.json({ error: "ID is required" }, 400);
