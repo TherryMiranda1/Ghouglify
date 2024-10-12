@@ -6,7 +6,7 @@ import {
   getPost,
   updatePost,
   deletePost,
-} from '../controllers/postController';
+} from '../controllers/postController.ts';
 
 const postRoutes = new Hono();
 

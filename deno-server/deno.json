@@ -1,0 +1,22 @@
+{
+  "imports": {
+    "hono": "jsr:@hono/hono@^4.6.4",
+    "joi": "npm:joi@^17.13.3",
+    "mongodb": "npm:mongodb@^6.9.0"
+  },
+  "tasks": {
+    "start": "deno serve --allow-net --allow-read --allow-env --allow-sys --env main.ts"
+  },
+  "compilerOptions": {
+    "jsx": "precompile",
+    "jsxImportSource": "hono/jsx"
+  },
+  "deploy": {
+    "project": "16a90342-c225-45a6-a032-c634167f988a",
+    "exclude": [
+      "**/node_modules"
+    ],
+    "include": [],
+    "entrypoint": "main.ts"
+  }
+}

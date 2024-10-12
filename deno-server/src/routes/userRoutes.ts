@@ -1,5 +1,5 @@
 import { Hono } from 'hono';
-import { createUser, getUsers, getUser, updateUser, deleteUser } from '../controllers/userController';
+import { createUser, getUsers, getUser, updateUser, deleteUser } from '../controllers/userController.ts';
 
 const router = new Hono();
 

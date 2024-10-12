@@ -1,7 +1,6 @@
-// userController.ts
 import { Context } from "hono";
-import { connectDB } from "../config/db";
-import { IUser } from "../models/userModel";
+import { connectDB } from "../config/db.ts";
+import { IUser } from "../models/userModel.ts";
 import Joi from "joi";
 
 const userSchema = Joi.object({
@@ -19,8 +18,10 @@ export const createUser = async (c: Context) => {
   }
 
   try {
-    const db = await connectDB(c.env.MONGODB_URI);
-    const existingUser = await db.collection("users").findOne({ userUUID: userData.userUUID });
+    const db = c.get("db");
+    const existingUser = await db
+      .collection("users")
+      .findOne({ userUUID: userData.userUUID });
 
     if (existingUser) {
       return c.json(existingUser, 200);
@@ -42,7 +43,7 @@ export const createUser = async (c: Context) => {
 
 export const getUsers = async (c: Context) => {
   try {
-    const db = await connectDB(c.env.MONGODB_URI);
+    const db = c.get("db");
     const users = await db.collection("users").find().toArray();
     return c.json(users, 200);
   } catch (err) {
@@ -58,7 +59,7 @@ export const getUser = async (c: Context) => {
   }
 
   try {
-    const db = await connectDB(c.env.MONGODB_URI);
+    const db = c.get("db");
     const user = await db.collection("users").findOne({ userUUID: id });
 
     if (!user) {
@@ -80,7 +81,7 @@ export const updateUser = async (c: Context) => {
   }
 
   try {
-    const db = await connectDB(c.env.MONGODB_URI);
+    const db = c.get("db");
     const user = await db.collection("users").findOneAndUpdate(
       { userUUID: id },
       { $set: { ...updatedData, updatedAt: new Date() } },
@@ -105,8 +106,10 @@ export const deleteUser = async (c: Context) => {
   }
 
   try {
-    const db = await connectDB(c.env.MONGODB_URI);
-    const result = await db.collection("users").findOneAndDelete({ userUUID: id });
+    const db = c.get("db");
+    const result = await db
+      .collection("users")
+      .findOneAndDelete({ userUUID: id });
 
     if (!result.value) {
       return c.json({ error: "User not found" }, 404);

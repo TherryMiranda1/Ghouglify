@@ -1,6 +1,7 @@
+// deno-lint-ignore-file no-explicit-any
 import { Context } from "hono";
-import { connectDB } from "../config/db";
-import { IPost } from "../models/postModel";
+import { connectDB } from "../config/db.ts";
+import { IPost } from "../models/postModel.ts";
 import Joi from "joi";
 import { ObjectId } from "mongodb";
 
@@ -25,7 +26,7 @@ export const createPost = async (c: Context) => {
   }
 
   try {
-    const db = await connectDB(c.env.MONGODB_URI);
+    const db = c.get("db");
     const newPost = {
       ...postData,
       createdAt: new Date(),
@@ -43,7 +44,7 @@ export const createPost = async (c: Context) => {
 export const getPosts = async (c: Context) => {
   const { userId, isPublic } = c.req.query();
 
-  let filter: any = {};
+  const filter: any = {};
 
   if (userId) {
     filter.userId = userId;
@@ -54,7 +55,7 @@ export const getPosts = async (c: Context) => {
   }
 
   try {
-    const db = await connectDB(c.env.MONGODB_URI);
+    const db = c.get("db");
     const posts = await db.collection("posts").find(filter).toArray();
     return c.json(posts, 200);
   } catch (err) {
@@ -70,7 +71,7 @@ export const getPost = async (c: Context) => {
   }
 
   try {
-    const db = await connectDB(c.env.MONGODB_URI);
+    const db = c.get("db");
     const post = await db
       .collection("posts")
       .findOne({ _id: new ObjectId(id) });
@@ -93,7 +94,7 @@ export const updatePost = async (c: Context) => {
   }
 
   try {
-    const db = await connectDB(c.env.MONGODB_URI);
+    const db = c.get("db");
     const result = await db.collection("posts").findOneAndUpdate(
       { _id: new ObjectId(id) },
       { $set: { ...updatedData, updatedAt: new Date() } },
@@ -118,7 +119,7 @@ export const deletePost = async (c: Context) => {
   }
 
   try {
-    const db = await connectDB(c.env.MONGODB_URI);
+    const db = c.get("db");
     const result = await db
       .collection("posts")
       .findOneAndDelete({ _id: new ObjectId(id) });
