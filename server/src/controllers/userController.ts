@@ -6,7 +6,7 @@ import Joi from "joi";
 const userSchema = Joi.object({
   userUUID: Joi.string().required(),
   name: Joi.string().min(3),
-  email: Joi.string().email(),
+  email: Joi.string().email({ tlds: { allow: false } }),
 });
 
 export const createUser = async (c: Context) => {
