@@ -14,7 +14,7 @@ export const View = ({ children, ...props }: Props) => {
 };
 
 const ViewStyled = styled.main`
-  padding: 32px;
+  padding: 8px;
   min-height: 100vh;
   min-width: 320px;
   max-width: 1200px;

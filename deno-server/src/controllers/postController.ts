@@ -1,6 +1,5 @@
 // deno-lint-ignore-file no-explicit-any
 import { Context } from "hono";
-import { connectDB } from "../config/db.ts";
 import { IPost } from "../models/postModel.ts";
 import Joi from "joi";
 import { ObjectId } from "mongodb";
@@ -9,12 +8,20 @@ const postSchema = Joi.object({
   userId: Joi.string().required(),
   name: Joi.string().min(3).required(),
   description: Joi.string().optional(),
-  imageUrl: Joi.string().uri().required(),
+  cloudPublicId: Joi.string().optional(),
   originalImageUrl: Joi.string().uri().required(),
+  transformedImageUrl: Joi.string().uri().optional(),
   backgroundPrompt: Joi.string().optional(),
   objectsPrompt: Joi.string().optional(),
   facePrompt: Joi.string().optional(),
-  isPublic: Joi.boolean().required(),
+  replaceImageUrl: Joi.string().optional(),
+  isPublic: Joi.boolean().optional(),
+  width: Joi.number().optional(),
+  height: Joi.number().optional(),
+  size: Joi.number().optional(),
+  format: Joi.string().optional(),
+  createdAt: Joi.date().optional(),
+  updatedAt: Joi.date().optional(),
 });
 
 export const createPost = async (c: Context) => {
@@ -53,7 +60,6 @@ export const getPosts = async (c: Context) => {
   if (isPublic !== undefined) {
     filter.isPublic = isPublic === "true";
   }
-
   try {
     const db = c.get("db");
     const posts = await db.collection("posts").find(filter).toArray();
@@ -120,13 +126,8 @@ export const deletePost = async (c: Context) => {
 
   try {
     const db = c.get("db");
-    const result = await db
-      .collection("posts")
-      .findOneAndDelete({ _id: new ObjectId(id) });
+    await db.collection("posts").findOneAndDelete({ _id: new ObjectId(id) });
 
-    if (!result.value) {
-      return c.json({ error: "Post not found" }, 404);
-    }
     return c.json({ message: "Post deleted successfully" }, 200);
   } catch (err) {
     console.error(err);

@@ -1,5 +1,7 @@
 import axios from "axios";
-import { cloudinaryConfig } from "../config/cloudinary";
+import { cloudinaryConfig } from "../../config/cloudinary";
+
+
 
 export const loadImageRequest = async (image: string) => {
   const { uploadPreset, cloudinaryUrl } = cloudinaryConfig;

@@ -14,6 +14,7 @@
 
 [data-theme="dark"] {
   --background-color: #1a1a1a;
+  --background-transparent-color: rgba(28, 28, 28, 0.8);
   --text-color: #f5f5f5;
   --text-secondary-color: #a9a9a9;
   --placeholder-color: #9ba1a6;
@@ -30,11 +31,31 @@
 [data-variant="BUBBLE"] {
   --border: none;
   --shadow: 0;
+  --squared-radius: 4px;
+  --small-radius: 8px;
   --card-radius: 12px;
   --tag-radius: 50px;
   --background-view: var(--background-view-color);
   --background-card: var(--background-card-color);
 }
+
+/* custom scrollbar */
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+*::-webkit-scrollbar-track {
+  background-color: #ffffff00; /*color de la barra de fondo*/
+}
+*::-webkit-scrollbar-thumb {
+  background-color: var(--background-transparent-color); /*color del manejador*/
+  border-radius: 30px;
+  cursor: pointer;
+}
+*::-webkit-scrollbar {
+  width: 4px; /*ancho del scroll vertical*/
+  height: 5px; /*alto del scroll horizontal*/
+}
+
 
 h1 {
   color: var(--tint-color);

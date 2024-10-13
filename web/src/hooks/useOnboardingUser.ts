@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 
-import { connectUserRequest } from "../api/user";
+import { connectUserRequest } from "../infra/api/user";
 import { User } from "../types/User";
 
 interface Props {
@@ -24,6 +24,7 @@ export const useOnboardingUser = ({
       setIsLoading(true);
       setIsError(false);
       const storedUuid = localStorage.getItem("uuid");
+
       if (storedUuid) {
         // Usuario existente
         const existingUser = await connectUserRequest({ userUUID: storedUuid });
@@ -33,8 +34,7 @@ export const useOnboardingUser = ({
       } else {
         // Nuevo usuario: generar UUID y nombre aleatorio
         const newUuid = uuidv4();
-        console.log(newUuid);
-        const randomName = `User-${newUuid.slice(0, 3)}`;
+        const randomName = `Ghougly-${newUuid.slice(0, 3)}`;
 
         const newUser = await connectUserRequest({
           userUUID: newUuid,
@@ -58,7 +58,7 @@ export const useOnboardingUser = ({
     if (!currentUser) {
       initializeUser();
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentUser]);
 
   return { isError, isLoading };

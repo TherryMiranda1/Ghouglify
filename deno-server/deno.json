@@ -5,7 +5,8 @@
     "mongodb": "npm:mongodb@^6.9.0"
   },
   "tasks": {
-    "start": "deno serve --allow-net --allow-read --allow-env --allow-sys --env main.ts"
+    "start": "deno serve --allow-net --allow-read --allow-env --allow-sys --env main.ts",
+    "deploy": "deployctl deploy"
   },
   "compilerOptions": {
     "jsx": "precompile",

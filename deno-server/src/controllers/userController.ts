@@ -1,5 +1,4 @@
 import { Context } from "hono";
-import { connectDB } from "../config/db.ts";
 import { IUser } from "../models/userModel.ts";
 import Joi from "joi";
 
@@ -107,13 +106,8 @@ export const deleteUser = async (c: Context) => {
 
   try {
     const db = c.get("db");
-    const result = await db
-      .collection("users")
-      .findOneAndDelete({ userUUID: id });
+    await db.collection("users").findOneAndDelete({ userUUID: id });
 
-    if (!result.value) {
-      return c.json({ error: "User not found" }, 404);
-    }
     return c.json({ message: "User deleted successfully" }, 200);
   } catch (err) {
     console.error(err);

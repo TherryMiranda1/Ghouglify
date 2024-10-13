@@ -35,6 +35,8 @@ const NavbarStyled = styled.nav<{ $height: number; $isFixed: boolean }>`
   width: 100%;
   z-index: 100;
   box-sizing: border-box;
+  justify-content: space-between;
+  align-items: center;
 `;
 const SpacingStyled = styled.div<{ $height: number; $isFixed: boolean }>`
   height: ${({ $height }) => $height}px;
