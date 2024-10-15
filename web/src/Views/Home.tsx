@@ -5,7 +5,7 @@ import { useGlobalContext } from "../context/useGlobalContext";
 
 export const Home = () => {
   const {
-    image,
+    image: { transformedImage },
     user: { currentUser },
   } = useGlobalContext();
 
@@ -14,11 +14,12 @@ export const Home = () => {
       {currentUser && (
         <Header componentType="h3" text={`Hola ${currentUser.name}`} />
       )}
+
       <Sandbox />
-      {image.transformedImage && (
+      {transformedImage && (
         <Card>
-          <Image src={image.transformedImage} />
-          <ImageDownloader imageUrl={image.transformedImage} />
+          <Image src={transformedImage} />
+          <ImageDownloader imageUrl={transformedImage} />
         </Card>
       )}
     </Section>

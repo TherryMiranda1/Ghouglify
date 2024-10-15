@@ -20,7 +20,7 @@ const TagStyled = styled.button<{ $isSelected: boolean }>`
   background-color: ${({ $isSelected }) =>
     $isSelected ? "var(--tint-color)" : "transparent"};
   border: var(--border);
-  padding: 4px;
+  padding: 4px 8px;
   display: flex;
   align-items: center;
   justify-content: center;

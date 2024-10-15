@@ -1,6 +1,11 @@
 import { Post } from "../types/Post";
 import { User } from "../types/User";
 
+export interface OriginalImageType {
+  title: string;
+  content: any;
+}
+
 export interface GlobalReturnType {
   image: UseImageOptions;
   user: UseUserOptions;
@@ -17,6 +22,8 @@ export interface UseImageOptions {
 }
 
 export interface UseSandboxOptions {
+  originalImage: OriginalImageType | null;
+  setOriginalImage: (image: OriginalImageType | null) => void;
   currentPrompt: string;
   setCurrentPrompt: (prompt: string) => void;
   imageSource: { id: string; title: string };

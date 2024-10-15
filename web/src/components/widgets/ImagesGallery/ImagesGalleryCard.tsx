@@ -7,9 +7,10 @@ import { getAspectRatio } from "../../../utils/getAspectRatio";
 
 interface Props {
   post: Post;
+  onSelect?: (item: Post) => void;
 }
 
-export const ImagesGalleryCard = ({ post }: Props) => {
+export const ImagesGalleryCard = ({ post, onSelect }: Props) => {
   const {
     posts: { currentToggledPost, setCurrentToggledPost },
   } = useGlobalContext();
@@ -27,12 +28,20 @@ export const ImagesGalleryCard = ({ post }: Props) => {
         onOpen={() => setCurrentToggledPost(post)}
         onClose={() => setCurrentToggledPost(null)}
       />
-      <ImageStyled src={post.originalImageUrl} />
+      <ImageStyled
+        onClick={(e) => {
+          e.stopPropagation();
+          setCurrentToggledPost(null);
+          onSelect?.(post);
+        }}
+        src={post.originalImageUrl}
+      />
     </CardStyled>
   );
 };
 
-const CardStyled = styled.article<{ $aspectRatio: number }>`
+const CardStyled = styled.button<{ $aspectRatio: number }>`
+  padding: 0;
   display: flex;
   position: relative;
   flex-direction: column;

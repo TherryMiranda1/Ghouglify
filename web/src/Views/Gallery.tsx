@@ -2,8 +2,13 @@ import { useEffect } from "react";
 import { View } from "../components";
 import { useGlobalContext } from "../context/useGlobalContext";
 import { ImagesGallery } from "../components/widgets/ImagesGallery/ImagesGallery";
+import { Post } from "../types/Post";
 
-export const Gallery = () => {
+interface Props {
+  onSelect?: (item: Post) => void;
+}
+
+export const Gallery = ({ onSelect }: Props) => {
   const {
     user: { currentUser },
     posts: {
@@ -33,8 +38,9 @@ export const Gallery = () => {
 
   return (
     <>
-     
-      {userPostsData && <ImagesGallery posts={userPostsData} />}
+      {userPostsData && (
+        <ImagesGallery posts={userPostsData} onSelect={onSelect} />
+      )}
     </>
   );
 };
