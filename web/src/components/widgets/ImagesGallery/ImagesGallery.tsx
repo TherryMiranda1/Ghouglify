@@ -12,12 +12,12 @@ export const ImagesGallery = ({ posts, onSelect }: Props) => {
   return (
     <ContainerStyled>
       <RowStyled>
-        {filterEven(posts).map((post) => (
+        {filterOdd(posts).map((post) => (
           <ImagesGalleryCard key={post._id} post={post} onSelect={onSelect} />
         ))}
       </RowStyled>
       <RowStyled>
-        {filterOdd(posts).map((post) => (
+        {filterEven(posts).map((post) => (
           <ImagesGalleryCard key={post._id} post={post} onSelect={onSelect} />
         ))}
       </RowStyled>

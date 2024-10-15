@@ -6,7 +6,10 @@ export const Route = createRootRoute({
     <>
       <Navbar>
         <Link to="/">
-          <Header text="Ghouglify" />
+          <header className="header">
+            <img src="/logo.png" alt="logo" />
+            <Header text="Ghouglify" />
+          </header>
         </Link>
         <div>
           <Link to="/gallery"> Gallery</Link>

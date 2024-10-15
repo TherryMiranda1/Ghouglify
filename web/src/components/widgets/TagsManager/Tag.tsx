@@ -28,6 +28,6 @@ const TagStyled = styled.button<{ $isSelected: boolean }>`
   cursor: pointer;
 
   &:hover {
-    background-color: var(--background-transparent-color);
+    background-color: var(--background-card-color);
   }
 `;

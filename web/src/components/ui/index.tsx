@@ -9,7 +9,7 @@ import { Select } from "./select/Select";
 import { Image } from "./image/Image";
 import { EmptyState } from "./states/empty/EmptyState";
 import { Navbar } from "./navbar/Navbar";
-
+import { LoadingState } from "./states/loading/LoadingState";
 export {
   Button,
   Card,
@@ -21,5 +21,6 @@ export {
   Header,
   Image,
   EmptyState,
+  LoadingState,
   Navbar,
 };

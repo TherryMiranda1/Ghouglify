@@ -1,18 +1,16 @@
+@font-face {
+  font-family: "Karla";
+  src: url("Karla-Regular.woff2") format("woff2");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root {
-  font-family:
-    system-ui,
-    -apple-system,
-    BlinkMacSystemFont,
-    "Segoe UI",
-    Roboto,
-    Oxygen,
-    Ubuntu,
-    Cantarell,
-    "Open Sans",
-    "Helvetica Neue",
-    sans-serif;
+  font-family: "Karla", sans-serif;
   line-height: 1.5;
-  font-weight: 400;
+  font-weight: normal;
+  font-style: normal;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   box-sizing: border-box;
@@ -76,7 +74,6 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: cursive;
   padding: 0;
   margin: 0;
   align-self: center;
@@ -126,6 +123,17 @@ button:hover {
 button:focus,
 button:focus-visible {
   outline: none;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+.header img {
+  width: 40px;
+  height: 40px;
 }
 
 .view {
