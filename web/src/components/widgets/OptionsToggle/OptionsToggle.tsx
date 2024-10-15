@@ -8,6 +8,7 @@ import { Button } from "./../../ui/button/Button";
 import { ICON_SIZES } from "../../../constants/sizes";
 import { useGlobalContext } from "../../../context/useGlobalContext";
 import { Post } from "../../../types/Post";
+import { useDownloadImage } from "./../../../context/hooks/useDownloadImage";
 
 interface Props {
   post: Post;
@@ -17,6 +18,7 @@ interface Props {
 }
 
 export const OptionsToggle = ({ post, isOpen, onOpen, onClose }: Props) => {
+  const { handleDownload } = useDownloadImage();
   const {
     posts: { handleDeletePost },
   } = useGlobalContext();
@@ -31,7 +33,12 @@ export const OptionsToggle = ({ post, isOpen, onOpen, onClose }: Props) => {
           <OptionStyled onClick={() => onClose?.()}>
             Share <IoMdShareAlt size={ICON_SIZES.xs} />
           </OptionStyled>
-          <OptionStyled onClick={() => onClose?.()}>
+          <OptionStyled
+            onClick={() => {
+              handleDownload(post.originalImageUrl, post.name);
+              onClose?.();
+            }}
+          >
             Download <MdDownload size={ICON_SIZES.xs} />
           </OptionStyled>
           <OptionStyled
@@ -53,7 +60,7 @@ export const OptionsToggle = ({ post, isOpen, onOpen, onClose }: Props) => {
 };
 
 const OptionsToggleStyled = styled.section`
-  z-index: 2;
+  z-index: 10;
   position: absolute;
   bottom: 4px;
   right: 4px;

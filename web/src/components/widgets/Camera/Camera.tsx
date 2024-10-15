@@ -1,12 +1,31 @@
-import React, { useEffect, useRef, useState } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useEffect, useRef, useState } from "react";
+import { FaRegCircle } from "react-icons/fa";
+import { GrPowerCycle } from "react-icons/gr";
+import { IoCloseOutline } from "react-icons/io5";
+import { MdDone } from "react-icons/md";
+import styled from "styled-components";
 
-const Camera: React.FC = () => {
+import { ICON_SIZES } from "../../../constants/sizes";
+import { OriginalImageType } from "../../../context/types";
+import { useGlobalContext } from "../../../context/useGlobalContext";
+
+interface Props {
+  onChange: (photo: OriginalImageType) => void;
+}
+
+export const Camera = ({ onChange }: Props) => {
+  const {
+    sandbox: { setOriginalImage },
+  } = useGlobalContext();
   const videoRef = useRef<HTMLVideoElement>(null);
   const photoRef = useRef<HTMLCanvasElement>(null);
-  const [isFrontCamera, setIsFrontCamera] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isFrontCamera, setIsFrontCamera] = useState(false);
   const [photo, setPhoto] = useState<string | null>(null);
 
   const startCamera = async () => {
+    setIsLoading(true);
     if (videoRef.current) {
       const constraints = {
         video: {
@@ -22,6 +41,7 @@ const Camera: React.FC = () => {
         console.error("Error accessing camera: ", err);
       }
     }
+    setIsLoading(false);
   };
 
   const switchCamera = () => {
@@ -64,33 +84,95 @@ const Camera: React.FC = () => {
   }, []);
 
   return (
-    <div>
-      <div>
-        <video
-          ref={videoRef}
-          style={{
-            width: "100%",
-            height: "auto",
-            display: photo ? "none" : "block",
-          }}
-        />
-        {photo && (
-          <img
-            src={photo}
-            alt="captured"
-            style={{ width: "100%", height: "auto" }}
-          />
-        )}
-      </div>
-      <div>
-        {photo && <button onClick={() => setPhoto(null)}>Take Again</button>}
-        {!photo && <button onClick={switchCamera}>Cambiar Cámara</button>}
-        <button onClick={takePhoto}>Tomar Foto</button>
-      </div>
-      <div></div>
+    <ContainerStyled>
+      <VideoStyled $show={photo === null} ref={videoRef} />
+      {isLoading ? (
+        <p>Loading...</p>
+      ) : (
+        <>
+          {photo && <ImageStyled src={photo} alt="captured" />}
+          <ButtonsAreaStyled>
+            {!photo && (
+              <TakeButtonStyled onClick={takePhoto}>
+                <FaRegCircle size={ICON_SIZES.lg} />
+              </TakeButtonStyled>
+            )}
+          </ButtonsAreaStyled>
+          {photo ? (
+            <SecondaryButtonStyled onClick={() => setPhoto(null)}>
+              <IoCloseOutline size={ICON_SIZES.sm} />
+            </SecondaryButtonStyled>
+          ) : (
+            <SecondaryButtonStyled $isRight onClick={switchCamera}>
+              <GrPowerCycle size={ICON_SIZES.sm} />
+            </SecondaryButtonStyled>
+          )}
+          {photo && (
+            <SecondaryButtonStyled
+              $isRight
+              onClick={() => {
+                const result = {
+                  title: `Ghougly-${new Date().toDateString()}`,
+                  content: photo,
+                };
+                onChange(result);
+                setOriginalImage(result);
+              }}
+            >
+              <MdDone size={ICON_SIZES.sm} />
+            </SecondaryButtonStyled>
+          )}
+        </>
+      )}
       <canvas ref={photoRef} style={{ display: "none" }} />
-    </div>
+    </ContainerStyled>
   );
 };
+const ContainerStyled = styled.section`
+  box-sizing: border-box;
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  border-radius: var(--card-radius);
+`;
+const VideoStyled = styled.video<{ $show: boolean }>`
+  width: 100%;
+  height: auto;
+  display: ${({ $show }) => ($show ? "block" : "none")};
+  border-radius: var(--card-radius);
+`;
+const ImageStyled = styled.img`
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: var(--card-radius);
+`;
 
-export default Camera;
+const ButtonsAreaStyled = styled.div`
+  background-color: var(--background-transparent-color);
+  border-bottom-left-radius: var(--card-radius);
+  border-bottom-right-radius: var(--card-radius);
+  height: 70px;
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  gap: 16px;
+`;
+
+const TakeButtonStyled = styled.button`
+  background-color: transparent;
+  border: var(--border);
+`;
+
+const SecondaryButtonStyled = styled.button<{ $isRight?: boolean }>`
+  background-color: transparent;
+  padding: 0;
+  border: var(--border);
+  position: absolute;
+  bottom: 20px;
+  ${({ $isRight }) => ($isRight ? "right: 10px;" : "left: 10px;")}
+`;

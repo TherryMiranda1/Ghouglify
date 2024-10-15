@@ -5,20 +5,20 @@ import { filterEven, filterOdd } from "../../../utils/filter";
 
 interface Props {
   posts: Post[];
+  onSelect?: (item: Post) => void;
 }
 
-export const ImagesGallery = ({ posts }: Props) => {
-
+export const ImagesGallery = ({ posts, onSelect }: Props) => {
   return (
     <ContainerStyled>
       <RowStyled>
         {filterEven(posts).map((post) => (
-          <ImagesGalleryCard key={post._id} post={post} />
+          <ImagesGalleryCard key={post._id} post={post} onSelect={onSelect} />
         ))}
       </RowStyled>
       <RowStyled>
         {filterOdd(posts).map((post) => (
-          <ImagesGalleryCard key={post._id} post={post} />
+          <ImagesGalleryCard key={post._id} post={post} onSelect={onSelect} />
         ))}
       </RowStyled>
     </ContainerStyled>
@@ -35,4 +35,5 @@ const RowStyled = styled.section`
   display: flex;
   width: 100%;
   flex-direction: column;
-  gap: 16px;`;
+  gap: 16px;
+`;

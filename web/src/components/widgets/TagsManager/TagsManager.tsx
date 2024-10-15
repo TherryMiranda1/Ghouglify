@@ -27,5 +27,5 @@ export const TagsManager = <_, T>({ data, currentTag, onSelect }: Props<T>) => {
 const TagsRowStyled = styled.section`
   display: flex;
   width: 100%;
-  gap: 16px;
+  gap: 8px;
 `;

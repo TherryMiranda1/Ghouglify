@@ -12,7 +12,7 @@ export const imageToPost = ({
   transformation?: Transformation;
 }): Post => ({
   userId: userUUID,
-  name: image.original_filename,
+  name: image.original_filename || `Ghougly-${new Date().toDateString()}`,
   cloudPublicId: image.public_id,
   originalImageUrl: image.secure_url,
   width: image.width,
