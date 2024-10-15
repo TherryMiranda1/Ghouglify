@@ -33,7 +33,7 @@
   --tint-color: #ff7518;
   --tint-secondary-color: #39ff14;
   --tint-terciary-color: #6a0dad;
-  --border-color: #1b1b1b;
+  --border-color: #262626;
 }
 
 [data-variant="BUBBLE"] {
@@ -81,7 +81,7 @@ h6 {
 
 a {
   font-weight: 500;
-  color: var(--tint-color);
+  color: var(--text-color);
   text-decoration: inherit;
 }
 

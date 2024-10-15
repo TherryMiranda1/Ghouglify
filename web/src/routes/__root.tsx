@@ -1,5 +1,6 @@
 import { createRootRoute, Link, Outlet } from "@tanstack/react-router";
 import { Header, Navbar } from "../components";
+import { Navigation } from "../components/widgets/Navigation/Navigation";
 
 export const Route = createRootRoute({
   component: () => (
@@ -15,7 +16,9 @@ export const Route = createRootRoute({
           <Link to="/gallery"> Gallery</Link>
         </div>
       </Navbar>
-      <Outlet />
+      <Navigation>
+        <Outlet />
+      </Navigation>
     </>
   ),
 });
