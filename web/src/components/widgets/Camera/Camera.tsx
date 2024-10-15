@@ -9,6 +9,7 @@ import styled from "styled-components";
 import { ICON_SIZES } from "../../../constants/sizes";
 import { OriginalImageType } from "../../../context/types";
 import { useGlobalContext } from "../../../context/useGlobalContext";
+import { LoadingState } from "../../ui";
 
 interface Props {
   onChange: (photo: OriginalImageType) => void;
@@ -25,8 +26,8 @@ export const Camera = ({ onChange }: Props) => {
   const [photo, setPhoto] = useState<string | null>(null);
 
   const startCamera = async () => {
-    setIsLoading(true);
     if (videoRef.current) {
+      setIsLoading(true);
       const constraints = {
         video: {
           facingMode: isFrontCamera ? "user" : "environment",
@@ -40,8 +41,8 @@ export const Camera = ({ onChange }: Props) => {
       } catch (err) {
         console.error("Error accessing camera: ", err);
       }
+      setIsLoading(false);
     }
-    setIsLoading(false);
   };
 
   const switchCamera = () => {
@@ -85,45 +86,43 @@ export const Camera = ({ onChange }: Props) => {
 
   return (
     <ContainerStyled>
-      <VideoStyled $show={photo === null} ref={videoRef} />
-      {isLoading ? (
-        <p>Loading...</p>
-      ) : (
-        <>
-          {photo && <ImageStyled src={photo} alt="captured" />}
-          <ButtonsAreaStyled>
-            {!photo && (
-              <TakeButtonStyled onClick={takePhoto}>
-                <FaRegCircle size={ICON_SIZES.lg} />
-              </TakeButtonStyled>
-            )}
-          </ButtonsAreaStyled>
-          {photo ? (
-            <SecondaryButtonStyled onClick={() => setPhoto(null)}>
-              <IoCloseOutline size={ICON_SIZES.sm} />
-            </SecondaryButtonStyled>
-          ) : (
-            <SecondaryButtonStyled $isRight onClick={switchCamera}>
-              <GrPowerCycle size={ICON_SIZES.sm} />
-            </SecondaryButtonStyled>
+      {isLoading && <LoadingState />}
+      <VideoStyled $show={photo === null && !isLoading} ref={videoRef} />
+      <>
+        {photo && <ImageStyled src={photo} alt="captured" />}
+        <ButtonsAreaStyled>
+          {!photo && (
+            <TakeButtonStyled onClick={takePhoto}>
+              <FaRegCircle size={ICON_SIZES.lg} />
+            </TakeButtonStyled>
           )}
-          {photo && (
-            <SecondaryButtonStyled
-              $isRight
-              onClick={() => {
-                const result = {
-                  title: `Ghougly-${new Date().toDateString()}`,
-                  content: photo,
-                };
-                onChange(result);
-                setOriginalImage(result);
-              }}
-            >
-              <MdDone size={ICON_SIZES.sm} />
-            </SecondaryButtonStyled>
-          )}
-        </>
-      )}
+        </ButtonsAreaStyled>
+        {photo ? (
+          <SecondaryButtonStyled onClick={() => setPhoto(null)}>
+            <IoCloseOutline size={ICON_SIZES.sm} />
+          </SecondaryButtonStyled>
+        ) : (
+          <SecondaryButtonStyled $isRight onClick={switchCamera}>
+            <GrPowerCycle size={ICON_SIZES.sm} />
+          </SecondaryButtonStyled>
+        )}
+        {photo && (
+          <SecondaryButtonStyled
+            $isRight
+            onClick={() => {
+              const result = {
+                title: `Ghougly-${new Date().toDateString()}`,
+                content: photo,
+              };
+              onChange(result);
+              setOriginalImage(result);
+            }}
+          >
+            <MdDone size={ICON_SIZES.sm} />
+          </SecondaryButtonStyled>
+        )}
+      </>
+
       <canvas ref={photoRef} style={{ display: "none" }} />
     </ContainerStyled>
   );
@@ -138,8 +137,9 @@ const ContainerStyled = styled.section`
 const VideoStyled = styled.video<{ $show: boolean }>`
   width: 100%;
   height: auto;
-  display: ${({ $show }) => ($show ? "block" : "none")};
+  opacity: ${({ $show }) => ($show ? 1 : 0)};
   border-radius: var(--card-radius);
+  transition: opacity 0.3s ease-in-out;
 `;
 const ImageStyled = styled.img`
   display: block;

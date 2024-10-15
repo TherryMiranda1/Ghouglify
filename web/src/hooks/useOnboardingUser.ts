@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 
@@ -58,7 +57,6 @@ export const useOnboardingUser = ({
     if (!currentUser) {
       initializeUser();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentUser]);
 
   return { isError, isLoading };

@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { View } from "../components";
+import { LoadingState, View } from "../components";
 import { useGlobalContext } from "../context/useGlobalContext";
 import { ImagesGallery } from "../components/widgets/ImagesGallery/ImagesGallery";
 import { Post } from "../types/Post";
@@ -25,11 +25,10 @@ export const Gallery = ({ onSelect }: Props) => {
     if (!userPostsData && currentUser) {
       getUserPosts();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userPostsData]);
 
   if (isLoadingUserPosts) {
-    return <View>Loading...</View>;
+    return <LoadingState />;
   }
 
   if (isUserPostsError) {
