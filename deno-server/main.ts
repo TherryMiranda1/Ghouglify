@@ -7,9 +7,16 @@ import { AppContext } from "./types.d.ts";
 import { dbMiddleware } from "./src/middleware/dbMiddleware.ts";
 
 const app = new Hono<AppContext>();
+const FRONTEND_URL = Deno.env.get("FRONTEND_URL");
 
 app.use(renderer);
-app.use("*", cors());
+app.use(
+  "*",
+  cors({
+    origin: [FRONTEND_URL ?? "*", "http://localhost:5173"],
+    allowMethods: ["POST", "GET", "DELETE", "PUT", "OPTIONS"],
+  })
+);
 app.use("*", dbMiddleware);
 
 app.use("*", async (c, next) => {

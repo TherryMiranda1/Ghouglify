@@ -12,6 +12,7 @@ export const Tag = <_, T>({ tag, isSelected, onSelect }: Props<T>) => {
   return (
     <TagStyled onClick={() => onSelect(tag)} $isSelected={isSelected}>
       {tag.title}
+      {tag.icon}
     </TagStyled>
   );
 };

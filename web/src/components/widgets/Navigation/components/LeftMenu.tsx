@@ -26,7 +26,7 @@ export const LeftMenu = ({ $width }: Props) => {
         </LeftMenuItemStyled>
       ))}
       {NAVIGATION_OPTIONS.filter((item) => item.isMainOption).map((item) => (
-        <MainOptionStyled to={item.path}>
+        <MainOptionStyled to={item.path} key={item.title}>
           {item.title} {item.icon}
         </MainOptionStyled>
       ))}

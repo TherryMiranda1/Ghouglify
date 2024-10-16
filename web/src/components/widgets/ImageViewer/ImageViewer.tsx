@@ -14,7 +14,7 @@ export const ImageViewer = () => {
       <CloseButtonStyled onClick={() => setOriginalImage(null)}>
         <IoCloseOutline size={ICON_SIZES.md} />
       </CloseButtonStyled>
-      <Image src={originalImage?.content as string} />
+      <Image src={originalImage?.originalImageUrl as string} />
     </ImageViewerStyled>
   );
 };

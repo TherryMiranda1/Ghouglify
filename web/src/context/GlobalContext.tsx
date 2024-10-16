@@ -18,8 +18,8 @@ export const GlobalContext = createContext<GlobalReturnType>(
 export const GlobalContainer = ({ children }: Props) => {
   const user = useUser();
   const posts = usePosts({ currentUser: user.currentUser });
-  const image = useImages({ currentUser: user.currentUser, posts });
   const sandbox = useSandbox();
+  const image = useImages({ currentUser: user.currentUser, posts, sandbox });
 
   return (
     <GlobalContext.Provider

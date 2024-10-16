@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useRef, useState } from "react";
 import { FaRegCircle } from "react-icons/fa";
 import { GrPowerCycle } from "react-icons/gr";
@@ -8,7 +7,6 @@ import styled from "styled-components";
 
 import { ICON_SIZES } from "../../../constants/sizes";
 import { OriginalImageType } from "../../../context/types";
-import { useGlobalContext } from "../../../context/useGlobalContext";
 import { LoadingState } from "../../ui";
 
 interface Props {
@@ -16,9 +14,6 @@ interface Props {
 }
 
 export const Camera = ({ onChange }: Props) => {
-  const {
-    sandbox: { setOriginalImage },
-  } = useGlobalContext();
   const videoRef = useRef<HTMLVideoElement>(null);
   const photoRef = useRef<HTMLCanvasElement>(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -115,7 +110,6 @@ export const Camera = ({ onChange }: Props) => {
                 content: photo,
               };
               onChange(result);
-              setOriginalImage(result);
             }}
           >
             <MdDone size={ICON_SIZES.sm} />

@@ -28,6 +28,10 @@ const AppContainer = styled.section`
   width: 100%;
   align-items: center;
 
+  @media screen and (max-width: ${DEVICE_BREAKPOINTS.md}) {
+    padding-bottom: 64px;
+  }
+
   @media screen and (min-width: ${DEVICE_BREAKPOINTS.md}) {
     padding-left: ${LEFT_MENU_WIDTH};
   }

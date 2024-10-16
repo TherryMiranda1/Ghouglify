@@ -20,6 +20,7 @@ const postSchema = Joi.object({
   height: Joi.number().optional(),
   size: Joi.number().optional(),
   format: Joi.string().optional(),
+  isLoading: Joi.boolean().optional(),
   createdAt: Joi.date().optional(),
   updatedAt: Joi.date().optional(),
 });
@@ -55,11 +56,13 @@ export const getPosts = async (c: Context) => {
 
   if (userId) {
     filter.userId = userId;
+    if (isPublic) {
+      filter.isPublic = isPublic;
+    }
+  } else {
+    filter.isPublic = true;
   }
 
-  if (isPublic !== undefined) {
-    filter.isPublic = isPublic === "true";
-  }
   try {
     const db = c.get("db");
     const posts = await db.collection("posts").find(filter).toArray();
@@ -106,12 +109,11 @@ export const updatePost = async (c: Context) => {
       { $set: { ...updatedData, updatedAt: new Date() } },
       { returnDocument: "after" } // Obtiene el documento actualizado
     );
-
-    if (!result.value) {
+    if (!result) {
       return c.json({ error: "Post not found" }, 404);
     }
 
-    return c.json(result.value, 200);
+    return c.json(result, 200);
   } catch (err) {
     console.error(err);
     return c.json({ error: "Error updating post" }, 500);

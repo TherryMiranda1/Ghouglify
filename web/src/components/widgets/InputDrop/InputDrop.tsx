@@ -1,28 +1,20 @@
 import { useEffect, useRef } from "react";
 import { Section, Button } from "../../ui";
-import { useGlobalContext } from "../../../context/useGlobalContext";
 import { OriginalImageType } from "../../../context/types";
 import styled from "styled-components";
 
 interface Props {
   value?: OriginalImageType;
-  onChange?: (e: OriginalImageType, isFile?: boolean) => void;
+  onChange?: (e: OriginalImageType | null) => void;
 }
 
 export const InputDrop = ({ onChange, value }: Props) => {
-  const {
-    sandbox: { setOriginalImage },
-  } = useGlobalContext();
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleFile = (file: File) => {
     if (file?.type.startsWith("image/")) {
       const reader = new FileReader();
       reader.onload = () => {
-        setOriginalImage({
-          title: file.name,
-          content: reader.result,
-        });
         onChange?.({
           title: file.name,
           content: reader.result,
@@ -54,9 +46,9 @@ export const InputDrop = ({ onChange, value }: Props) => {
 
   useEffect(() => {
     if (!value) {
-      setOriginalImage(null);
+      onChange?.(null);
     }
-  }, [value, setOriginalImage]);
+  }, [value, onChange]);
 
   return (
     <DraggingAreaStyled onDrop={handleDrop} onDragOver={handleDragOver}>

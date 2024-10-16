@@ -1,20 +1,22 @@
+import { useEffect } from "react";
 import { ImageDownloader } from "../components";
-import { Card, Header, Section, Image } from "../components/ui";
+import { Card, Section, Image } from "../components/ui";
 import { Sandbox } from "../components/widgets/Sandbox/Sandbox";
 import { useGlobalContext } from "../context/useGlobalContext";
+import { USER_POSTS_FILTERS } from "../context/hooks/usePosts";
 
-export const Home = () => {
+export const Create = () => {
   const {
     image: { transformedImage },
-    user: { currentUser },
+    posts: { setCurrentUserPostsFilter },
   } = useGlobalContext();
+
+  useEffect(() => {
+    setCurrentUserPostsFilter(USER_POSTS_FILTERS[0]);
+  }, []);
 
   return (
     <Section>
-      {currentUser && (
-        <Header componentType="h3" text={`Hola ${currentUser.name}`} />
-      )}
-
       <Sandbox />
       {transformedImage && (
         <Card>

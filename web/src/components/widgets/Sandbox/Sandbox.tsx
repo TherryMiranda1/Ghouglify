@@ -5,6 +5,7 @@ import { IMAGE_SOURCES } from "../../../context/hooks/useSandbox";
 import { ImageSources } from "../ImageSources/ImageSources";
 import { ImageViewer } from "../ImageViewer/ImageViewer";
 import { DEVICE_BREAKPOINTS } from "../../../constants/devices";
+import { TransformationsBoard } from "../TransformationsBoard/TransformationsBoard";
 
 export const Sandbox = () => {
   const {
@@ -14,7 +15,10 @@ export const Sandbox = () => {
   return (
     <SandboxStyled>
       {originalImage ? (
-        <ImageViewer />
+        <>
+          <ImageViewer />
+          <TransformationsBoard />
+        </>
       ) : (
         <>
           <TagsManager

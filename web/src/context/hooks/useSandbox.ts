@@ -1,5 +1,7 @@
 import { useState } from "react";
-import { OriginalImageType, UseSandboxOptions } from "../types";
+import { UseSandboxOptions } from "../types";
+import { TagTypeBase } from "../../components/widgets/TagsManager/TagsManager";
+import { Post } from "../../types/Post";
 
 export enum ImageSource {
   LOCAL = "local",
@@ -23,13 +25,11 @@ export const IMAGE_SOURCES = [
 ];
 
 export const useSandbox = (): UseSandboxOptions => {
-  const [originalImage, setOriginalImage] = useState<OriginalImageType | null>(
+  const [originalImage, setOriginalImage] = useState<Post | null>(
     null
   );
   const [currentPrompt, setCurrentPrompt] = useState<string>("");
-  const [imageSource, setImageSource] = useState<{ id: string; title: string }>(
-    IMAGE_SOURCES[0]
-  );
+  const [imageSource, setImageSource] = useState<TagTypeBase>(IMAGE_SOURCES[0]);
 
   return {
     originalImage,

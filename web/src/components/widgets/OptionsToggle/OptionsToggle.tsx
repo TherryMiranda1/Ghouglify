@@ -20,7 +20,7 @@ interface Props {
 export const OptionsToggle = ({ post, isOpen, onOpen, onClose }: Props) => {
   const { handleDownload } = useDownloadImage();
   const {
-    posts: { handleDeletePost },
+    posts: { handleDeletePost, handleUpdatePost },
   } = useGlobalContext();
 
   return (
@@ -30,8 +30,13 @@ export const OptionsToggle = ({ post, isOpen, onOpen, onClose }: Props) => {
           <OptionStyled onClick={() => onClose?.()}>
             Remix <GrPowerCycle size={ICON_SIZES.xs} />
           </OptionStyled>
-          <OptionStyled onClick={() => onClose?.()}>
-            Share <IoMdShareAlt size={ICON_SIZES.xs} />
+          <OptionStyled
+            onClick={() => {
+              handleUpdatePost({ ...post, isPublic: true });
+              onClose?.();
+            }}
+          >
+            Publish <IoMdShareAlt size={ICON_SIZES.xs} />
           </OptionStyled>
           <OptionStyled
             onClick={() => {
@@ -90,7 +95,6 @@ const ContentStyled = styled.section`
 
 const OptionStyled = styled.button`
   background-color: transparent;
-  border: var(--border);
   padding: 6px 8px;
   display: flex;
   gap: 4px;

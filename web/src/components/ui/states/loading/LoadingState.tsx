@@ -12,10 +12,23 @@ const options = {
 interface Props {
   width?: number;
   height?: number;
+  transparent?: boolean;
+  onlyText?: boolean;
 }
-export const LoadingState = ({ width = 220, height = 200 }: Props) => {
+export const LoadingState = ({
+  width = 220,
+  height = 200,
+  transparent = false,
+  onlyText = false,
+}: Props) => {
+  if (onlyText)
+    return (
+      <LoadingStateStyled $transparent={transparent}>
+        Loading..
+      </LoadingStateStyled>
+    );
   return (
-    <LoadingStateStyled>
+    <LoadingStateStyled $transparent={transparent}>
       <WrapperStyled $width={width} $height={height}>
         <Lottie {...options} />
       </WrapperStyled>
@@ -23,7 +36,9 @@ export const LoadingState = ({ width = 220, height = 200 }: Props) => {
   );
 };
 
-const LoadingStateStyled = styled.section`
+const LoadingStateStyled = styled.section<{ $transparent?: boolean }>`
+  background-color: ${({ $transparent }) =>
+    $transparent ? "transparent" : ""};
   width: 100%;
   height: 100%;
   display: flex;
@@ -32,7 +47,7 @@ const LoadingStateStyled = styled.section`
   padding: 16px 0px;
 `;
 
-const WrapperStyled = styled.section<{ $width: number; $height: number }>`
+const WrapperStyled = styled.div<{ $width: number; $height: number }>`
   width: ${(props) => props.$width}px;
   height: ${(props) => props.$height}px;
 `;

@@ -33,7 +33,8 @@ export const updatePostRequest = async ({
 }: {
   post: Post;
 }): Promise<Post | null> => {
-  const response = await axios.put(`${BASE_API_URL}/posts/${post._id}`, post);
+  const { _id, ...data } = post;
+  const response = await axios.put(`${BASE_API_URL}/posts/${_id}`, data);
 
   return response.data as Post;
 };

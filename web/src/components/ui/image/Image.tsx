@@ -9,6 +9,6 @@ export const Image = ({ ...props }: Props) => {
 
 const ImageStyled = styled.img`
   object-fit: cover;
+  object-position: top;
   width: 100%;
-  aspect-ratio: 1;
 `;
