@@ -9,6 +9,7 @@ import { USER_POSTS_FILTERS, UserPostsFilter } from "../context/hooks/usePosts";
 interface Props {
   onSelect?: (item: Post) => void;
   showTags?: boolean;
+  showTransFormationsInitialValue?: boolean;
 }
 
 export const Gallery = ({ onSelect, showTags }: Props) => {

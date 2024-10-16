@@ -37,7 +37,11 @@ export const Wall = ({ onSelect }: Props) => {
   return (
     <>
       {publicPostsData && (
-        <ImagesGallery posts={publicPostsData} onSelect={onSelect} />
+        <ImagesGallery
+          posts={publicPostsData}
+          onSelect={onSelect}
+          showTransformationInitialValue
+        />
       )}
     </>
   );
