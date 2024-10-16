@@ -34,6 +34,10 @@ export const Wall = ({ onSelect }: Props) => {
     return <View>Error</View>;
   }
 
+  if (publicPostsData?.length === 0) {
+    return <View>No hay publicaciones</View>;
+  }
+
   return (
     <>
       {publicPostsData && (
