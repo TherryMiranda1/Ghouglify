@@ -59,15 +59,14 @@ const ToolbarItemStyled = styled(Link)<{
   width: ${({ $isMain }) => ($isMain ? "65px" : "40px")};
   gap: 4px;
   border-radius: var(--tag-radius);
-  font-size: 16px;
-
-  color: ${({ $isActive, $isMain }) =>
-    $isActive
-      ? "var(--tint-color)"
-      : $isMain
-        ? "var(--text-secondary-color)"
-        : "var(--text-color)"};
+  font-size: 14px;
+  color: ${({ $isActive }) =>
+    $isActive ? "var(--tint-color)" : "var(--text-color)"};
   transition: all 0.3s ease-in-out;
+
+  svg{
+    font-size: 24px;
+  }
 `;
 
 const MainOptionStyled = styled(Link)`

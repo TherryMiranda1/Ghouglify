@@ -18,6 +18,7 @@ export const ImageSources = () => {
           <Header text="Sube una imagen" componentType="h3" />
           <InputDrop
             onChange={(value) => {
+              if (!value) return;
               image.load(value.content);
             }}
           />
@@ -26,14 +27,7 @@ export const ImageSources = () => {
       {imageSource.id === ImageSource.CLOUD && (
         <SourceWrapper>
           <GalleryWrapper>
-            <Gallery
-              onSelect={(post) =>
-                setOriginalImage({
-                  content: post.originalImageUrl,
-                  title: post.name,
-                })
-              }
-            />
+            <Gallery onSelect={(post) => setOriginalImage(post)} />
           </GalleryWrapper>
         </SourceWrapper>
       )}

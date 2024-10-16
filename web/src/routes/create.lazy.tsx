@@ -1,11 +1,11 @@
 import { createLazyFileRoute } from "@tanstack/react-router";
 import { View } from "../components";
-import { Wall } from "../Views/Wall";
+import { Create } from "../Views/Create";
 
-export const Route = createLazyFileRoute("/")({
+export const Route = createLazyFileRoute("/create")({
   component: () => (
     <View>
-      <Wall />
+      <Create />
     </View>
   ),
 });

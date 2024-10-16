@@ -16,15 +16,33 @@ import { Route as rootRoute } from './routes/__root'
 
 // Create Virtual Routes
 
+const MeLazyImport = createFileRoute('/me')()
 const GalleryLazyImport = createFileRoute('/gallery')()
+const CreateLazyImport = createFileRoute('/create')()
+const AboutLazyImport = createFileRoute('/about')()
 const IndexLazyImport = createFileRoute('/')()
 
 // Create/Update Routes
+
+const MeLazyRoute = MeLazyImport.update({
+  path: '/me',
+  getParentRoute: () => rootRoute,
+} as any).lazy(() => import('./routes/me.lazy').then((d) => d.Route))
 
 const GalleryLazyRoute = GalleryLazyImport.update({
   path: '/gallery',
   getParentRoute: () => rootRoute,
 } as any).lazy(() => import('./routes/gallery.lazy').then((d) => d.Route))
+
+const CreateLazyRoute = CreateLazyImport.update({
+  path: '/create',
+  getParentRoute: () => rootRoute,
+} as any).lazy(() => import('./routes/create.lazy').then((d) => d.Route))
+
+const AboutLazyRoute = AboutLazyImport.update({
+  path: '/about',
+  getParentRoute: () => rootRoute,
+} as any).lazy(() => import('./routes/about.lazy').then((d) => d.Route))
 
 const IndexLazyRoute = IndexLazyImport.update({
   path: '/',
@@ -42,11 +60,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexLazyImport
       parentRoute: typeof rootRoute
     }
+    '/about': {
+      id: '/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof AboutLazyImport
+      parentRoute: typeof rootRoute
+    }
+    '/create': {
+      id: '/create'
+      path: '/create'
+      fullPath: '/create'
+      preLoaderRoute: typeof CreateLazyImport
+      parentRoute: typeof rootRoute
+    }
     '/gallery': {
       id: '/gallery'
       path: '/gallery'
       fullPath: '/gallery'
       preLoaderRoute: typeof GalleryLazyImport
+      parentRoute: typeof rootRoute
+    }
+    '/me': {
+      id: '/me'
+      path: '/me'
+      fullPath: '/me'
+      preLoaderRoute: typeof MeLazyImport
       parentRoute: typeof rootRoute
     }
   }
@@ -56,37 +95,52 @@ declare module '@tanstack/react-router' {
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexLazyRoute
+  '/about': typeof AboutLazyRoute
+  '/create': typeof CreateLazyRoute
   '/gallery': typeof GalleryLazyRoute
+  '/me': typeof MeLazyRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexLazyRoute
+  '/about': typeof AboutLazyRoute
+  '/create': typeof CreateLazyRoute
   '/gallery': typeof GalleryLazyRoute
+  '/me': typeof MeLazyRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexLazyRoute
+  '/about': typeof AboutLazyRoute
+  '/create': typeof CreateLazyRoute
   '/gallery': typeof GalleryLazyRoute
+  '/me': typeof MeLazyRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/gallery'
+  fullPaths: '/' | '/about' | '/create' | '/gallery' | '/me'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/gallery'
-  id: '__root__' | '/' | '/gallery'
+  to: '/' | '/about' | '/create' | '/gallery' | '/me'
+  id: '__root__' | '/' | '/about' | '/create' | '/gallery' | '/me'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexLazyRoute: typeof IndexLazyRoute
+  AboutLazyRoute: typeof AboutLazyRoute
+  CreateLazyRoute: typeof CreateLazyRoute
   GalleryLazyRoute: typeof GalleryLazyRoute
+  MeLazyRoute: typeof MeLazyRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexLazyRoute: IndexLazyRoute,
+  AboutLazyRoute: AboutLazyRoute,
+  CreateLazyRoute: CreateLazyRoute,
   GalleryLazyRoute: GalleryLazyRoute,
+  MeLazyRoute: MeLazyRoute,
 }
 
 export const routeTree = rootRoute
@@ -102,14 +156,26 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/",
-        "/gallery"
+        "/about",
+        "/create",
+        "/gallery",
+        "/me"
       ]
     },
     "/": {
       "filePath": "index.lazy.tsx"
     },
+    "/about": {
+      "filePath": "about.lazy.tsx"
+    },
+    "/create": {
+      "filePath": "create.lazy.tsx"
+    },
     "/gallery": {
       "filePath": "gallery.lazy.tsx"
+    },
+    "/me": {
+      "filePath": "me.lazy.tsx"
     }
   }
 }

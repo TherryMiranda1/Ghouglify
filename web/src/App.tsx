@@ -1,4 +1,4 @@
-import { Home } from "./Views/Home";
+import { Home } from "./Views/Create";
 import { View } from "./components/ui";
 
 function App() {

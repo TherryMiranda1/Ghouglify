@@ -6,7 +6,7 @@ export const Route = createLazyFileRoute("/gallery")({
   component: () => (
     <View>
       <Header componentType="h3" text="Mis imagenes" />
-      <Gallery />
+      <Gallery showTags />
     </View>
   ),
 });

@@ -2,11 +2,16 @@
 import styled from "styled-components";
 import { Tag } from "./Tag";
 
-export type TagType<T> = T & { id: string; title: string };
+export type TagTypeBase = {
+  id: string;
+  title: string;
+  icon?: JSX.Element;
+};
+export type TagType<T> = T & TagTypeBase;
 
 interface Props<T> {
   data: TagType<T>[];
-  currentTag: T & { id: string; title: string };
+  currentTag: T & TagTypeBase;
   onSelect: (item: T) => void;
 }
 export const TagsManager = <_, T>({ data, currentTag, onSelect }: Props<T>) => {

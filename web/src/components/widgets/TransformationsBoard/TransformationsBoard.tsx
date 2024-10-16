@@ -11,17 +11,22 @@ export const TransformationsBoard = () => {
         value={sandbox.currentPrompt}
         onChange={(text) => sandbox.setCurrentPrompt(text as string)}
       />
-      {image.imageData && (
-        <Button
-          onClick={() =>
-            image.transform(image.imageData.public_id, sandbox.currentPrompt)
+      <Button
+        onClick={() => {
+          if (sandbox.originalImage && sandbox.currentPrompt) {
+            image.transform(sandbox.originalImage, sandbox.currentPrompt);
           }
-        >
-          Transformar
-        </Button>
-      )}
+        }}
+      >
+        Transformar
+      </Button>
     </TransformationsBoardStyled>
   );
 };
 
-const TransformationsBoardStyled = styled.section``;
+const TransformationsBoardStyled = styled.section`
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+`;

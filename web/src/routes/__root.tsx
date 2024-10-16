@@ -1,21 +1,11 @@
-import { createRootRoute, Link, Outlet } from "@tanstack/react-router";
-import { Header, Navbar } from "../components";
+import { createRootRoute, Outlet } from "@tanstack/react-router";
 import { Navigation } from "../components/widgets/Navigation/Navigation";
+import { TopBar } from "../components/widgets/Navigation/components/TopBar";
 
 export const Route = createRootRoute({
   component: () => (
     <>
-      <Navbar>
-        <Link to="/">
-          <header className="header">
-            <img src="/logo.png" alt="logo" />
-            <Header text="Ghouglify" />
-          </header>
-        </Link>
-        <div>
-          <Link to="/gallery"> Gallery</Link>
-        </div>
-      </Navbar>
+      <TopBar />
       <Navigation>
         <Outlet />
       </Navigation>
