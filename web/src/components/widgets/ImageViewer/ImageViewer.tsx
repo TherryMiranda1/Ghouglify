@@ -1,20 +1,22 @@
 import styled from "styled-components";
-import { useGlobalContext } from "../../../context/useGlobalContext";
 import { Image } from "../../ui";
 import { ICON_SIZES } from "../../../constants/sizes";
 import { IoCloseOutline } from "react-icons/io5";
 
-export const ImageViewer = () => {
-  const {
-    sandbox: { originalImage, setOriginalImage },
-  } = useGlobalContext();
+export const ImageViewer = ({
+  image,
+  onClose,
+}: {
+  image: string;
+  onClose: () => void;
+}) => {
 
   return (
     <ImageViewerStyled>
-      <CloseButtonStyled onClick={() => setOriginalImage(null)}>
+      <CloseButtonStyled onClick={() => onClose()}>
         <IoCloseOutline size={ICON_SIZES.md} />
       </CloseButtonStyled>
-      <Image src={originalImage?.originalImageUrl as string} />
+      <Image src={image} />
     </ImageViewerStyled>
   );
 };

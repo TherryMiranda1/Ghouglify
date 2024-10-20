@@ -18,7 +18,7 @@ const CardStyled = styled.article`
   display: flex;
   flex-direction: column;
   max-width: ${DEVICE_BREAKPOINTS.sm};
-  padding: 16px;
+  padding: 8px;
   gap: 16px;
   width: 100%;
   box-sizing: border-box;

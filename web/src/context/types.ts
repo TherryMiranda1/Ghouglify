@@ -1,10 +1,24 @@
 import { TagTypeBase } from "../components/widgets/TagsManager/TagsManager";
+import { Asset } from "../types/Asset";
 import { Post } from "../types/Post";
 import { User } from "../types/User";
+import { AssetDraft } from "./hooks/useAssets";
 
 export interface OriginalImageType {
   title: string;
   content: any;
+}
+
+export enum ImageSource {
+  LOCAL = "local",
+  CLOUD = "cloud",
+  CAMERA = "camera",
+}
+
+export enum TransformationOptions {
+  BACKGROUND_REPLACE = "background_replace",
+  BACKGROUND_GENERATION = "background_generation",
+  FACE_SWAPING = "face_swapping",
 }
 
 export interface GlobalReturnType {
@@ -12,13 +26,14 @@ export interface GlobalReturnType {
   user: UseUserOptions;
   posts: UsePostsOptions;
   sandbox: UseSandboxOptions;
+  assets: UseAssetsOptions;
 }
 
 export interface UseImageOptions {
-  imageData: any;
   transformedImage: any;
   load: (image: string) => void;
   transform: (post: Post, prompt: string) => void;
+  swapFace: ({ source, target }: { source: string; target: string }) => void;
 }
 
 export interface UseSandboxOptions {
@@ -28,6 +43,10 @@ export interface UseSandboxOptions {
   setCurrentPrompt: (prompt: string) => void;
   imageSource: TagTypeBase;
   setImageSource: (source: TagTypeBase) => void;
+  currentTransformationOption: TagTypeBase;
+  setCurrentTransformationOption: (option: TagTypeBase) => void;
+  faceSwapTargetAsset: Asset | null;
+  setFaceSwapTargetAsset: (asset: Asset | null) => void;
 }
 
 export interface UsePostsOptions {
@@ -55,4 +74,20 @@ export interface UsePostsOptions {
 export interface UseUserOptions {
   currentUser: User | null;
   setCurrentUser: (user: User | null) => void;
+}
+
+export interface UseAssetsOptions {
+  assets: {
+    assetsData: Asset[] | null;
+    getAssets: () => void;
+    isAssetsLoading: boolean;
+    isAssetsError: boolean;
+  };
+  currentAssetFilter: TagTypeBase;
+  setCurrentAssetFilter: (filter: TagTypeBase) => void;
+  handleDeleteAsset: (asset: Asset) => void;
+  handleCreateAsset: (
+    asset: AssetDraft
+  ) => Promise<Asset | undefined | null> | void;
+  handleUpdateAsset: (asset: Asset) => Promise<Asset | null> | void;
 }

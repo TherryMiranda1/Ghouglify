@@ -88,7 +88,7 @@ export const Camera = ({ onChange }: Props) => {
         <ButtonsAreaStyled>
           {!photo && (
             <TakeButtonStyled onClick={takePhoto}>
-              <FaRegCircle size={ICON_SIZES.lg} />
+              <FaRegCircle size={ICON_SIZES.md} />
             </TakeButtonStyled>
           )}
         </ButtonsAreaStyled>
@@ -131,8 +131,9 @@ const ContainerStyled = styled.section`
 const VideoStyled = styled.video<{ $show: boolean }>`
   width: 100%;
   height: auto;
-  opacity: ${({ $show }) => ($show ? 1 : 0)};
+  display: ${({ $show }) => ($show ? "block" : "none")};
   border-radius: var(--card-radius);
+  border: var(--border);
   transition: opacity 0.3s ease-in-out;
 `;
 const ImageStyled = styled.img`
@@ -140,6 +141,7 @@ const ImageStyled = styled.img`
   width: 100%;
   height: auto;
   border-radius: var(--card-radius);
+  border: var(--border);
 `;
 
 const ButtonsAreaStyled = styled.div`
@@ -159,13 +161,11 @@ const ButtonsAreaStyled = styled.div`
 
 const TakeButtonStyled = styled.button`
   background-color: transparent;
-  border: var(--border);
 `;
 
 const SecondaryButtonStyled = styled.button<{ $isRight?: boolean }>`
   background-color: transparent;
   padding: 0;
-  border: var(--border);
   position: absolute;
   bottom: 20px;
   ${({ $isRight }) => ($isRight ? "right: 10px;" : "left: 10px;")}

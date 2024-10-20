@@ -8,6 +8,8 @@ import { loadImageRequest } from "../../infra/api/images";
 import { User } from "../../types/User";
 import { imageToPost } from "../../infra/mappers/imageToPost";
 import { Post } from "../../types/Post";
+import { faceSwapRequest } from "../../infra/api/services";
+import { CloudinaryImageDTO } from "../../types/DTOs";
 
 interface Props {
   currentUser: User | null;
@@ -20,7 +22,6 @@ export const useImages = ({
   posts,
   sandbox,
 }: Props): UseImageOptions => {
-  const [imageData, setImageData] = useState();
   const [transformedImage, setTransformedImage] = useState("");
 
   const { cloudName } = cloudinaryConfig;
@@ -31,11 +32,10 @@ export const useImages = ({
     },
   });
 
-  const loadImage = async (image: string) => {
+  const loadImage = async (image: string, saveOnDB = true): Promise<CloudinaryImageDTO> => {
     const result = await loadImageRequest(image);
 
-    setImageData(result.data);
-    if (currentUser && result.data) {
+    if (currentUser && result.data && saveOnDB) {
       const post = imageToPost({
         image: result.data,
         userUUID: currentUser.userUUID,
@@ -45,6 +45,7 @@ export const useImages = ({
         sandbox.setOriginalImage(savedPost);
       }
     }
+    return result?.data;
   };
 
   const transformImage = async (post: Post, prompt: string) => {
@@ -62,10 +63,31 @@ export const useImages = ({
     });
   };
 
+  const swapFace = async ({
+    source,
+    target,
+  }: {
+    source: string;
+    target: string;
+  }) => {
+    const result = await faceSwapRequest({
+      source_face_url: source,
+      target_url: target,
+    });
+
+    if (result) {
+      const savedImage = await loadImage(result, false);
+
+      if (savedImage) {
+        setTransformedImage(savedImage.original_filename);
+      }
+    }
+  };
+
   return {
-    imageData,
     transformedImage,
     load: loadImage,
     transform: transformImage,
+    swapFace,
   };
 };

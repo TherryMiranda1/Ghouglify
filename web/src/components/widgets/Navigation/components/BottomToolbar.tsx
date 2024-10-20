@@ -12,17 +12,19 @@ export const BottomToolbar = () => {
       {NAVIGATION_OPTIONS.map((item) => (
         <ToolbarItemStyled
           key={item.title}
-          to={item.path}
           $isActive={getIsActive(item.path)}
           $isMain={item.isMainOption}
         >
           {item.isMainOption ? (
-            <MainOptionStyled to={item.path}>{item.icon}</MainOptionStyled>
-          ) : (
-            <>
+            <MainOptionStyled to={item.path}>
               {item.icon}
               {item.title}
-            </>
+            </MainOptionStyled>
+          ) : (
+            <Link to={item.path}>
+              {item.icon}
+              {item.title}
+            </Link>
           )}
         </ToolbarItemStyled>
       ))}
@@ -48,38 +50,46 @@ const BottomToolbarStyled = styled.nav`
   }
 `;
 
-const ToolbarItemStyled = styled(Link)<{
+const ToolbarItemStyled = styled.div<{
   $isMain?: boolean;
   $isActive?: boolean;
 }>`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
   padding: 4px;
   width: ${({ $isMain }) => ($isMain ? "65px" : "40px")};
-  gap: 4px;
+
   border-radius: var(--tag-radius);
   font-size: 14px;
   color: ${({ $isActive }) =>
     $isActive ? "var(--tint-color)" : "var(--text-color)"};
   transition: all 0.3s ease-in-out;
 
-  svg{
+  svg {
     font-size: 24px;
+  }
+  a {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    align-items: center;
   }
 `;
 
 const MainOptionStyled = styled(Link)`
   position: absolute;
-  background-color: var(--text-color);
-  color: var(--background-color);
+  background-color: var(--tint-color);
+  color: var(--text-color);
   border-radius: var(--tag-radius);
-  padding: 8px;
+  padding: 10px 8px 6px 8px;
+  padding-top: 8;
   width: 50px;
   height: 50px;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: 24px;
+
   top: -10px;
+  svg {
+    font-size: 24px;
+  }
 `;

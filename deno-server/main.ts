@@ -3,8 +3,10 @@ import { cors } from "hono/cors";
 import { renderer } from "./renderer.tsx";
 import userRoutes from "./src/routes/userRoutes.ts";
 import postRoutes from "./src/routes/postRoutes.ts";
-import { AppContext } from "./types.d.ts";
+import assetRoutes from "./src/routes/assetRoutes.ts";
 import { dbMiddleware } from "./src/middleware/dbMiddleware.ts";
+
+import { AppContext } from "./types.d.ts";
 
 const app = new Hono<AppContext>();
 const FRONTEND_URL = Deno.env.get("FRONTEND_URL");
@@ -31,6 +33,7 @@ app.use("*", async (c, next) => {
 // Definir rutas para usuarios y publicaciones
 app.route("/api", userRoutes);
 app.route("/api", postRoutes);
+app.route("/api", assetRoutes);
 
 // Manejo de rutas no encontradas
 app.notFound((c) => c.json({ error: "Not Found" }, 404));

@@ -6,6 +6,7 @@ import { useUser } from "./hooks/useUser";
 import { useSandbox } from "./hooks/useSandbox";
 
 import { GlobalReturnType } from "./types";
+import { useAssets } from "./hooks/useAssets";
 
 interface Props {
   children: JSX.Element | JSX.Element[];
@@ -20,6 +21,7 @@ export const GlobalContainer = ({ children }: Props) => {
   const posts = usePosts({ currentUser: user.currentUser });
   const sandbox = useSandbox();
   const image = useImages({ currentUser: user.currentUser, posts, sandbox });
+  const assets = useAssets();
 
   return (
     <GlobalContext.Provider
@@ -28,6 +30,7 @@ export const GlobalContainer = ({ children }: Props) => {
         user,
         posts,
         sandbox,
+        assets
       }}
     >
       {children}

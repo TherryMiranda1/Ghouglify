@@ -5,6 +5,7 @@ import { ImagesGallery } from "../components/widgets/ImagesGallery/ImagesGallery
 import { Post } from "../types/Post";
 import { TagsManager } from "../components/widgets/TagsManager/TagsManager";
 import { USER_POSTS_FILTERS, UserPostsFilter } from "../context/hooks/usePosts";
+import { GalleryContainer } from "../styles/Common.styles";
 
 interface Props {
   onSelect?: (item: Post) => void;
@@ -62,7 +63,7 @@ export const Gallery = ({ onSelect, showTags }: Props) => {
   }
 
   return (
-    <>
+    <GalleryContainer>
       {userPostsData && (
         <>
           {showTags && (
@@ -82,6 +83,6 @@ export const Gallery = ({ onSelect, showTags }: Props) => {
           />
         </>
       )}
-    </>
+    </GalleryContainer>
   );
 };

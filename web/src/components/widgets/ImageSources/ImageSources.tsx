@@ -1,10 +1,10 @@
 import styled from "styled-components";
-import { ImageSource } from "../../../context/hooks/useSandbox";
 import { useGlobalContext } from "../../../context/useGlobalContext";
 import { Card, Header } from "../../ui";
 import { InputDrop } from "../InputDrop/InputDrop";
 import { Camera } from "../Camera/Camera";
 import { Gallery } from "../../../Views/Gallery";
+import { ImageSource } from "../../../context/types";
 
 export const ImageSources = () => {
   const {
