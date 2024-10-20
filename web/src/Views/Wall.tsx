@@ -3,6 +3,7 @@ import { LoadingState, View } from "../components";
 import { useGlobalContext } from "../context/useGlobalContext";
 import { Post } from "../types/Post";
 import { ImagesGallery } from "../components/widgets/ImagesGallery/ImagesGallery";
+import { GalleryContainer } from "../styles/Common.styles";
 
 interface Props {
   onSelect?: (item: Post) => void;
@@ -39,7 +40,7 @@ export const Wall = ({ onSelect }: Props) => {
   }
 
   return (
-    <>
+    <GalleryContainer>
       {publicPostsData && (
         <ImagesGallery
           posts={publicPostsData}
@@ -47,6 +48,6 @@ export const Wall = ({ onSelect }: Props) => {
           showTransformationInitialValue
         />
       )}
-    </>
+    </GalleryContainer>
   );
 };

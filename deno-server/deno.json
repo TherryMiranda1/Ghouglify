@@ -6,7 +6,7 @@
   },
   "tasks": {
     "start": "deno serve --allow-net --allow-read --allow-env --allow-sys --env main.ts",
-    "deploy": "deployctl deploy"
+    "deploy": "deployctl deploy --exclude=./web"
   },
   "compilerOptions": {
     "jsx": "precompile",

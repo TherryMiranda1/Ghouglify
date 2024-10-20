@@ -9,16 +9,25 @@ export type TagTypeBase = {
 };
 export type TagType<T> = T & TagTypeBase;
 
+export type TagsVariant = "ROW" | "COLUMN";
+
 interface Props<T> {
+  variant?: TagsVariant;
   data: TagType<T>[];
   currentTag: T & TagTypeBase;
   onSelect: (item: T) => void;
 }
-export const TagsManager = <_, T>({ data, currentTag, onSelect }: Props<T>) => {
+export const TagsManager = <_, T>({
+  data,
+  currentTag,
+  onSelect,
+  variant = "ROW",
+}: Props<T>) => {
   return (
-    <TagsRowStyled>
+    <TagsRowStyled $variant={variant}>
       {data.map((tag) => (
         <Tag
+          variant={variant}
           key={tag.id}
           tag={tag}
           isSelected={tag.id === currentTag.id}
@@ -29,8 +38,11 @@ export const TagsManager = <_, T>({ data, currentTag, onSelect }: Props<T>) => {
   );
 };
 
-const TagsRowStyled = styled.section`
+const TagsRowStyled = styled.section<{ $variant: TagsVariant }>`
   display: flex;
   width: 100%;
-  gap: 8px;
+  justify-content: ${({ $variant }) =>
+    $variant === "ROW" ? "flex-start" : "space-between"};
+  overflow-x: auto;
+  gap: ${({ $variant }) => ($variant === "ROW" ? "8px" : "0")};
 `;

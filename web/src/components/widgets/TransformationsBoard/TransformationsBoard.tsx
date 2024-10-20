@@ -1,25 +1,29 @@
 import styled from "styled-components";
-import { Button, Input } from "../../ui";
 import { useGlobalContext } from "../../../context/useGlobalContext";
+import { TagsManager } from "../TagsManager/TagsManager";
+import { TRANSFORMATION_OPTIONS } from "../../../context/GlobalContext.constants";
+import { TransformationOptions } from "../../../context/types";
+import { BackgroundGeneration } from "./components/BackgroundGeneration";
+import { BackgroundReplace } from "./components/BackgroundReplace";
+import { FaceSwaping } from "./components/FaceSwaping";
 
 export const TransformationsBoard = () => {
-  const { image, sandbox } = useGlobalContext();
+  const {
+    sandbox: { setCurrentTransformationOption, currentTransformationOption },
+  } = useGlobalContext();
   return (
     <TransformationsBoardStyled>
-      <Input
-        placeholder="Como quieres transformar esta imagen?"
-        value={sandbox.currentPrompt}
-        onChange={(text) => sandbox.setCurrentPrompt(text as string)}
+      <TagsManager
+        data={TRANSFORMATION_OPTIONS}
+        currentTag={currentTransformationOption}
+        onSelect={setCurrentTransformationOption}
       />
-      <Button
-        onClick={() => {
-          if (sandbox.originalImage && sandbox.currentPrompt) {
-            image.transform(sandbox.originalImage, sandbox.currentPrompt);
-          }
-        }}
-      >
-        Transformar
-      </Button>
+      {currentTransformationOption.id ===
+        TransformationOptions.BACKGROUND_GENERATION && <BackgroundGeneration />}
+      {currentTransformationOption.id ===
+        TransformationOptions.BACKGROUND_REPLACE && <BackgroundReplace />}
+      {currentTransformationOption.id ===
+        TransformationOptions.FACE_SWAPING && <FaceSwaping />}
     </TransformationsBoardStyled>
   );
 };
@@ -27,6 +31,7 @@ export const TransformationsBoard = () => {
 const TransformationsBoardStyled = styled.section`
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 8px;
   width: 100%;
 `;

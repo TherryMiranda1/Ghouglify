@@ -2,6 +2,9 @@ import { useEffect, useRef } from "react";
 import { Section, Button } from "../../ui";
 import { OriginalImageType } from "../../../context/types";
 import styled from "styled-components";
+import { loadImage } from "../../../utils/loadImage";
+import { compressImage } from "../../../utils/compressImage";
+import { blobToDataUrl } from "../../../utils/blobToDataUrl";
 
 interface Props {
   value?: OriginalImageType;
@@ -14,12 +17,26 @@ export const InputDrop = ({ onChange, value }: Props) => {
   const handleFile = (file: File) => {
     if (file?.type.startsWith("image/")) {
       const reader = new FileReader();
-      reader.onload = () => {
-        onChange?.({
-          title: file.name,
-          content: reader.result,
-        } as OriginalImageType);
+
+      reader.onload = async () => {
+        const originalImageUrl = reader.result as string;
+
+        try {
+          const image = await loadImage(originalImageUrl);
+
+          const compressedBlob = await compressImage(image);
+
+          const compressedDataUrl = await blobToDataUrl(compressedBlob);
+
+          onChange?.({
+            title: file.name,
+            content: compressedDataUrl,
+          } as OriginalImageType);
+        } catch (error) {
+          console.error("Error al procesar la imagen:", error);
+        }
       };
+
       reader.readAsDataURL(file);
     }
   };
@@ -47,6 +64,9 @@ export const InputDrop = ({ onChange, value }: Props) => {
   useEffect(() => {
     if (!value) {
       onChange?.(null);
+      if (fileInputRef?.current?.value) {
+        fileInputRef.current.value = "";
+      }
     }
   }, [value, onChange]);
 
