@@ -15,7 +15,7 @@ interface Props<T> {
   variant?: TagsVariant;
   data: TagType<T>[];
   currentTag: T & TagTypeBase;
-  onSelect: (item: T) => void;
+  onSelect: (item: T ) => void;
 }
 export const TagsManager = <_, T>({
   data,
@@ -44,5 +44,5 @@ const TagsRowStyled = styled.section<{ $variant: TagsVariant }>`
   justify-content: ${({ $variant }) =>
     $variant === "ROW" ? "flex-start" : "space-between"};
   overflow-x: auto;
-  gap: ${({ $variant }) => ($variant === "ROW" ? "8px" : "0")};
+  gap: ${({ $variant }) => ($variant === "ROW" ? "8px" : "4px")};
 `;

@@ -1,10 +1,10 @@
 import { useState } from "react";
-import { ASSETS_FILTERS } from "../../../context/hooks/useAssets";
 import { useGlobalContext } from "../../../context/useGlobalContext";
 import { Button, Card, Header, Input, Section } from "../../ui";
 import { InputDrop } from "../InputDrop/InputDrop";
 import { TagsManager } from "../TagsManager/TagsManager";
 import { ImageViewer } from "../ImageViewer/ImageViewer";
+import { ASSETS_FILTERS } from "../../../context/GlobalContext.constants";
 
 const EMPTY_DRAFT = {
   name: "",

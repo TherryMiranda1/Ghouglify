@@ -15,8 +15,13 @@ export const useSandbox = (): UseSandboxOptions => {
   const [faceSwapTargetAsset, setFaceSwapTargetAsset] = useState<Asset | null>(
     null
   );
+  const [backgroundReplaceAsset, setBackgroundReplaceAsset] =
+    useState<Asset | null>(null);
   const [currentTransformationOption, setCurrentTransformationOption] =
     useState<TagTypeBase>(TRANSFORMATION_OPTIONS[0]);
+  const [currentAssetFilter, setCurrentAssetFilter] = useState<TagTypeBase>(
+    IMAGE_SOURCES[0]
+  );
 
   return {
     originalImage,
@@ -29,5 +34,9 @@ export const useSandbox = (): UseSandboxOptions => {
     setCurrentTransformationOption,
     faceSwapTargetAsset,
     setFaceSwapTargetAsset,
+    currentAssetFilter,
+    setCurrentAssetFilter,
+    backgroundReplaceAsset,
+    setBackgroundReplaceAsset,
   };
 };

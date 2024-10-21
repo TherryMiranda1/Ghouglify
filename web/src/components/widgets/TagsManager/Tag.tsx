@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import styled from "styled-components";
 import { TagsVariant, TagType } from "./TagsManager";
+import { DEVICE_BREAKPOINTS } from "../../../constants/devices";
 
 interface Props<T> {
   variant?: "ROW" | "COLUMN";
@@ -60,5 +61,13 @@ const TagStyled = styled.button<{
   }
   svg {
     font-size: ${({ $variant }) => ($variant === "ROW" ? "20px" : "24px")};
+  }
+
+  @media screen and (max-width: ${DEVICE_BREAKPOINTS.xs}) {
+    font-size: ${({ $variant }) => ($variant === "ROW" ? "14px" : "12px")};
+
+    svg {
+      font-size: ${({ $variant }) => ($variant === "ROW" ? "16px" : "20px")};
+    }
   }
 `;

@@ -3,6 +3,7 @@ import styled from "styled-components";
 
 type Props = ComponentProps<"input"> & {
   onChange?: (value: string) => void;
+  isTextarea?: boolean;
 };
 
 export const Input = ({ ...props }: Props) => {

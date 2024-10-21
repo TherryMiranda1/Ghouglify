@@ -20,4 +20,6 @@ const ViewStyled = styled.main`
   margin: auto;
   width: 100%;
   box-sizing: border-box;
+
+  
 `;

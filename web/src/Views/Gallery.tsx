@@ -6,6 +6,7 @@ import { Post } from "../types/Post";
 import { TagsManager } from "../components/widgets/TagsManager/TagsManager";
 import { USER_POSTS_FILTERS, UserPostsFilter } from "../context/hooks/usePosts";
 import { GalleryContainer } from "../styles/Common.styles";
+import { filterUserPosts } from "../utils/filterUserPosts";
 
 interface Props {
   onSelect?: (item: Post) => void;
@@ -45,22 +46,11 @@ export const Gallery = ({ onSelect, showTags }: Props) => {
     return <View>Error</View>;
   }
 
-  const filterUserPosts = (posts: Post[], filter: UserPostsFilter) => {
-    switch (filter) {
-      case UserPostsFilter.LOADING:
-        return posts?.filter((post) => post.isLoading);
-      case UserPostsFilter.TRANSFORMATIONS:
-        return posts?.filter((post) => post.transformedImageUrl);
-      case UserPostsFilter.PUBLIC:
-        return posts?.filter((post) => post.isPublic);
-      default:
-        return posts;
-    }
-  };
-
   if (userPostsData?.length === 0) {
     return <View>No hay publicaciones</View>;
   }
+
+
 
   return (
     <GalleryContainer>

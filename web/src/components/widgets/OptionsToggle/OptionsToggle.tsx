@@ -8,7 +8,9 @@ import { Button } from "./../../ui/button/Button";
 import { ICON_SIZES } from "../../../constants/sizes";
 import { useGlobalContext } from "../../../context/useGlobalContext";
 import { Post } from "../../../types/Post";
-import { useDownloadImage } from "./../../../context/hooks/useDownloadImage";
+import { useDownloadImage } from "../../../hooks/useDownloadImage";
+import { TRANSFORMATION_OPTIONS } from "../../../context/GlobalContext.constants";
+import { useRouter } from "@tanstack/react-router";
 
 interface Props {
   post: Post;
@@ -19,25 +21,70 @@ interface Props {
 
 export const OptionsToggle = ({ post, isOpen, onOpen, onClose }: Props) => {
   const { handleDownload } = useDownloadImage();
+  const { navigate } = useRouter();
   const {
+    sandbox: {
+      setCurrentPrompt,
+      setFaceSwapTargetAsset,
+      setBackgroundReplaceAsset,
+      setCurrentTransformationOption,
+    },
     posts: { handleDeletePost, handleUpdatePost },
+    user: { currentUser },
   } = useGlobalContext();
 
+  const isOwner = post.userId === currentUser?._id;
+  const hasTransformation = post.transformedImageUrl;
+
+  const handleRemix = () => {
+    if (post.facePrompt) {
+      setCurrentTransformationOption(TRANSFORMATION_OPTIONS[2]);
+      setFaceSwapTargetAsset({
+        name: "",
+        type: "",
+        originalImageUrl: post.facePrompt,
+      });
+    }
+
+    if (post.objectsPrompt) {
+      setCurrentTransformationOption(TRANSFORMATION_OPTIONS[1]);
+      setBackgroundReplaceAsset({
+        name: "",
+        type: "",
+        originalImageUrl: post.objectsPrompt,
+      });
+    }
+    if (post.backgroundPrompt) {
+      setCurrentTransformationOption(TRANSFORMATION_OPTIONS[0]);
+      setCurrentPrompt(post.backgroundPrompt);
+    }
+
+    navigate({ to: "/create" });
+  };
   return (
     <OptionsToggleStyled>
       {isOpen ? (
         <ContentStyled>
-          <OptionStyled onClick={() => onClose?.()}>
-            Remix <GrPowerCycle size={ICON_SIZES.xs} />
-          </OptionStyled>
-          <OptionStyled
-            onClick={() => {
-              handleUpdatePost({ ...post, isPublic: true });
-              onClose?.();
-            }}
-          >
-            Publish <IoMdShareAlt size={ICON_SIZES.xs} />
-          </OptionStyled>
+          {hasTransformation && (
+            <OptionStyled
+              onClick={() => {
+                onClose?.();
+                handleRemix();
+              }}
+            >
+              Remix <GrPowerCycle size={ICON_SIZES.xs} />
+            </OptionStyled>
+          )}
+          {!post.isPublic && (
+            <OptionStyled
+              onClick={() => {
+                handleUpdatePost({ ...post, isPublic: true });
+                onClose?.();
+              }}
+            >
+              Publish <IoMdShareAlt size={ICON_SIZES.xs} />
+            </OptionStyled>
+          )}
           <OptionStyled
             onClick={() => {
               handleDownload(post.originalImageUrl, post.name);
@@ -46,14 +93,16 @@ export const OptionsToggle = ({ post, isOpen, onOpen, onClose }: Props) => {
           >
             Download <MdDownload size={ICON_SIZES.xs} />
           </OptionStyled>
-          <OptionStyled
-            onClick={() => {
-              onClose?.();
-              handleDeletePost(post);
-            }}
-          >
-            Delete <MdDelete size={ICON_SIZES.xs} />
-          </OptionStyled>
+          {isOwner && (
+            <OptionStyled
+              onClick={() => {
+                onClose?.();
+                handleDeletePost(post);
+              }}
+            >
+              Delete <MdDelete size={ICON_SIZES.xs} />
+            </OptionStyled>
+          )}
         </ContentStyled>
       ) : (
         <ButtonStyled onClick={() => onOpen?.()}>

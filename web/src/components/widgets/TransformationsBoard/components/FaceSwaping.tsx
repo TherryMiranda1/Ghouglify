@@ -1,28 +1,28 @@
+import { useState } from "react";
+import { AssetFilter } from "../../../../context/types";
 import { useGlobalContext } from "../../../../context/useGlobalContext";
 import { AssetsView } from "../../../../Views/Assets";
-import { Button, Card } from "../../../ui";
+import { Card } from "../../../ui";
+import { TagsManager, TagTypeBase } from "../../TagsManager/TagsManager";
+import { ASSETS_FILTERS } from "../../../../context/GlobalContext.constants";
 
 export const FaceSwaping = () => {
-  const { image, sandbox } = useGlobalContext();
+  const { sandbox } = useGlobalContext();
+  const [currentAssetFilter, setCurrentAssetFilter] = useState<TagTypeBase>(
+    ASSETS_FILTERS[1]
+  );
   return (
     <Card>
+      <TagsManager
+        data={[ASSETS_FILTERS[1], ASSETS_FILTERS[2]]}
+        currentTag={currentAssetFilter}
+        onSelect={(item: TagTypeBase) => setCurrentAssetFilter(item)}
+      />
       <AssetsView
         selectedItem={sandbox.faceSwapTargetAsset}
         onSelect={(asset) => sandbox.setFaceSwapTargetAsset(asset)}
+        filterBy={currentAssetFilter.id as AssetFilter}
       />
-      <Button
-        disabled={!sandbox.faceSwapTargetAsset}
-        onClick={() => {
-          if (sandbox.originalImage && sandbox.faceSwapTargetAsset) {
-            image.swapFace({
-              source: sandbox.originalImage.originalImageUrl,
-              target: sandbox.faceSwapTargetAsset.originalImageUrl,
-            });
-          }
-        }}
-      >
-        Transformar
-      </Button>
     </Card>
   );
 };
