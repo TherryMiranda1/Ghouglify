@@ -7,6 +7,7 @@ import { TagsManager } from "../components/widgets/TagsManager/TagsManager";
 import { USER_POSTS_FILTERS, UserPostsFilter } from "../context/hooks/usePosts";
 import { GalleryContainer } from "../styles/Common.styles";
 import { filterUserPosts } from "../utils/filterUserPosts";
+import { sortByDate } from "../utils/sortByDate";
 
 interface Props {
   onSelect?: (item: Post) => void;
@@ -50,8 +51,6 @@ export const Gallery = ({ onSelect, showTags }: Props) => {
     return <View>No hay publicaciones</View>;
   }
 
-
-
   return (
     <GalleryContainer>
       {userPostsData && (
@@ -64,9 +63,11 @@ export const Gallery = ({ onSelect, showTags }: Props) => {
             />
           )}
           <ImagesGallery
-            posts={filterUserPosts(
-              userPostsData,
-              currentUserPostsFilter.id as UserPostsFilter
+            posts={sortByDate(
+              filterUserPosts(
+                userPostsData,
+                currentUserPostsFilter.id as UserPostsFilter
+              )
             )}
             onSelect={onSelect}
             showTransformationInitialValue={showTransFormationsInitialValue}

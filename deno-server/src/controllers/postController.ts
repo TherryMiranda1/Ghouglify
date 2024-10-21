@@ -15,6 +15,7 @@ const postSchema = Joi.object({
   objectsPrompt: Joi.string().optional(),
   facePrompt: Joi.string().optional(),
   replaceImageUrl: Joi.string().optional(),
+  isTransformation: Joi.boolean().optional(),
   isPublic: Joi.boolean().optional(),
   width: Joi.number().optional(),
   height: Joi.number().optional(),

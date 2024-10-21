@@ -4,6 +4,7 @@ import { useGlobalContext } from "../context/useGlobalContext";
 import { Post } from "../types/Post";
 import { ImagesGallery } from "../components/widgets/ImagesGallery/ImagesGallery";
 import { GalleryContainer } from "../styles/Common.styles";
+import { sortByDate } from "../utils/sortByDate";
 
 interface Props {
   onSelect?: (item: Post) => void;
@@ -43,7 +44,7 @@ export const Wall = ({ onSelect }: Props) => {
     <GalleryContainer>
       {publicPostsData && (
         <ImagesGallery
-          posts={publicPostsData}
+          posts={sortByDate(publicPostsData)}
           onSelect={onSelect}
           showTransformationInitialValue
         />

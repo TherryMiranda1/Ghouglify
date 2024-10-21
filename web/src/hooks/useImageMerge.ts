@@ -3,45 +3,65 @@ import { useEffect, useState } from "react";
 export const useImageMerge = (
   imageUrl?: string,
   backgroundUrl?: string,
-  onSuccess?: (url: string) => void
+  onSuccess?: (url: string) => void,
+  darkness = 0.3
 ) => {
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
+  const [resultImage, setResultImage] = useState<string>("");
 
   useEffect(() => {
-    const processImage = () => {
+    const loadImage = (src: string): Promise<HTMLImageElement> => {
+      return new Promise((resolve, reject) => {
+        const img = new Image();
+        img.crossOrigin = "Anonymous";
+        img.src = src;
+        img.onload = () => resolve(img);
+        img.onerror = () => reject(new Error(`Failed to load image: ${src}`));
+      });
+    };
+
+    const processImage = async () => {
       if (!imageUrl || !backgroundUrl) return;
       setIsLoading(true);
-      const canvas = document.createElement("canvas");
-      const ctx = canvas.getContext("2d");
 
-      if (!ctx) return;
+      try {
+        const [img, bgImg] = await Promise.all([
+          loadImage(imageUrl),
+          loadImage(backgroundUrl),
+        ]);
 
-      const img = new Image();
-      img.crossOrigin = "Anonymous";
-      img.src = imageUrl;
+        const canvas = document.createElement("canvas");
+        const ctx = canvas.getContext("2d");
 
-      const bgImg = new Image();
-      bgImg.crossOrigin = "Anonymous";
-      bgImg.src = backgroundUrl;
+        if (!ctx) {
+          throw new Error("Failed to create canvas context");
+        }
 
-      img.onload = () => {
-        bgImg.onload = () => {
-          canvas.width = img.width;
-          canvas.height = img.height;
+        canvas.width = img.width;
+        canvas.height = img.height;
 
-          ctx.drawImage(bgImg, 0, 0, canvas.width, canvas.height);
-          ctx.drawImage(img, 0, 0);
+        // Dibujar las imágenes en el canvas
+        ctx.drawImage(bgImg, 0, 0, canvas.width, canvas.height);
+        ctx.drawImage(img, 0, 0);
 
-          const dataUrl = canvas.toDataURL("image/png");
+        ctx.fillStyle = `rgba(0, 0, 0, ${darkness})`; // Oscuridad controlada por el valor `darkness`
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-          onSuccess?.(dataUrl);
-          setIsLoading(false);
-        };
-      };
+        const dataUrl = canvas.toDataURL("image/png");
+        setResultImage(dataUrl);
+        setIsLoading(false);
+      } catch (error) {
+        console.error(error);
+        setIsLoading(false);
+      }
     };
 
     processImage();
   }, [imageUrl, backgroundUrl]);
 
-  return { isLoading };
+  useEffect(() => {
+    if (resultImage) onSuccess?.(resultImage);
+  }, [resultImage, onSuccess]);
+
+  return { isLoading, resultImage };
 };

@@ -10,6 +10,6 @@ export const filterUserPosts = (posts: Post[], filter: UserPostsFilter) => {
     case UserPostsFilter.PUBLIC:
       return posts?.filter((post) => post.isPublic);
     default:
-      return posts;
+      return posts?.filter((post) => !post.isTransformation);
   }
 };
