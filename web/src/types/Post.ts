@@ -11,6 +11,7 @@ export interface Post {
   facePrompt?: string;
   replaceImageUrl?: string;
   isPublic?: boolean;
+  isTransformation?: boolean;
   width?: number;
   height?: number;
   size?: number;

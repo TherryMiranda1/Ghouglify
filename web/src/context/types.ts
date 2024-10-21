@@ -1,5 +1,6 @@
 import { TagTypeBase } from "../components/widgets/TagsManager/TagsManager";
 import { Asset } from "../types/Asset";
+import { CloudinaryImageDTO } from "../types/DTOs";
 import { Post } from "../types/Post";
 import { User } from "../types/User";
 import { AssetDraft } from "./hooks/useAssets";
@@ -42,7 +43,7 @@ export interface UseImageOptions {
   setTransformedImage: (image: any) => void;
   mergedImage: string;
   setMergedImage: (image: string) => void;
-  load: (image: string) => void;
+  load: (image: string) => Promise<CloudinaryImageDTO>;
   transform: (post: Post, prompt: string) => void;
   swapFace: ({ source, target }: { source: string; target: string }) => void;
   removeBackground: ({ url }: { url: string }) => void;

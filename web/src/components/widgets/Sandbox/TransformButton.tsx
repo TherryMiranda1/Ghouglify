@@ -51,6 +51,7 @@ export const TransformButton = () => {
         const { _id, ...rest } = originalImage;
         await handleCreatePost({
           ...rest,
+          isTransformation: true,
           objectsPrompt: backgroundReplaceAsset?.originalImageUrl,
           transformedImageUrl: mergedImage,
         });

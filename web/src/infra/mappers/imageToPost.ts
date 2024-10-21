@@ -6,10 +6,12 @@ export const imageToPost = ({
   image,
   userUUID,
   transformation,
+  isTransformation,
 }: {
   image: CloudinaryImageDTO;
   userUUID: string;
   transformation?: Transformation;
+  isTransformation?: boolean;
 }): Post => ({
   userId: userUUID,
   name: image.original_filename || `Ghougly-${new Date().toDateString()}`,
@@ -21,6 +23,7 @@ export const imageToPost = ({
   format: image.format,
   createdAt: new Date(image.created_at),
   updatedAt: new Date(),
+  isTransformation,
   ...(transformation && { ...transformation }),
 });
 
@@ -42,6 +45,7 @@ export const faceSwapToPost = ({
   height: image.height,
   size: image.bytes,
   format: image.format,
+  isTransformation: true,
   createdAt: new Date(image.created_at),
   updatedAt: new Date(),
   transformedImageUrl: image.secure_url,

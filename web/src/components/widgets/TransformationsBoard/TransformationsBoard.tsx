@@ -10,15 +10,26 @@ import { DEVICE_BREAKPOINTS } from "../../../constants/devices";
 
 export const TransformationsBoard = () => {
   const {
-    sandbox: { setCurrentTransformationOption, currentTransformationOption },
+    sandbox: {
+      setCurrentTransformationOption,
+      currentTransformationOption,
+      setBackgroundReplaceAsset,
+      setFaceSwapTargetAsset,
+    },
   } = useGlobalContext();
+
+  const handleChangeOption = (option: any) => {
+    setCurrentTransformationOption(option);
+    setFaceSwapTargetAsset(null);
+    setBackgroundReplaceAsset(null);
+  };
   return (
     <TransformationsBoardStyled>
       <TagsManager
         variant="COLUMN"
         data={TRANSFORMATION_OPTIONS}
         currentTag={currentTransformationOption}
-        onSelect={setCurrentTransformationOption}
+        onSelect={handleChangeOption}
       />
       <ScrollableListStyled>
         {currentTransformationOption.id ===
@@ -40,21 +51,16 @@ const TransformationsBoardStyled = styled.section`
   align-items: center;
   gap: 8px;
   width: 100%;
-
-  @media screen and (min-width: ${DEVICE_BREAKPOINTS.lg}) {
-    width: 50%;
-    max-height: 80vh;
-    overflow-y: auto;
-  }
 `;
 const ScrollableListStyled = styled.div`
+  box-sizing: border-box;
   width: 100%;
   display: flex;
-  align-items: center;
-  max-height: 35vh;
   overflow-y: auto;
+  max-height: 250px;
   border-radius: var(--small-radius);
+
   @media screen and (min-width: ${DEVICE_BREAKPOINTS.lg}) {
-    max-height: 60vh;
+    max-height: 400px;
   }
 `;

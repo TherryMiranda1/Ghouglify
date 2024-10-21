@@ -102,7 +102,7 @@ export const useImages = ({
         toast.success("Se ha completado la transformación!");
       }
     }
-    setIsLoading(false)
+    setIsLoading(false);
   };
 
   const removeBackground = async ({ url }: { url: string }) => {

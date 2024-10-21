@@ -142,8 +142,8 @@ const ImagesSectionStyled = styled.section`
     flex-direction: column;
 
     div {
-      width: 70%;
-      max-width: ${DEVICE_BREAKPOINTS["2xs"]};
+      width: 100%;
+      min-width: ${DEVICE_BREAKPOINTS["2xs"]};
     }
   }
 `;

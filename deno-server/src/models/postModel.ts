@@ -1,5 +1,5 @@
 export interface IPost {
-  userId: string; 
+  userId: string;
   name: string;
   cloudPublicId?: string;
   description?: string;
@@ -10,6 +10,7 @@ export interface IPost {
   facePrompt?: string;
   replaceImageUrl?: string;
   isPublic?: boolean;
+  isTransformation?: boolean;
   width?: number;
   height?: number;
   size?: number;

@@ -1,25 +1,34 @@
 import styled from "styled-components";
 import { useGlobalContext } from "../../../context/useGlobalContext";
-import { Card, Header } from "../../ui";
+import { Card, Header, LoadingState } from "../../ui";
 import { InputDrop } from "../InputDrop/InputDrop";
 import { Camera } from "../Camera/Camera";
 import { Gallery } from "../../../Views/Gallery";
 import { ImageSource } from "../../../context/types";
+import { useState } from "react";
 
 export const ImageSources = () => {
+  const [isLoading, setIsLoading] = useState(false);
   const {
     sandbox: { imageSource, setOriginalImage },
     image,
   } = useGlobalContext();
+
+  if (isLoading) {
+    return <LoadingState />;
+  }
   return (
     <>
       {imageSource.id === ImageSource.LOCAL && (
         <SourceWrapper>
           <Header text="Sube una imagen" componentType="h3" />
           <InputDrop
-            onChange={(value) => {
+            onChange={async (value) => {
               if (!value) return;
-              image.load(value.content);
+
+              setIsLoading(true);
+              await image.load(value.content);
+              setIsLoading(false);
             }}
           />
         </SourceWrapper>
@@ -33,7 +42,13 @@ export const ImageSources = () => {
       )}
       {imageSource.id === ImageSource.CAMERA && (
         <SourceWrapper>
-          <Camera onChange={(value) => image.load(value.content)} />
+          <Camera
+            onChange={async (value) => {
+              setIsLoading(true);
+              await image.load(value.content);
+              setIsLoading(false);
+            }}
+          />
         </SourceWrapper>
       )}
     </>

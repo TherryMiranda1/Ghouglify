@@ -16,3 +16,14 @@ export const connectUserRequest = async ({
 
   return response.data as User;
 };
+
+export const updateUserRequest = async ({
+  user,
+}: {
+  user: User;
+}): Promise<User | null> => {
+  const { _id, ...data } = user;
+  const response = await axios.put(`${BASE_API_URL}/users/${_id}`, data);
+
+  return response.data as User;
+};
