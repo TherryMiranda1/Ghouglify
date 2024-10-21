@@ -28,6 +28,8 @@ export const ImagesGalleryCard = ({
 
   const isToggled = currentToggledPost?._id === post._id;
 
+  const hasTransformation = post.transformedImageUrl;
+
   useEffect(() => {
     setShowTransformation(showTransformationInitialValue);
   }, [showTransformationInitialValue]);
@@ -53,10 +55,13 @@ export const ImagesGalleryCard = ({
           }
         }}
       />
-      <TransformationToggle
-        show={showTransformation}
-        onToggle={() => setShowTransformation(!showTransformation)}
-      />
+
+      {hasTransformation && (
+        <TransformationToggle
+          show={showTransformation}
+          onToggle={() => setShowTransformation(!showTransformation)}
+        />
+      )}
     </CardStyled>
   );
 };

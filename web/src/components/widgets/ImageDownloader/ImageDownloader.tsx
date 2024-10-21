@@ -1,5 +1,5 @@
 import { Button } from "../../ui";
-import { useDownloadImage } from "../../../context/hooks/useDownloadImage";
+import { useDownloadImage } from "../../../hooks/useDownloadImage";
 
 interface Props {
   imageUrl: string;

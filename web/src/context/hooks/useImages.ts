@@ -6,10 +6,14 @@ import { UseImageOptions, UsePostsOptions, UseSandboxOptions } from "../types";
 import { cloudinaryConfig } from "../../config/cloudinary";
 import { loadImageRequest } from "../../infra/api/images";
 import { User } from "../../types/User";
-import { imageToPost } from "../../infra/mappers/imageToPost";
+import { faceSwapToPost, imageToPost } from "../../infra/mappers/imageToPost";
 import { Post } from "../../types/Post";
-import { faceSwapRequest } from "../../infra/api/services";
+import {
+  faceSwapRequest,
+  removeBackgroundRequest,
+} from "../../infra/api/services";
 import { CloudinaryImageDTO } from "../../types/DTOs";
+import toast from "react-hot-toast";
 
 interface Props {
   currentUser: User | null;
@@ -22,8 +26,9 @@ export const useImages = ({
   posts,
   sandbox,
 }: Props): UseImageOptions => {
+  const [isLoading, setIsLoading] = useState(false);
   const [transformedImage, setTransformedImage] = useState("");
-
+  const [mergedImage, setMergedImage] = useState("");
   const { cloudName } = cloudinaryConfig;
 
   const cloudy = new Cloudinary({
@@ -32,7 +37,10 @@ export const useImages = ({
     },
   });
 
-  const loadImage = async (image: string, saveOnDB = true): Promise<CloudinaryImageDTO> => {
+  const loadImage = async (
+    image: string,
+    saveOnDB = true
+  ): Promise<CloudinaryImageDTO> => {
     const result = await loadImageRequest(image);
 
     if (currentUser && result.data && saveOnDB) {
@@ -49,18 +57,21 @@ export const useImages = ({
   };
 
   const transformImage = async (post: Post, prompt: string) => {
+    setIsLoading(true);
     const myImage = cloudy.image(post.cloudPublicId);
 
     const result = myImage
       .effect(generativeBackgroundReplace().prompt(prompt))
       .toURL();
     setTransformedImage(result);
-    posts.handleUpdatePost({
+    await posts.handleUpdatePost({
       ...post,
       backgroundPrompt: prompt,
       transformedImageUrl: result,
       isLoading: true,
     });
+    toast.success("Se ha completado la transformación!");
+    setIsLoading(false);
   };
 
   const swapFace = async ({
@@ -70,6 +81,7 @@ export const useImages = ({
     source: string;
     target: string;
   }) => {
+    setIsLoading(true);
     const result = await faceSwapRequest({
       source_face_url: source,
       target_url: target,
@@ -78,16 +90,48 @@ export const useImages = ({
     if (result) {
       const savedImage = await loadImage(result, false);
 
-      if (savedImage) {
-        setTransformedImage(savedImage.original_filename);
+      if (savedImage && currentUser) {
+        const post = faceSwapToPost({
+          image: savedImage,
+          userUUID: currentUser.userUUID,
+          target,
+          source,
+        });
+        await posts.handleCreatePost(post);
+        setTransformedImage(savedImage.secure_url);
+        toast.success("Se ha completado la transformación!");
+      }
+    }
+    setIsLoading(false)
+  };
+
+  const removeBackground = async ({ url }: { url: string }) => {
+    const result = await removeBackgroundRequest({ url });
+
+    if (result) {
+      const savedImage = await loadImage(result, false);
+
+      if (savedImage && sandbox.originalImage && currentUser) {
+        const draft = {
+          ...sandbox.originalImage,
+          replaceImageUrl: savedImage.secure_url,
+        };
+        await posts.handleUpdatePost(draft);
+        sandbox.setOriginalImage(draft);
       }
     }
   };
 
   return {
+    isLoading,
+    setIsLoading,
     transformedImage,
+    setTransformedImage,
+    mergedImage,
+    setMergedImage,
     load: loadImage,
     transform: transformImage,
     swapFace,
+    removeBackground,
   };
 };

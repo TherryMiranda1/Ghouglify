@@ -29,10 +29,6 @@ export const USER_POSTS_FILTERS = [
     title: "Subidas",
   },
   {
-    id: UserPostsFilter.LOADING,
-    title: "Cargando",
-  },
-  {
     id: UserPostsFilter.TRANSFORMATIONS,
     title: "Transformaciones",
   },

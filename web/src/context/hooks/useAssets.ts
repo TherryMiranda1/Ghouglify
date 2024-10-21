@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { UseAssetsOptions } from "../types";
+import { AssetFilter, UseAssetsOptions } from "../types";
 import { useAsyncCall } from "../../hooks/useAsyncCall";
 import { TagTypeBase } from "../../components/widgets/TagsManager/TagsManager";
 import {
@@ -11,33 +11,14 @@ import {
 import { Asset } from "../../types/Asset";
 import { loadImageRequest } from "../../infra/api/images";
 import { imageToAsset } from "../../infra/mappers/imageToAsset";
+import { ASSETS_FILTERS } from "../GlobalContext.constants";
 
-export enum AssetFilter {
-  BACKGROUND = "background",
-  CHARACTER_MALE = "character_male",
-  CHARACTER_FEMALE = "character_female",
-}
 export interface AssetDraft {
   image: any;
   name: string;
   description: string;
   type: string;
 }
-
-export const ASSETS_FILTERS = [
-  {
-    id: AssetFilter.BACKGROUND,
-    title: "Fondos",
-  },
-  {
-    id: AssetFilter.CHARACTER_MALE,
-    title: "Personajes Masculinos",
-  },
-  {
-    id: AssetFilter.CHARACTER_FEMALE,
-    title: "Personajes Femeninos",
-  },
-];
 
 export const useAssets = (): UseAssetsOptions => {
   const [currentAssetFilter, setCurrentAssetFilter] = useState<TagTypeBase>(

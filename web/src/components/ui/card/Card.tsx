@@ -17,9 +17,10 @@ export const Card = ({ children, ...props }: Props) => {
 const CardStyled = styled.article`
   display: flex;
   flex-direction: column;
-  max-width: ${DEVICE_BREAKPOINTS.sm};
+  max-width: ${DEVICE_BREAKPOINTS.md};
   padding: 8px;
   gap: 16px;
   width: 100%;
+  height: 100%;
   box-sizing: border-box;
 `;

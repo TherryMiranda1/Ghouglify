@@ -21,6 +21,12 @@ export enum TransformationOptions {
   FACE_SWAPING = "face_swapping",
 }
 
+export enum AssetFilter {
+  BACKGROUND = "background",
+  CHARACTER_MALE = "character_male",
+  CHARACTER_FEMALE = "character_female",
+}
+
 export interface GlobalReturnType {
   image: UseImageOptions;
   user: UseUserOptions;
@@ -30,10 +36,16 @@ export interface GlobalReturnType {
 }
 
 export interface UseImageOptions {
+  isLoading: boolean;
+  setIsLoading: (isLoading: boolean) => void;
   transformedImage: any;
+  setTransformedImage: (image: any) => void;
+  mergedImage: string;
+  setMergedImage: (image: string) => void;
   load: (image: string) => void;
   transform: (post: Post, prompt: string) => void;
   swapFace: ({ source, target }: { source: string; target: string }) => void;
+  removeBackground: ({ url }: { url: string }) => void;
 }
 
 export interface UseSandboxOptions {
@@ -47,6 +59,10 @@ export interface UseSandboxOptions {
   setCurrentTransformationOption: (option: TagTypeBase) => void;
   faceSwapTargetAsset: Asset | null;
   setFaceSwapTargetAsset: (asset: Asset | null) => void;
+  currentAssetFilter: TagTypeBase;
+  setCurrentAssetFilter: (filter: TagTypeBase) => void;
+  backgroundReplaceAsset: Asset | null;
+  setBackgroundReplaceAsset: (asset: Asset | null) => void;
 }
 
 export interface UsePostsOptions {

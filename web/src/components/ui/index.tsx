@@ -10,6 +10,8 @@ import { Image } from "./image/Image";
 import { EmptyState } from "./states/empty/EmptyState";
 import { Navbar } from "./navbar/Navbar";
 import { LoadingState } from "./states/loading/LoadingState";
+import { TextArea } from "./TextArea/TextArea";
+
 export {
   Button,
   Card,
@@ -23,4 +25,5 @@ export {
   EmptyState,
   LoadingState,
   Navbar,
+  TextArea,
 };

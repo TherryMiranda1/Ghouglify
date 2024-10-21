@@ -4,13 +4,20 @@ import { useGlobalContext } from "../context/useGlobalContext";
 import { GalleryContainer } from "../styles/Common.styles";
 import { AssetsGallery } from "../components/widgets/AssetsGallery/AssetsGallery";
 import { Asset } from "../types/Asset";
+import { AssetFilter } from "../context/types";
+import { filterAssets } from "../utils/filterAssets";
 
 interface Props {
   onSelect?: (item: Asset) => void;
   selectedItem?: Asset | null;
+  filterBy?: AssetFilter;
 }
 
-export const AssetsView = ({ onSelect, selectedItem }: Props) => {
+export const AssetsView = ({
+  onSelect,
+  selectedItem,
+  filterBy = AssetFilter.BACKGROUND,
+}: Props) => {
   const {
     assets: {
       assets: { assetsData, getAssets, isAssetsLoading, isAssetsError },
@@ -23,6 +30,8 @@ export const AssetsView = ({ onSelect, selectedItem }: Props) => {
     }
   }, [assetsData]);
 
+  const filteredAssets = assetsData ? filterAssets(assetsData, filterBy) : [];
+
   if (isAssetsLoading) {
     return <LoadingState />;
   }
@@ -31,15 +40,15 @@ export const AssetsView = ({ onSelect, selectedItem }: Props) => {
     return <View>Error</View>;
   }
 
-  if (assetsData?.length === 0) {
+  if (filteredAssets?.length === 0) {
     return <View>No hay assets</View>;
   }
 
   return (
     <GalleryContainer>
-      {assetsData && (
+      {filteredAssets && (
         <AssetsGallery
-          assets={assetsData}
+          assets={filteredAssets}
           selectedItem={selectedItem}
           onSelect={onSelect}
         />
