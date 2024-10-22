@@ -24,7 +24,7 @@ const ImageOverlay = styled.img<{
   width: ${({ $width }) => ($width ? $width : 40)}px;
   height: ${({ $height }) => ($height ? $height : 40)}px;
   object-fit: cover;
-  transition: opacity 0.5 ease-in-out;
+  transition: opacity 1 ease-in-out;
   opacity: 0;
   z-index: 1;
 
