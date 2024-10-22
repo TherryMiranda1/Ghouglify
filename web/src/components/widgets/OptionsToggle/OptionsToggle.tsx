@@ -22,13 +22,7 @@ interface Props {
   showTransformation?: boolean;
 }
 
-export const OptionsToggle = ({
-  post,
-  isOpen,
-  showTransformation,
-  onOpen,
-  onClose,
-}: Props) => {
+export const OptionsToggle = ({ post, isOpen, onOpen, onClose }: Props) => {
   const { handleDownload } = useDownloadImage();
   const { navigate } = useRouter();
   const {
@@ -43,7 +37,7 @@ export const OptionsToggle = ({
   } = useGlobalContext();
 
   const imageUrl =
-    showTransformation && post.transformedImageUrl
+    post.isTransformation && post.transformedImageUrl
       ? post.transformedImageUrl
       : post.originalImageUrl;
 
@@ -112,7 +106,8 @@ export const OptionsToggle = ({
           )}
           <OptionStyled
             onClick={() => {
-              handleDownload(post.originalImageUrl, post.name);
+              console.log(post);
+              handleDownload(imageUrl, post.name);
               onClose?.();
             }}
           >
