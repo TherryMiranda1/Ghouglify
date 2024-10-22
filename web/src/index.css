@@ -140,10 +140,12 @@ button:focus-visible {
   outline: none;
 }
 .truncate {
-  white-space: nowrap;      
-  overflow: hidden;          
-  text-overflow: ellipsis;   
-  max-width: 80px;              
+  @media (max-width: 490px) {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 90px;
+  }
 }
 
 .header {
