@@ -49,6 +49,15 @@ export interface UseImageOptions {
   transform: (post: Post, prompt: string) => void;
   swapFace: ({ source, target }: { source: string; target: string }) => void;
   removeBackground: ({ url }: { url: string }) => void;
+  replaceBackground: ({
+    originalImage,
+    background,
+    mergedImage,
+  }: {
+    originalImage: string;
+    background: string;
+    mergedImage: string;
+  }) => void;
 }
 
 export interface UseSandboxOptions {

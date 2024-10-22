@@ -41,6 +41,7 @@ export const Wall = ({ onSelect }: Props) => {
   if (publicPostsData?.length === 0) {
     return <View>No hay publicaciones</View>;
   }
+  console.log(publicPostsData?.filter(post => post.transformedImageUrl?.includes('data:image')));
 
   return (
     <GalleryContainer>

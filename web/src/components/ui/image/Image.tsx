@@ -5,6 +5,7 @@ type Props = ComponentProps<"img"> & {
   $aspectRatio?: number;
   $width?: number;
   $height?: number;
+  $hideBorder?: boolean;
 };
 
 export const Image = ({ ...props }: Props) => {
@@ -16,5 +17,6 @@ const ImageStyled = styled.img<Props>`
   object-position: top;
   width: ${({ $width }) => ($width ? `${$width}px` : "100%")};
   height: ${({ $height }) => ($height ? `${$height}px` : "")};
+  border: ${({ $hideBorder }) => ($hideBorder ? "none" : "var(--border)")};
   aspect-ratio: ${(props) => props.$aspectRatio};
 `;

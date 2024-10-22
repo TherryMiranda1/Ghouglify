@@ -28,6 +28,6 @@ const AssetsGalleryStyled = styled.section`
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
-  gap: 8px;
+  gap: 4px;
   width: 100%;
 `;

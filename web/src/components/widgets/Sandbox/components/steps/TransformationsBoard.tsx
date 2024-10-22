@@ -1,12 +1,12 @@
 import styled from "styled-components";
-import { useGlobalContext } from "../../../context/useGlobalContext";
-import { TagsManager } from "../TagsManager/TagsManager";
-import { TRANSFORMATION_OPTIONS } from "../../../context/GlobalContext.constants";
-import { TransformationOptions } from "../../../context/types";
-import { BackgroundGeneration } from "./components/BackgroundGeneration";
-import { BackgroundReplace } from "./components/BackgroundReplace";
-import { FaceSwaping } from "./components/FaceSwaping";
-import { DEVICE_BREAKPOINTS } from "../../../constants/devices";
+import { useGlobalContext } from "../../../../../context/useGlobalContext";
+import { TagsManager } from "../../../TagsManager/TagsManager";
+import { TRANSFORMATION_OPTIONS } from "../../../../../context/GlobalContext.constants";
+import { TransformationOptions } from "../../../../../context/types";
+import { BackgroundGeneration } from "../BackgroundGeneration";
+import { BackgroundReplace } from "../BackgroundReplace";
+import { FaceSwaping } from "../FaceSwaping";
+import { DEVICE_BREAKPOINTS } from "../../../../../constants/devices";
 
 export const TransformationsBoard = () => {
   const {

@@ -52,6 +52,7 @@ const LoadingStateStyled = styled.section<{
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow-x: hidden;
   padding: ${({ $isButtonLoader }) => ($isButtonLoader ? "0px" : "16px 8px")};
 `;
 

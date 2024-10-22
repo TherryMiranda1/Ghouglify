@@ -6,7 +6,11 @@ import { UseImageOptions, UsePostsOptions, UseSandboxOptions } from "../types";
 import { cloudinaryConfig } from "../../config/cloudinary";
 import { loadImageRequest } from "../../infra/api/images";
 import { User } from "../../types/User";
-import { faceSwapToPost, imageToPost } from "../../infra/mappers/imageToPost";
+import {
+  faceSwapToPost,
+  imageToPost,
+  replaceBackgroundToPost,
+} from "../../infra/mappers/imageToPost";
 import { Post } from "../../types/Post";
 import {
   faceSwapRequest,
@@ -122,6 +126,32 @@ export const useImages = ({
     }
   };
 
+  const replaceBackground = async ({
+    originalImage,
+    background,
+    mergedImage,
+  }: {
+    mergedImage: string;
+    originalImage: string;
+    background: string;
+  }) => {
+    setIsLoading(true);
+    const savedImage = await loadImage(mergedImage, false);
+
+    if (savedImage && currentUser) {
+      const post = replaceBackgroundToPost({
+        image: savedImage,
+        userUUID: currentUser.userUUID,
+        background,
+        originalImage,
+      });
+      await posts.handleCreatePost(post);
+      setTransformedImage(savedImage.secure_url);
+    }
+    setMergedImage("");
+    setIsLoading(false);
+  };
+
   return {
     isLoading,
     setIsLoading,
@@ -135,5 +165,6 @@ export const useImages = ({
     transform: transformImage,
     swapFace,
     removeBackground,
+    replaceBackground,
   };
 };

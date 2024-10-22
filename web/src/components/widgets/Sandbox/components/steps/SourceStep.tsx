@@ -1,21 +1,29 @@
 import styled from "styled-components";
-import { useGlobalContext } from "../../../context/useGlobalContext";
-import { Card, Header, LoadingState } from "../../ui";
-import { InputDrop } from "../InputDrop/InputDrop";
-import { Camera } from "../Camera/Camera";
-import { Gallery } from "../../../Views/Gallery";
-import { ImageSource } from "../../../context/types";
+import { useGlobalContext } from "../../../../../context/useGlobalContext";
+import { Card, Header, LoadingState } from "../../../../ui";
+import { InputDrop } from "../../../InputDrop/InputDrop";
+import { Camera } from "../../../Camera/Camera";
+import { Gallery } from "../../../../../Views/Gallery";
+import { ImageSource } from "../../../../../context/types";
 import { useState } from "react";
+import { TagsManager } from "../../../TagsManager/TagsManager";
+import { IMAGE_SOURCES } from "../../../../../context/GlobalContext.constants";
 
-export const ImageSources = () => {
+export const SourceStep = () => {
   const [isLoading, setIsLoading] = useState(false);
   const {
-    sandbox: { imageSource, setOriginalImage },
+    sandbox: { imageSource, setImageSource, setOriginalImage },
     image,
   } = useGlobalContext();
 
   return (
     <>
+      <TagsManager
+        variant="COLUMN"
+        data={IMAGE_SOURCES}
+        currentTag={imageSource}
+        onSelect={setImageSource}
+      />
       {imageSource.id === ImageSource.LOCAL && (
         <SourceWrapper>
           <Header text="Sube una imagen" componentType="h3" />

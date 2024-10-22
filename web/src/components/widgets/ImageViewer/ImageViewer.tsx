@@ -29,7 +29,7 @@ export const ImageViewer = ({
   } = useGlobalContext();
 
   return (
-    <ImageViewerStyled>
+    <ImageViewerStyled $isGeneration={!isBackgroundLoaded}>
       <CloseButtonStyled onClick={() => onClose()}>
         <IoCloseOutline size={ICON_SIZES.md} />
       </CloseButtonStyled>
@@ -51,6 +51,7 @@ export const ImageViewer = ({
         $width={width}
         $height={height}
         $aspectRatio={aspectRatio}
+        $hideBorder={isGeneration}
       />
 
       {isGeneration && !isBackgroundLoaded && (
@@ -60,12 +61,16 @@ export const ImageViewer = ({
   );
 };
 
-const ImageViewerStyled = styled.div`
+const ImageViewerStyled = styled.div<{ $isGeneration?: boolean }>`
   position: relative;
   width: 100%;
   height: 100%;
   overflow: hidden;
   border-radius: var(--card-radius);
+
+  img {
+    transition: all 0.3s ease-in-out;
+  }
 `;
 const CloseButtonStyled = styled.button`
   border-radius: 0;
@@ -80,6 +85,7 @@ const CloseButtonStyled = styled.button`
     padding: 2px;
     svg {
       font-size: 16px;
+      transition: all 0.3s ease-in-out;
     }
   }
 `;

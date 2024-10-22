@@ -1,15 +1,11 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import styled from "styled-components";
-import { TransformationOptions } from "../../../context/types";
-import { useGlobalContext } from "../../../context/useGlobalContext";
-import { Button, LoadingState, Section } from "../../ui";
-import toast from "react-hot-toast";
-import { Link } from "@tanstack/react-router";
+import { TransformationOptions } from "../../../../context/types";
+import { useGlobalContext } from "../../../../context/useGlobalContext";
+import { Button, LoadingState } from "../../../ui";
 
 export const TransformButton = () => {
   const {
-    posts: { handleCreatePost },
-    image: { mergedImage, transform, swapFace, isLoading },
+    image: { mergedImage, transform, swapFace, replaceBackground, isLoading },
     sandbox: {
       currentTransformationOption,
       originalImage,
@@ -20,7 +16,8 @@ export const TransformButton = () => {
   } = useGlobalContext();
 
   const generationDisabled = !originalImage || !currentPrompt;
-  const replaceDisabled = !originalImage || !mergedImage;
+  const replaceDisabled =
+    !originalImage || !backgroundReplaceAsset || !mergedImage;
   const swapDisabled = !originalImage || !faceSwapTargetAsset;
 
   const isDisabled = () => {
@@ -49,21 +46,11 @@ export const TransformButton = () => {
       TransformationOptions.BACKGROUND_REPLACE
     ) {
       if (!replaceDisabled) {
-        const { _id, ...rest } = originalImage;
-        await handleCreatePost({
-          ...rest,
-          isTransformation: true,
-          objectsPrompt: backgroundReplaceAsset?.originalImageUrl,
-          transformedImageUrl: mergedImage,
+        replaceBackground({
+          originalImage: originalImage.originalImageUrl,
+          background: backgroundReplaceAsset.originalImageUrl,
+          mergedImage,
         });
-        toast(
-          <Section>
-            Se ha transformado tu imagen
-            <Link className="primaryButton" to="/gallery">
-              Ver galeria
-            </Link>
-          </Section>
-        );
       }
     }
     if (currentTransformationOption.id === TransformationOptions.FACE_SWAPING) {

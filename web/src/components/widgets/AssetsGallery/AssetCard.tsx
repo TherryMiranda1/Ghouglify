@@ -28,7 +28,7 @@ const AssetCardStyled = styled.button<{ $isSelected: boolean }>`
   border-radius: var(--card-radius);
   border: ${({ $isSelected }) =>
     $isSelected ? "2px solid var(--tint-color)" : "var(--border)"};
-  width: calc((100% - 32px) / 2);
+  width: calc((100% - 4px) / 2);
   aspect-ratio: 16/9;
   overflow: hidden;
   transition: all 0.3s ease-in-out;
