@@ -12,6 +12,7 @@ import { ImageDownloader } from "../ImageDownloader/ImageDownloader";
 import { TransformButton } from "./TransformButton";
 import { useShareImage } from "../../../hooks/useShareImage";
 import { FaShareAlt } from "react-icons/fa";
+import { PumpkingCorner } from "../../ui/decorations/PumpkinCorner";
 
 export const Sandbox = () => {
   const {
@@ -35,6 +36,7 @@ export const Sandbox = () => {
 
   return (
     <SandboxStyled>
+      <PumpkingCorner />
       {originalImage ? (
         <TransformationsWrapperStyled>
           <TransformationsStyled>
@@ -104,6 +106,7 @@ export const Sandbox = () => {
 };
 
 const SandboxStyled = styled.section`
+  position: relative;
   background-color: var(--background-transparent-color);
   border: var(--border);
   border-radius: var(--small-radius);

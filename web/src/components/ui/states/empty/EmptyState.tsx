@@ -35,11 +35,21 @@ export const EmptyState = ({
 const EmptyStateStyled = styled.section`
   display: flex;
   align-items: center;
+  justify-content: center;
   flex-direction: column;
   padding: 16px;
   gap: 16px;
   max-width: 720px;
+
   p {
     text-align: center;
+  }
+  button {
+    background-color: var(--tint-color);
+  }
+  img {
+    max-height: 300px;
+    width: auto;
+    border: none;
   }
 `;

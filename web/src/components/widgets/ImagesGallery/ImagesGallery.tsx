@@ -42,13 +42,13 @@ export const ImagesGallery = ({
 
 const ContainerStyled = styled.section`
   display: flex;
-  gap: 16px;
-  padding: 16px 0;
+  gap: 8px;
+  padding: 8px 0;
 `;
 
 const RowStyled = styled.section`
   display: flex;
   width: 100%;
   flex-direction: column;
-  gap: 16px;
+  gap: 8px;
 `;

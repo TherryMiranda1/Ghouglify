@@ -2,7 +2,7 @@
 import styled from "styled-components";
 import { TransformationOptions } from "../../../context/types";
 import { useGlobalContext } from "../../../context/useGlobalContext";
-import { Button } from "../../ui";
+import { Button, LoadingState } from "../../ui";
 
 export const TransformButton = () => {
   const {
@@ -70,11 +70,21 @@ export const TransformButton = () => {
       disabled={isDisabled() || isLoading}
       onClick={() => handleClick()}
     >
-      {isLoading ? "Transformando..." : "Transformar"}
+      {isLoading ? (
+        <>
+          <LoadingState isButtonLoader width={40} height={40} />
+        </>
+      ) : (
+        "Transformar"
+      )}
     </TransformButtonStyled>
   );
 };
 
 const TransformButtonStyled = styled(Button)`
   width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
 `;
