@@ -11,14 +11,16 @@ import { PumpkingCorner } from "../../ui/decorations/PumpkinCorner";
 const EMPTY_DRAFT = {
   name: "",
   profileImage: undefined,
+  loadedImage: undefined,
 };
 
 export const UserManager = () => {
   const [isEdit, setIsEdit] = useState(false);
   const {
+    image: { load },
     user: { currentUser, setCurrentUser },
   } = useGlobalContext();
-  const [draft, setDraft] = useState(
+  const [draft, setDraft] = useState<any>(
     currentUser
       ? {
           name: currentUser.name,
@@ -28,20 +30,41 @@ export const UserManager = () => {
   );
   const handleSubmit = async () => {
     if (currentUser?.userUUID) {
-      const userDraft = {
-        ...currentUser,
-        ...draft,
-      };
-      const result = await updateUserRequest({
-        user: userDraft,
-      });
-      if (result) {
-        setDraft({
-          name: result.name,
-          profileImage: result.profileImage,
+      if (draft.loadedImage) {
+        const loadedImage = await load(draft.loadedImage);
+
+        const userDraft = {
+          ...currentUser,
+          name: draft.name,
+          profileImage: loadedImage.secure_url,
+        };
+        const result = await updateUserRequest({
+          user: userDraft,
         });
-        setCurrentUser(result);
-        setIsEdit(false);
+        if (result) {
+          setDraft({
+            name: result.name,
+            profileImage: result.profileImage,
+          });
+          setCurrentUser(result);
+          setIsEdit(false);
+        }
+      } else {
+        const userDraft = {
+          ...currentUser,
+          ...draft,
+        };
+        const result = await updateUserRequest({
+          user: userDraft,
+        });
+        if (result) {
+          setDraft({
+            name: result.name,
+            profileImage: result.profileImage,
+          });
+          setCurrentUser(result);
+          setIsEdit(false);
+        }
       }
     }
   };
@@ -50,19 +73,18 @@ export const UserManager = () => {
       <PumpkingCorner />
       {isEdit ? (
         <>
-          {" "}
           <Header text="Foto de perfil" componentType="h4" />
-          {draft.profileImage ? (
+          {draft.loadedImage ? (
             <ImageViewer
-              image={draft.profileImage}
-              onClose={() => setDraft({ ...draft, profileImage: undefined })}
+              image={draft.loadedImagee}
+              onClose={() => setDraft({ ...draft, loadedImage: undefined })}
             />
           ) : (
             <InputDrop
               height={200}
               onChange={(value) => {
                 if (!value) return;
-                setDraft({ ...draft, profileImage: value.content });
+                setDraft({ ...draft, loadedImage: value.content });
               }}
             />
           )}
