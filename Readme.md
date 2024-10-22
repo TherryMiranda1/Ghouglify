@@ -151,7 +151,7 @@ Servicios de Procesamiento
 
 ---
 
-Variables de Entorno
+### Variables de Entorno
 
 Para que la aplicación funcione correctamente, asegúrate de configurar las siguientes variables de entorno:
 
@@ -174,7 +174,7 @@ VITE_SWAP_SERVICE_URL: URL del servicio de intercambio de caras.
 
 ---
 
-Comandos
+### Comandos
 
 Backend
 
