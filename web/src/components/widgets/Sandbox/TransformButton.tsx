@@ -2,8 +2,9 @@
 import styled from "styled-components";
 import { TransformationOptions } from "../../../context/types";
 import { useGlobalContext } from "../../../context/useGlobalContext";
-import { Button, LoadingState } from "../../ui";
+import { Button, LoadingState, Section } from "../../ui";
 import toast from "react-hot-toast";
+import { Link } from "@tanstack/react-router";
 
 export const TransformButton = () => {
   const {
@@ -55,8 +56,13 @@ export const TransformButton = () => {
           objectsPrompt: backgroundReplaceAsset?.originalImageUrl,
           transformedImageUrl: mergedImage,
         });
-        toast.success(
-          "Se ha transformado tu imagen, puedes verla en tu galeria"
+        toast(
+          <Section>
+            Se ha transformado tu imagen
+            <Link className="primaryButton" to="/gallery">
+              Ver galeria
+            </Link>
+          </Section>
         );
       }
     }
