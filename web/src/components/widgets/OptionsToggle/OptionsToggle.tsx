@@ -51,7 +51,6 @@ export const OptionsToggle = ({
   const hasTransformation = post.transformedImageUrl;
   const { shareImage, isSharingSupported } = useShareImage(imageUrl);
 
-  console.log({ post, currentUser });
   const handleRemix = () => {
     if (post.facePrompt) {
       setCurrentTransformationOption(TRANSFORMATION_OPTIONS[2]);

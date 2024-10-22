@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { LoadingState, View } from "../components";
+import { EmptyState, LoadingState, View } from "../components";
 import { useGlobalContext } from "../context/useGlobalContext";
 import { ImagesGallery } from "../components/widgets/ImagesGallery/ImagesGallery";
 import { Post } from "../types/Post";
@@ -8,6 +8,7 @@ import { USER_POSTS_FILTERS, UserPostsFilter } from "../context/hooks/usePosts";
 import { GalleryContainer } from "../styles/Common.styles";
 import { filterUserPosts } from "../utils/filterUserPosts";
 import { sortByDate } from "../utils/sortByDate";
+import { IMAGES } from "../assets/images";
 
 interface Props {
   onSelect?: (item: Post) => void;
@@ -48,7 +49,15 @@ export const Gallery = ({ onSelect, showTags }: Props) => {
   }
 
   if (userPostsData?.length === 0) {
-    return <View>No hay publicaciones</View>;
+    return (
+      <View>
+        <EmptyState
+          title="Esto esta muy vacio"
+          image={IMAGES.empty}
+          buttonText="Subir imagen"
+        />
+      </View>
+    );
   }
 
   return (

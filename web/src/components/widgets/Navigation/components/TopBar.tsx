@@ -2,6 +2,7 @@ import { Link } from "@tanstack/react-router";
 import { Header, Navbar } from "../../../ui";
 import { useGlobalContext } from "../../../../context/useGlobalContext";
 import styled from "styled-components";
+import { OverlaySwitcher } from "../../OverlaySwitcher/OverlaySwitcher";
 
 export const TopBar = () => {
   const {
@@ -11,7 +12,7 @@ export const TopBar = () => {
     <Navbar>
       <Link to="/">
         <header className="header">
-          <img src="/logo.png" alt="logo" />
+          <OverlaySwitcher image1="/logo.png" image2="/pumpkin-squared.png" />
           <Header text="Ghouglify" />
         </header>
       </Link>

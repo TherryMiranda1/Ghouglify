@@ -1,11 +1,12 @@
 import { useEffect } from "react";
-import { LoadingState, View } from "../components";
+import { EmptyState, LoadingState, View } from "../components";
 import { useGlobalContext } from "../context/useGlobalContext";
 import { GalleryContainer } from "../styles/Common.styles";
 import { AssetsGallery } from "../components/widgets/AssetsGallery/AssetsGallery";
 import { Asset } from "../types/Asset";
 import { AssetFilter } from "../context/types";
 import { filterAssets } from "../utils/filterAssets";
+import { IMAGES } from "../assets/images";
 
 interface Props {
   onSelect?: (item: Asset) => void;
@@ -41,7 +42,17 @@ export const AssetsView = ({
   }
 
   if (filteredAssets?.length === 0) {
-    return <View>No hay assets</View>;
+    return (
+      <View>
+        <View>
+          <EmptyState
+            title="Esto esta muy vacio"
+            image={IMAGES.empty}
+            buttonText="Subir un asset"
+          />
+        </View>
+      </View>
+    );
   }
 
   return (

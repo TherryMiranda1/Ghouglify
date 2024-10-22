@@ -20,6 +20,8 @@ export const Camera = ({ onChange }: Props) => {
   const [isFrontCamera, setIsFrontCamera] = useState(false);
   const [photo, setPhoto] = useState<string | null>(null);
 
+  let stream: MediaStream;
+
   const startCamera = async () => {
     if (videoRef.current) {
       setIsLoading(true);
@@ -30,7 +32,7 @@ export const Camera = ({ onChange }: Props) => {
       };
 
       try {
-        const stream = await navigator.mediaDevices.getUserMedia(constraints);
+        stream = await navigator.mediaDevices.getUserMedia(constraints);
         videoRef.current.srcObject = stream;
         videoRef.current.play();
       } catch (err) {
@@ -47,11 +49,9 @@ export const Camera = ({ onChange }: Props) => {
   };
 
   const stopCamera = () => {
-    if (videoRef.current && videoRef.current.srcObject) {
-      const stream = videoRef.current.srcObject as MediaStream;
+    if (stream) {
       const tracks = stream.getTracks();
       tracks.forEach((track) => track.stop());
-      videoRef.current.srcObject = null;
     }
   };
 

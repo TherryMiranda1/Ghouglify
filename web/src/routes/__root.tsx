@@ -9,7 +9,14 @@ export const Route = createRootRoute({
       <TopBar />
       <Navigation>
         <Outlet />
-        <Toaster />
+        <Toaster
+          toastOptions={{
+            style: {
+              backgroundColor: "var(--background-color)",
+              color: "var(--text-color)",
+            },
+          }}
+        />
       </Navigation>
     </>
   ),

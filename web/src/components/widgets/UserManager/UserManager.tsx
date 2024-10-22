@@ -6,6 +6,7 @@ import { ImageViewer } from "../ImageViewer/ImageViewer";
 import { updateUserRequest } from "../../../infra/api/user";
 import styled from "styled-components";
 import { DEVICE_BREAKPOINTS } from "../../../constants/devices";
+import { PumpkingCorner } from "../../ui/decorations/PumpkinCorner";
 
 const EMPTY_DRAFT = {
   name: "",
@@ -46,6 +47,7 @@ export const UserManager = () => {
   };
   return (
     <UserManagerStyled>
+      <PumpkingCorner />
       {isEdit ? (
         <>
           {" "}
@@ -100,6 +102,7 @@ const ProfilePictureStyled = styled.img`
 `;
 
 const UserManagerStyled = styled.section`
+  position: relative;
   background-color: var(--background-transparent-color);
   border: var(--border);
   border-radius: var(--card-radius);

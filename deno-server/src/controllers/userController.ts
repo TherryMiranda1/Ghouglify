@@ -92,7 +92,7 @@ export const updateUser = async (c: Context) => {
       return c.json({ error: "User not found" }, 404);
     }
 
-    return c.json(user.value, 200);
+    return c.json(user, 200);
   } catch (err) {
     console.error(err);
     return c.json({ error: "Error updating user" }, 500);

@@ -14,10 +14,12 @@ interface Props {
   height?: number;
   transparent?: boolean;
   onlyText?: boolean;
+  isButtonLoader?: boolean;
 }
 export const LoadingState = ({
   width = 220,
   height = 200,
+  isButtonLoader = false,
   transparent = false,
   onlyText = false,
 }: Props) => {
@@ -28,7 +30,10 @@ export const LoadingState = ({
       </LoadingStateStyled>
     );
   return (
-    <LoadingStateStyled $transparent={transparent}>
+    <LoadingStateStyled
+      isButtonLoader={isButtonLoader}
+      $transparent={transparent}
+    >
       <WrapperStyled $width={width} $height={height}>
         <Lottie {...options} />
       </WrapperStyled>
@@ -36,7 +41,10 @@ export const LoadingState = ({
   );
 };
 
-const LoadingStateStyled = styled.section<{ $transparent?: boolean }>`
+const LoadingStateStyled = styled.section<{
+  isButtonLoader?: boolean;
+  $transparent?: boolean;
+}>`
   background-color: ${({ $transparent }) =>
     $transparent ? "transparent" : ""};
   width: 100%;
@@ -44,7 +52,7 @@ const LoadingStateStyled = styled.section<{ $transparent?: boolean }>`
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 16px 0px;
+  padding: ${({ isButtonLoader }) => (isButtonLoader ? "0px" : "16px")};
 `;
 
 const WrapperStyled = styled.div<{ $width: number; $height: number }>`

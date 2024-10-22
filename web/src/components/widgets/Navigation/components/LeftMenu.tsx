@@ -3,6 +3,7 @@ import { Link } from "@tanstack/react-router";
 import styled from "styled-components";
 import { NAVIGATION_OPTIONS } from "../navigation.constants";
 import { DEVICE_BREAKPOINTS } from "../../../../constants/devices";
+import { BlackCat } from "../../../ui/decorations/BlackCat";
 
 interface Props {
   $width: string;
@@ -14,6 +15,7 @@ export const LeftMenu = ({ $width }: Props) => {
 
   return (
     <LeftMenuStyled $width={$width}>
+      <BlackCat />
       {NAVIGATION_OPTIONS.filter((item) => !item.isMainOption).map((item) => (
         <LeftMenuItemStyled
           key={item.title}
