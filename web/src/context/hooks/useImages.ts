@@ -13,7 +13,7 @@ import {
   removeBackgroundRequest,
 } from "../../infra/api/services";
 import { CloudinaryImageDTO } from "../../types/DTOs";
-import toast from "react-hot-toast";
+import { promptSanitizer } from "../../utils/promptSanitizer";
 
 interface Props {
   currentUser: User | null;
@@ -29,6 +29,7 @@ export const useImages = ({
   const [isLoading, setIsLoading] = useState(false);
   const [transformedImage, setTransformedImage] = useState("");
   const [mergedImage, setMergedImage] = useState("");
+  const [isBackgroundLoaded, setIsBackgroundLoaded] = useState(false);
   const { cloudName } = cloudinaryConfig;
 
   const cloudy = new Cloudinary({
@@ -58,10 +59,11 @@ export const useImages = ({
 
   const transformImage = async (post: Post, prompt: string) => {
     setIsLoading(true);
+    setIsBackgroundLoaded(false);
     const myImage = cloudy.image(post.cloudPublicId);
 
     const result = myImage
-      .effect(generativeBackgroundReplace().prompt(prompt))
+      .effect(generativeBackgroundReplace().prompt(promptSanitizer(prompt)))
       .toURL();
     setTransformedImage(result);
     await posts.handleUpdatePost({
@@ -70,7 +72,6 @@ export const useImages = ({
       transformedImageUrl: result,
       isLoading: true,
     });
-    toast.success("Se ha completado la transformación!");
     setIsLoading(false);
   };
 
@@ -99,7 +100,6 @@ export const useImages = ({
         });
         await posts.handleCreatePost(post);
         setTransformedImage(savedImage.secure_url);
-        toast.success("Se ha completado la transformación!");
       }
     }
     setIsLoading(false);
@@ -129,6 +129,8 @@ export const useImages = ({
     setTransformedImage,
     mergedImage,
     setMergedImage,
+    isBackgroundLoaded,
+    setIsBackgroundLoaded,
     load: loadImage,
     transform: transformImage,
     swapFace,

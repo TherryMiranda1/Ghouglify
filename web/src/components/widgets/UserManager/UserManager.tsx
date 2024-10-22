@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { useGlobalContext } from "../../../context/useGlobalContext";
-import { Button, Header, Input, Section } from "../../ui";
+import { Button, Header, Input } from "../../ui";
 import { InputDrop } from "../InputDrop/InputDrop";
 import { ImageViewer } from "../ImageViewer/ImageViewer";
 import { updateUserRequest } from "../../../infra/api/user";
+import styled from "styled-components";
+import { DEVICE_BREAKPOINTS } from "../../../constants/devices";
 
 const EMPTY_DRAFT = {
   name: "",
@@ -11,6 +13,7 @@ const EMPTY_DRAFT = {
 };
 
 export const UserManager = () => {
+  const [isEdit, setIsEdit] = useState(false);
   const {
     user: { currentUser, setCurrentUser },
   } = useGlobalContext();
@@ -37,35 +40,77 @@ export const UserManager = () => {
           profileImage: result.profileImage,
         });
         setCurrentUser(result);
+        setIsEdit(false);
       }
     }
   };
   return (
-    <Section>
-      <Header text={`Hola ${currentUser?.name}`} componentType="h3" />
-
-      <Header text="Foto de perfil" componentType="h4" />
-
-      {draft.profileImage ? (
-        <ImageViewer
-          image={draft.profileImage}
-          onClose={() => setDraft({ ...draft, profileImage: undefined })}
-        />
+    <UserManagerStyled>
+      {isEdit ? (
+        <>
+          {" "}
+          <Header text="Foto de perfil" componentType="h4" />
+          {draft.profileImage ? (
+            <ImageViewer
+              image={draft.profileImage}
+              onClose={() => setDraft({ ...draft, profileImage: undefined })}
+            />
+          ) : (
+            <InputDrop
+              height={200}
+              onChange={(value) => {
+                if (!value) return;
+                setDraft({ ...draft, profileImage: value.content });
+              }}
+            />
+          )}
+          <Header text="Username" componentType="h4" />
+          <Input
+            placeholder="Nombre"
+            value={draft.name}
+            onChange={(e) => setDraft({ ...draft, name: e as string })}
+          />
+        </>
       ) : (
-        <InputDrop
-          onChange={(value) => {
-            if (!value) return;
-            setDraft({ ...draft, profileImage: value.content });
-          }}
-        />
+        <>
+          <Header text={` ${currentUser?.name}`} componentType="h3" />
+          {currentUser?.profileImage && (
+            <ProfilePictureStyled
+              src={currentUser.profileImage}
+              alt="profile"
+            />
+          )}
+        </>
       )}
-      <Header text="Username" componentType="h4" />
-      <Input
-        placeholder="Nombre"
-        value={draft.name}
-        onChange={(e) => setDraft({ ...draft, name: e as string })}
-      />
-      <Button onClick={handleSubmit}>Actualizar</Button>
-    </Section>
+
+      <Button onClick={() => (isEdit ? handleSubmit() : setIsEdit(true))}>
+        {isEdit ? "Actualizar" : "Editar"}
+      </Button>
+      {isEdit && <Button onClick={() => setIsEdit(false)}>Cancelar</Button>}
+    </UserManagerStyled>
   );
 };
+
+const ProfilePictureStyled = styled.img`
+  width: 100%;
+  max-width: 300px;
+  border-radius: var(--card-radius);
+  overflow: hidden;
+  margin-bottom: 16px;
+`;
+
+const UserManagerStyled = styled.section`
+  background-color: var(--background-transparent-color);
+  border: var(--border);
+  border-radius: var(--card-radius);
+  padding: 16px;
+  gap: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  box-sizing: border-box;
+  max-width: ${DEVICE_BREAKPOINTS.xs};
+  margin: auto;
+`;

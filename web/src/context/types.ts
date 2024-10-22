@@ -43,6 +43,8 @@ export interface UseImageOptions {
   setTransformedImage: (image: any) => void;
   mergedImage: string;
   setMergedImage: (image: string) => void;
+  isBackgroundLoaded: boolean;
+  setIsBackgroundLoaded: (isBackgroundLoaded: boolean) => void;
   load: (image: string) => Promise<CloudinaryImageDTO>;
   transform: (post: Post, prompt: string) => void;
   swapFace: ({ source, target }: { source: string; target: string }) => void;
@@ -91,6 +93,10 @@ export interface UsePostsOptions {
 export interface UseUserOptions {
   currentUser: User | null;
   setCurrentUser: (user: User | null) => void;
+  handleUpdateUser: (user: {
+    image: string;
+    name: string;
+  }) => Promise<User | null | void>;
 }
 
 export interface UseAssetsOptions {

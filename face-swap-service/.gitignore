@@ -1,0 +1,5 @@
+.venv
+.devcontainer
+uploads
+env
+models

@@ -1,0 +1,4 @@
+.venv
+.devcontainer
+uploads
+env

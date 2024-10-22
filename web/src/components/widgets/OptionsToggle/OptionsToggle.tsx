@@ -11,15 +11,24 @@ import { Post } from "../../../types/Post";
 import { useDownloadImage } from "../../../hooks/useDownloadImage";
 import { TRANSFORMATION_OPTIONS } from "../../../context/GlobalContext.constants";
 import { useRouter } from "@tanstack/react-router";
+import { useShareImage } from "../../../hooks/useShareImage";
+import { FaShareAlt } from "react-icons/fa";
 
 interface Props {
   post: Post;
   isOpen?: boolean;
   onOpen?: () => void;
   onClose?: () => void;
+  showTransformation?: boolean;
 }
 
-export const OptionsToggle = ({ post, isOpen, onOpen, onClose }: Props) => {
+export const OptionsToggle = ({
+  post,
+  isOpen,
+  showTransformation,
+  onOpen,
+  onClose,
+}: Props) => {
   const { handleDownload } = useDownloadImage();
   const { navigate } = useRouter();
   const {
@@ -33,9 +42,16 @@ export const OptionsToggle = ({ post, isOpen, onOpen, onClose }: Props) => {
     user: { currentUser },
   } = useGlobalContext();
 
-  const isOwner = post.userId === currentUser?._id;
-  const hasTransformation = post.transformedImageUrl;
+  const imageUrl =
+    showTransformation && post.transformedImageUrl
+      ? post.transformedImageUrl
+      : post.originalImageUrl;
 
+  const isOwner = post.userId === currentUser?.userUUID;
+  const hasTransformation = post.transformedImageUrl;
+  const { shareImage, isSharingSupported } = useShareImage(imageUrl);
+
+  console.log({ post, currentUser });
   const handleRemix = () => {
     if (post.facePrompt) {
       setCurrentTransformationOption(TRANSFORMATION_OPTIONS[2]);
@@ -82,7 +98,17 @@ export const OptionsToggle = ({ post, isOpen, onOpen, onClose }: Props) => {
                 onClose?.();
               }}
             >
-              Publish <IoMdShareAlt size={ICON_SIZES.xs} />
+              Publicar <IoMdShareAlt size={ICON_SIZES.xs} />
+            </OptionStyled>
+          )}
+          {isSharingSupported && (
+            <OptionStyled
+              onClick={() => {
+                shareImage();
+                onClose?.();
+              }}
+            >
+              Compartir <FaShareAlt size={ICON_SIZES.xs} />
             </OptionStyled>
           )}
           <OptionStyled
@@ -91,7 +117,7 @@ export const OptionsToggle = ({ post, isOpen, onOpen, onClose }: Props) => {
               onClose?.();
             }}
           >
-            Download <MdDownload size={ICON_SIZES.xs} />
+            Descargar <MdDownload size={ICON_SIZES.xs} />
           </OptionStyled>
           {isOwner && (
             <OptionStyled
@@ -100,7 +126,7 @@ export const OptionsToggle = ({ post, isOpen, onOpen, onClose }: Props) => {
                 handleDeletePost(post);
               }}
             >
-              Delete <MdDelete size={ICON_SIZES.xs} />
+              Eliminar <MdDelete size={ICON_SIZES.xs} />
             </OptionStyled>
           )}
         </ContentStyled>

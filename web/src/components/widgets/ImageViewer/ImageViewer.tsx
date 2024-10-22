@@ -1,8 +1,10 @@
 import styled from "styled-components";
-import { Image } from "../../ui";
+import toast from "react-hot-toast";
+import { Image, LoadingState } from "../../ui";
 import { ICON_SIZES } from "../../../constants/sizes";
 import { IoCloseOutline } from "react-icons/io5";
 import { DEVICE_BREAKPOINTS } from "../../../constants/devices";
+import { useGlobalContext } from "../../../context/useGlobalContext";
 
 interface Props {
   image: string;
@@ -10,6 +12,7 @@ interface Props {
   width?: number;
   height?: number;
   aspectRatio?: number;
+  isGeneration?: boolean;
 }
 
 export const ImageViewer = ({
@@ -18,7 +21,12 @@ export const ImageViewer = ({
   width,
   height,
   aspectRatio,
+  isGeneration = false,
 }: Props) => {
+  const {
+    image: { isBackgroundLoaded, setIsBackgroundLoaded },
+  } = useGlobalContext();
+
   return (
     <ImageViewerStyled>
       <CloseButtonStyled onClick={() => onClose()}>
@@ -26,10 +34,20 @@ export const ImageViewer = ({
       </CloseButtonStyled>
       <Image
         src={image}
+        onLoad={() => {
+          if (isGeneration) {
+            setIsBackgroundLoaded(true);
+            toast.success("Se ha completado la transformación!");
+          }
+        }}
         $width={width}
         $height={height}
         $aspectRatio={aspectRatio}
       />
+
+      {isGeneration && !isBackgroundLoaded && (
+        <LoadingState width={width} height={height} />
+      )}
     </ImageViewerStyled>
   );
 };

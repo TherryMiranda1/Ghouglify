@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="icon"
+      href="{{ url_for('static', filename='logo.svg') }}"
+      type="image/x-icon"
+    />
+    <title>Bienvenido a la API</title>
+    <style>
+      body {
+        font-family: system-ui, -apple-system, BlinkMacSystemFont;
+        box-sizing: border-box;
+        background-color: #f4f4f9;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        padding: 16px;
+      }
+      .container {
+        text-align: center;
+        background-color: white;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      }
+      h1 {
+        color: #ce8600;
+      }
+      p {
+        color: #555;
+      }
+      p,
+      ul {
+        color: #555;
+      }
+      ul {
+        text-align: left;
+        display: inline-block;
+        margin: 0 auto;
+      }
+      li {
+        margin-bottom: 10px;
+      }
+      code {
+        background-color: #f4f4f9;
+        padding: 2px 4px;
+        border-radius: 4px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>¡Bienvenido a la API de Reemplazo de caras!</h1>
+      <p>La API está funcionando correctamente.</p>
+      <h2>Endpoints:</h2>
+      <ul>
+        <li>
+          <code>POST /swap-faces/</code> - Sube una imagen, una cara y devuelve
+          la imagen con la cara reemplazada.
+        </li>
+      </ul>
+    </div>
+  </body>
+</html>
