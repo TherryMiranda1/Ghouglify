@@ -36,6 +36,22 @@
   --border-color: #262626;
 }
 
+[data-theme="light"] {
+  --background-color: #f5f5f5;
+  --background-transparent-color: rgba(236, 236, 236, 0.8);
+  --text-color: #1a1a1a;
+  --text-secondary-color: #282828;
+  --placeholder-color: #2f2f2f;
+  --text-negative-color: #d0d0d0;
+  --background-secondary-color: #d2d2d2;
+  --background-view-color: #dcdcdc;
+  --background-card-color: #ffffff;
+  --tint-color: #ff7518;
+  --tint-secondary-color: #39ff14;
+  --tint-terciary-color: #6a0dad;
+  --border-color: #b9b9b9;
+}
+
 [data-variant="BUBBLE"] {
   --border: 1px solid var(--border-color);
   --shadow: 0;
@@ -122,6 +138,12 @@ button:hover {
 button:focus,
 button:focus-visible {
   outline: none;
+}
+.truncate {
+  white-space: nowrap;      
+  overflow: hidden;          
+  text-overflow: ellipsis;   
+  max-width: 80px;              
 }
 
 .header {

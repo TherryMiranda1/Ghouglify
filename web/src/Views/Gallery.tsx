@@ -10,6 +10,7 @@ import { filterUserPosts } from "../utils/filterUserPosts";
 import { sortByDate } from "../utils/sortByDate";
 import { IMAGES } from "../assets/images";
 import { useRouter } from "@tanstack/react-router";
+import { IMAGE_SOURCES } from "../context/GlobalContext.constants";
 
 interface Props {
   onSelect?: (item: Post) => void;
@@ -21,6 +22,7 @@ export const Gallery = ({ onSelect, showTags }: Props) => {
   const { navigate } = useRouter();
   const {
     user: { currentUser },
+    sandbox: { setImageSource },
     posts: {
       userPosts: {
         userPostsData,
@@ -67,8 +69,11 @@ export const Gallery = ({ onSelect, showTags }: Props) => {
           title="Esto esta muy vacio"
           image={IMAGES.empty}
           buttonText="Subir imagen"
-           description="Comienza a crear imagenes espeluznantes"
-          buttonOnClick={() => navigate({ to: "/create" })}
+          description="Comienza a crear imagenes espeluznantes"
+          buttonOnClick={() => {
+            setImageSource(IMAGE_SOURCES[0]);
+            navigate({ to: "/create" });
+          }}
         />
       </View>
     );
