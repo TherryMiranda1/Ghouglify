@@ -8,16 +8,12 @@ import styled from "styled-components";
 import { ICON_SIZES } from "../../../constants/sizes";
 import { OriginalImageType } from "../../../context/types";
 import { LoadingState } from "../../ui";
-import { useGlobalContext } from "../../../context/useGlobalContext";
 
 interface Props {
   onChange: (photo: OriginalImageType) => void;
 }
 
 export const Camera = ({ onChange }: Props) => {
-  const {
-    sandbox: { stream, setStream },
-  } = useGlobalContext();
   const videoRef = useRef<HTMLVideoElement>(null);
   const photoRef = useRef<HTMLCanvasElement>(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -37,7 +33,6 @@ export const Camera = ({ onChange }: Props) => {
         const stream = await navigator.mediaDevices.getUserMedia(constraints);
         videoRef.current.srcObject = stream;
         videoRef.current.play();
-        setStream(stream);
       } catch (err) {
         console.error("Error accessing camera: ", err);
       }
@@ -45,21 +40,17 @@ export const Camera = ({ onChange }: Props) => {
     }
   };
 
-  const switchCamera = async () => {
-    stopCamera();
+  const switchCamera = () => {
     setIsFrontCamera((prev) => !prev);
-    startCamera();
+    stopCamera();
+    setTimeout(() => startCamera(), 500);
   };
 
   const stopCamera = () => {
-    if (stream) {
+    if (videoRef.current && videoRef.current.srcObject) {
+      const stream = videoRef.current.srcObject as MediaStream;
       const tracks = stream.getTracks();
-      tracks.forEach((track) => {
-        track.stop();
-      });
-      setStream(null);
-    }
-    if (videoRef.current) {
+      tracks.forEach((track) => track.stop());
       videoRef.current.srcObject = null;
     }
   };
@@ -84,7 +75,6 @@ export const Camera = ({ onChange }: Props) => {
   useEffect(() => {
     startCamera();
     return () => {
-      console.log("stop camera");
       stopCamera();
     };
   }, []);
@@ -131,7 +121,6 @@ export const Camera = ({ onChange }: Props) => {
     </ContainerStyled>
   );
 };
-
 const ContainerStyled = styled.section`
   box-sizing: border-box;
   position: relative;
@@ -139,7 +128,6 @@ const ContainerStyled = styled.section`
   overflow: hidden;
   border-radius: var(--card-radius);
 `;
-
 const VideoStyled = styled.video<{ $show: boolean }>`
   width: 100%;
   height: auto;
