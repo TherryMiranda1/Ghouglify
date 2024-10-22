@@ -45,7 +45,7 @@ export interface UseImageOptions {
   setMergedImage: (image: string) => void;
   isBackgroundLoaded: boolean;
   setIsBackgroundLoaded: (isBackgroundLoaded: boolean) => void;
-  load: (image: string) => Promise<CloudinaryImageDTO>;
+  load: (image: string, saveOnDB?: boolean) => Promise<CloudinaryImageDTO>;
   transform: (post: Post, prompt: string) => void;
   swapFace: ({ source, target }: { source: string; target: string }) => void;
   removeBackground: ({ url }: { url: string }) => void;

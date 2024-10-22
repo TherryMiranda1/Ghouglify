@@ -31,7 +31,7 @@ export const UserManager = () => {
   const handleSubmit = async () => {
     if (currentUser?.userUUID) {
       if (draft.loadedImage) {
-        const loadedImage = await load(draft.loadedImage);
+        const loadedImage = await load(draft.loadedImage, false);
 
         const userDraft = {
           ...currentUser,

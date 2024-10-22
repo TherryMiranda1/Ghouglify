@@ -1,6 +1,6 @@
 # ¡Bienvenido a Ghouglify, donde el espíritu de Halloween cobra vida en cada imagen! 🎃
 
-¿Alguna vez soñaste con darle a tus fotos ese toque espeluznante que solo Halloween puede ofrecer? Nuestra aplicación está diseñada para transformar tus recuerdos cotidianos en auténticas obras de arte sobrenaturales. Y lo mejor de todo… ¡es fácil, rápida y muy divertida!
+¿Alguna vez soñaste con darle a tus fotos ese toque espeluznante que solo Halloween puede ofrecer? Transforma tus recuerdos cotidianos en auténticas obras de arte sobrenaturales. Y lo mejor de todo… ¡es fácil, rápido y muy divertido!
 
 ## ¿Qué puedes hacer?
 Con Ghouglify, puedes hacer magia visual de Halloween con solo unos clics:
