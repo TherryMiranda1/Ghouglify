@@ -1,4 +1,4 @@
-# ¡Bienvenidos a Chouglify, donde el espíritu de Halloween cobra vida en cada imagen! 🎃
+# ¡Bienvenido a Ghouglify, donde el espíritu de Halloween cobra vida en cada imagen! 🎃
 
 ¿Alguna vez soñaste con darle a tus fotos ese toque espeluznante que solo Halloween puede ofrecer? Nuestra aplicación está diseñada para transformar tus recuerdos cotidianos en auténticas obras de arte sobrenaturales. Y lo mejor de todo… ¡es fácil, rápida y muy divertida!
 
@@ -23,3 +23,4 @@ Usar nuestra app es tan simple como asustar a un fantasma:
 ## Prepárate para sentir el escalofrío…
 
 En Ghouglify, cada foto tiene una historia que contar. Una historia oscura, misteriosa… ¡y espantosamente divertida!
+
