@@ -17,8 +17,8 @@ interface Props {
   isButtonLoader?: boolean;
 }
 export const LoadingState = ({
-  width = 200,
-  height = 180,
+  width = 160,
+  height = 150,
   isButtonLoader = false,
   transparent = false,
   onlyText = false,
@@ -52,7 +52,7 @@ const LoadingStateStyled = styled.section<{
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: ${({ $isButtonLoader }) => ($isButtonLoader ? "0px" : "16px")};
+  padding: ${({ $isButtonLoader }) => ($isButtonLoader ? "0px" : "16px 8px")};
 `;
 
 const WrapperStyled = styled.div<{ $width: number; $height: number }>`
