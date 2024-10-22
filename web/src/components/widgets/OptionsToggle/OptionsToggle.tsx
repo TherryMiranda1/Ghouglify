@@ -15,6 +15,7 @@ import { useShareImage } from "../../../hooks/useShareImage";
 import { FaShareAlt } from "react-icons/fa";
 
 interface Props {
+  variant?: "ROW" | "COLUMN";
   post: Post;
   isOpen?: boolean;
   onOpen?: () => void;
@@ -22,7 +23,13 @@ interface Props {
   showTransformation?: boolean;
 }
 
-export const OptionsToggle = ({ post, isOpen, onOpen, onClose }: Props) => {
+export const OptionsToggle = ({
+  variant = "COLUMN",
+  post,
+  isOpen,
+  onOpen,
+  onClose,
+}: Props) => {
   const { handleDownload } = useDownloadImage();
   const { navigate } = useRouter();
   const {
@@ -71,11 +78,12 @@ export const OptionsToggle = ({ post, isOpen, onOpen, onClose }: Props) => {
     navigate({ to: "/create" });
   };
   return (
-    <OptionsToggleStyled>
+    <OptionsToggleStyled $variant={variant}>
       {isOpen ? (
-        <ContentStyled>
+        <ContentStyled $variant={variant}>
           {hasTransformation && (
             <OptionStyled
+              $variant={variant}
               onClick={() => {
                 onClose?.();
                 handleRemix();
@@ -86,6 +94,7 @@ export const OptionsToggle = ({ post, isOpen, onOpen, onClose }: Props) => {
           )}
           {!post.isPublic && (
             <OptionStyled
+              $variant={variant}
               onClick={() => {
                 handleUpdatePost({ ...post, isPublic: true });
                 onClose?.();
@@ -96,6 +105,7 @@ export const OptionsToggle = ({ post, isOpen, onOpen, onClose }: Props) => {
           )}
           {isSharingSupported && (
             <OptionStyled
+              $variant={variant}
               onClick={() => {
                 shareImage();
                 onClose?.();
@@ -105,6 +115,7 @@ export const OptionsToggle = ({ post, isOpen, onOpen, onClose }: Props) => {
             </OptionStyled>
           )}
           <OptionStyled
+            $variant={variant}
             onClick={() => {
               console.log(post);
               handleDownload(imageUrl, post.name);
@@ -115,6 +126,7 @@ export const OptionsToggle = ({ post, isOpen, onOpen, onClose }: Props) => {
           </OptionStyled>
           {isOwner && (
             <OptionStyled
+              $variant={variant}
               onClick={() => {
                 onClose?.();
                 handleDeletePost(post);
@@ -133,9 +145,9 @@ export const OptionsToggle = ({ post, isOpen, onOpen, onClose }: Props) => {
   );
 };
 
-const OptionsToggleStyled = styled.section`
-  z-index: 10;
-  position: absolute;
+const OptionsToggleStyled = styled.section<{ $variant?: "ROW" | "COLUMN" }>`
+  z-index: 5;
+  position: ${({ $variant }) => ($variant === "ROW" ? "relative" : "absolute")};
   bottom: 4px;
   right: 4px;
 `;
@@ -150,22 +162,24 @@ const ButtonStyled = styled(Button)`
   border-radius: var(--small-radius);
 `;
 
-const ContentStyled = styled.section`
+const ContentStyled = styled.section<{ $variant?: "ROW" | "COLUMN" }>`
   background-color: var(--background-transparent-color);
   border: var(--border);
   padding: 8px;
   gap: 2px;
   display: flex;
-  flex-direction: column;
+  flex-direction: ${({ $variant }) => ($variant === "ROW" ? "row" : "column")};
   align-items: center;
   justify-content: center;
   border-radius: var(--small-radius);
 `;
 
-const OptionStyled = styled.button`
+const OptionStyled = styled.button<{ $variant?: "ROW" | "COLUMN" }>`
   background-color: transparent;
   padding: 6px 8px;
   display: flex;
+  flex-direction: ${({ $variant }) =>
+    $variant === "ROW" ? "column-reverse" : "row"};
   gap: 4px;
   font-size: 12px;
   align-items: center;

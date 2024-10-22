@@ -66,6 +66,8 @@ export interface UseSandboxOptions {
   setCurrentAssetFilter: (filter: TagTypeBase) => void;
   backgroundReplaceAsset: Asset | null;
   setBackgroundReplaceAsset: (asset: Asset | null) => void;
+  stream: MediaStream | null;
+  setStream: (stream: MediaStream | null) => void;
 }
 
 export interface UsePostsOptions {

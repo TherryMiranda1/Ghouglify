@@ -17,8 +17,8 @@ interface Props {
   isButtonLoader?: boolean;
 }
 export const LoadingState = ({
-  width = 220,
-  height = 200,
+  width = 200,
+  height = 180,
   isButtonLoader = false,
   transparent = false,
   onlyText = false,

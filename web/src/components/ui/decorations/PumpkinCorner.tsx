@@ -12,11 +12,11 @@ export const PumpkingCorner = ({ ...props }: Props) => {
 
 const ImageStyled = styled.img<Props>`
   position: absolute;
-  z-index: 2;
+  z-index: 8;
   object-fit: cover;
   object-position: center;
   bottom: -70px;
-  right: -15px;
+  right: 0px;
   width: ${({ $width }) => ($width ? `${$width}px` : "100px")};
   height: ${({ $height }) => ($height ? `${$height}px` : "100px")};
 `;

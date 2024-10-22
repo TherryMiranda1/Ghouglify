@@ -5,12 +5,14 @@ import { Post } from "../types/Post";
 import { ImagesGallery } from "../components/widgets/ImagesGallery/ImagesGallery";
 import { GalleryContainer } from "../styles/Common.styles";
 import { sortByDate } from "../utils/sortByDate";
+import { useRouter } from "@tanstack/react-router";
 
 interface Props {
   onSelect?: (item: Post) => void;
 }
 
 export const Wall = ({ onSelect }: Props) => {
+  const { navigate } = useRouter();
   const {
     posts: {
       publicPosts: {
@@ -45,7 +47,10 @@ export const Wall = ({ onSelect }: Props) => {
       {publicPostsData && (
         <ImagesGallery
           posts={sortByDate(publicPostsData)}
-          onSelect={onSelect}
+          onSelect={(post) => {
+            onSelect?.(post);
+            navigate({ to: `/posts/${post._id}` });
+          }}
           showTransformationInitialValue
         />
       )}
