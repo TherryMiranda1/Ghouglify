@@ -11,7 +11,7 @@ export const TransformationToggle = ({
 }) => {
   return (
     <ShowToggleStyled onClick={onToggle}>
-      {show ? <FaUser /> : <SiGhostery color="var(--tint-color)" />}
+      {show ? <SiGhostery color="var(--tint-color)" /> : <FaUser />}
     </ShowToggleStyled>
   );
 };
@@ -24,7 +24,7 @@ const ShowToggleStyled = styled.button`
   flex-direction: column;
   gap: 0.5rem;
   border-radius: 0;
-  border:var(--border);
+  border: var(--border);
   background-color: var(--background-transparent-color);
   border-bottom-right-radius: var(--card-radius);
   font-size: 16px;
