@@ -7,9 +7,11 @@ import { ImageViewer } from "../ImageViewer/ImageViewer";
 import { DEVICE_BREAKPOINTS } from "../../../constants/devices";
 import { TransformationsBoard } from "../TransformationsBoard/TransformationsBoard";
 import { IMAGE_SOURCES } from "../../../context/GlobalContext.constants";
-import { Card } from "../../ui";
+import { Button, Card } from "../../ui";
 import { ImageDownloader } from "../ImageDownloader/ImageDownloader";
 import { TransformButton } from "./TransformButton";
+import { useShareImage } from "../../../hooks/useShareImage";
+import { FaShareAlt } from "react-icons/fa";
 
 export const Sandbox = () => {
   const {
@@ -18,6 +20,7 @@ export const Sandbox = () => {
       setTransformedImage,
       mergedImage,
       setMergedImage,
+      isBackgroundLoaded,
     },
     sandbox: {
       setImageSource,
@@ -28,6 +31,7 @@ export const Sandbox = () => {
       setFaceSwapTargetAsset,
     },
   } = useGlobalContext();
+  const { isSharingSupported, shareImage } = useShareImage(transformedImage);
 
   return (
     <SandboxStyled>
@@ -62,10 +66,20 @@ export const Sandbox = () => {
               {transformedImage ? (
                 <Card>
                   <ImageViewer
+                    isGeneration
                     image={transformedImage}
                     onClose={() => setTransformedImage("")}
                   />
-                  <ImageDownloader imageUrl={transformedImage} />
+                  {isBackgroundLoaded && (
+                    <ButtonsAreaStyled>
+                      <ImageDownloader imageUrl={transformedImage} />
+                      {isSharingSupported && (
+                        <ShareButtonStyled onClick={() => shareImage()}>
+                          Compartir <FaShareAlt />
+                        </ShareButtonStyled>
+                      )}
+                    </ButtonsAreaStyled>
+                  )}
                 </Card>
               ) : (
                 <TransformationsBoard />
@@ -146,4 +160,18 @@ const ImagesSectionStyled = styled.section`
       min-width: ${DEVICE_BREAKPOINTS["2xs"]};
     }
   }
+`;
+const ButtonsAreaStyled = styled.div`
+  box-sizing: border-box;
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  gap: 8px;
+`;
+const ShareButtonStyled = styled(Button)`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
 `;

@@ -29,7 +29,7 @@ const AppContainer = styled.section`
   align-items: center;
 
   @media screen and (max-width: ${DEVICE_BREAKPOINTS.md}) {
-    padding-bottom: 64px;
+    padding-bottom: 72px;
   }
 
   @media screen and (min-width: ${DEVICE_BREAKPOINTS.md}) {

@@ -9,9 +9,10 @@ import { blobToDataUrl } from "../../../utils/blobToDataUrl";
 interface Props {
   value?: OriginalImageType;
   onChange?: (e: OriginalImageType | null) => void;
+  height?: number;
 }
 
-export const InputDrop = ({ onChange, value }: Props) => {
+export const InputDrop = ({ onChange, value, height = 300 }: Props) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleFile = (file: File) => {
@@ -71,7 +72,11 @@ export const InputDrop = ({ onChange, value }: Props) => {
   }, [value, onChange]);
 
   return (
-    <DraggingAreaStyled onDrop={handleDrop} onDragOver={handleDragOver}>
+    <DraggingAreaStyled
+      $height={height}
+      onDrop={handleDrop}
+      onDragOver={handleDragOver}
+    >
       <Section style={{ position: "relative", zIndex: 2 }}>
         <p>Arrastra y suelta una imagen aquí</p>
         <Button onClick={() => fileInputRef?.current?.click?.()}>
@@ -89,7 +94,7 @@ export const InputDrop = ({ onChange, value }: Props) => {
   );
 };
 
-const DraggingAreaStyled = styled.section`
+const DraggingAreaStyled = styled.section<{ $height: number }>`
   position: relative;
   border-radius: var(--card-radius);
   border: 2px dashed var(--text-color);
@@ -98,5 +103,5 @@ const DraggingAreaStyled = styled.section`
   align-items: center;
   justify-content: center;
   height: 100%;
-  height: 400px;
+  height: ${(props) => props.$height}px;
 `;

@@ -3,7 +3,6 @@ import styled from "styled-components";
 import { TransformationOptions } from "../../../context/types";
 import { useGlobalContext } from "../../../context/useGlobalContext";
 import { Button } from "../../ui";
-import toast from "react-hot-toast";
 
 export const TransformButton = () => {
   const {
@@ -55,7 +54,6 @@ export const TransformButton = () => {
           objectsPrompt: backgroundReplaceAsset?.originalImageUrl,
           transformedImageUrl: mergedImage,
         });
-        toast.success("Se ha completado la transformación!");
       }
     }
     if (currentTransformationOption.id === TransformationOptions.FACE_SWAPING) {
