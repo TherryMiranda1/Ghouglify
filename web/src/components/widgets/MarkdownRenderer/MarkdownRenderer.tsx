@@ -52,5 +52,23 @@ const RendererStyled = styled.div`
   margin: auto;
   padding: 16px;
   max-width: ${DEVICE_BREAKPOINTS.md};
+  img {
+    width: 100%;
+    max-width: ${DEVICE_BREAKPOINTS["2xs"]};
+  }
+  h1,
+  h2,
+  h3{
+    color: var(--tint-color);
+    display: block;
+    align-self: flex-start;
+  }
+  a {
+    color: var(--secondary-text-color);
+    text-decoration: none;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
 `;
 export default MarkdownRenderer;
