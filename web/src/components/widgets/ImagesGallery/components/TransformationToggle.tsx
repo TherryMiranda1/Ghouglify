@@ -27,7 +27,7 @@ const ShowToggleStyled = styled.button`
   border:var(--border);
   background-color: var(--background-transparent-color);
   border-bottom-right-radius: var(--card-radius);
-  font-size: 20px;
+  font-size: 16px;
   align-items: center;
   justify-content: center;
   cursor: pointer;
