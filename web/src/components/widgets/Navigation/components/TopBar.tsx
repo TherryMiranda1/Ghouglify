@@ -29,6 +29,7 @@ export const TopBar = () => {
 };
 
 const CurrentUserStyled = styled(Link)`
+  box-sizing: border-box;
   display: flex;
   align-items: center;
   gap: 8px;

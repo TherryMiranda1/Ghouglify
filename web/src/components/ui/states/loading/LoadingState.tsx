@@ -45,6 +45,7 @@ const LoadingStateStyled = styled.section<{
   $isButtonLoader?: boolean;
   $transparent?: boolean;
 }>`
+  box-sizing: border-box;
   background-color: ${({ $transparent }) =>
     $transparent ? "transparent" : ""};
   width: 100%;

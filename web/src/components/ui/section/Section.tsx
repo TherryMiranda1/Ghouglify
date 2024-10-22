@@ -11,6 +11,7 @@ export const Section = ({ children, ...props }: Props) => {
 };
 
 const SectionStyled = styled.section`
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
   align-items: center;

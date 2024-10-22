@@ -47,7 +47,17 @@ export const Gallery = ({ onSelect, showTags }: Props) => {
   }
 
   if (isUserPostsError) {
-    return <View>Error</View>;
+    return (
+      <View>
+        <EmptyState
+          title="Algo ha salido mal"
+          description="Parece que la suerte no esta de nuestro lado..."
+          image={IMAGES.cat}
+          buttonText="Reintentar"
+          buttonOnClick={() => getUserPosts()}
+        />
+      </View>
+    );
   }
 
   if (userPostsData?.length === 0) {
@@ -57,6 +67,8 @@ export const Gallery = ({ onSelect, showTags }: Props) => {
           title="Esto esta muy vacio"
           image={IMAGES.empty}
           buttonText="Subir imagen"
+           description="Comienza a crear imagenes espeluznantes"
+          buttonOnClick={() => navigate({ to: "/create" })}
         />
       </View>
     );

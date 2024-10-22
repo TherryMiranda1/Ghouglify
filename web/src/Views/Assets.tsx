@@ -7,6 +7,7 @@ import { Asset } from "../types/Asset";
 import { AssetFilter } from "../context/types";
 import { filterAssets } from "../utils/filterAssets";
 import { IMAGES } from "../assets/images";
+import { useRouter } from "@tanstack/react-router";
 
 interface Props {
   onSelect?: (item: Asset) => void;
@@ -19,6 +20,7 @@ export const AssetsView = ({
   selectedItem,
   filterBy = AssetFilter.BACKGROUND,
 }: Props) => {
+  const { navigate } = useRouter();
   const {
     assets: {
       assets: { assetsData, getAssets, isAssetsLoading, isAssetsError },
@@ -38,19 +40,28 @@ export const AssetsView = ({
   }
 
   if (isAssetsError) {
-    return <View>Error</View>;
+    return (
+      <View>
+        <EmptyState
+          title="Algo ha salido mal"
+          description="Parece que la suerte no esta de nuestro lado..."
+          image={IMAGES.empty}
+          buttonText="reintentar"
+          buttonOnClick={() => getAssets()}
+        />
+      </View>
+    );
   }
 
   if (filteredAssets?.length === 0) {
     return (
       <View>
-        <View>
-          <EmptyState
-            title="Esto esta muy vacio"
-            image={IMAGES.empty}
-            buttonText="Subir un asset"
-          />
-        </View>
+        <EmptyState
+          title="Esto esta muy vacio"
+          image={IMAGES.empty}
+          buttonText="Subir un asset"
+          buttonOnClick={() => navigate({ to: "/assets" })}
+        />
       </View>
     );
   }

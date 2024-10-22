@@ -24,6 +24,7 @@ export const AssetsGallery = ({ assets, onSelect, selectedItem }: Props) => {
 };
 
 const AssetsGalleryStyled = styled.section`
+  box-sizing: border-box;
   display: flex;
   flex-wrap: wrap;
   align-items: center;

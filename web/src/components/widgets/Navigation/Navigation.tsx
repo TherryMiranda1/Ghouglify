@@ -20,9 +20,11 @@ export const Navigation = ({ children }: Props) => {
 
 const NavigationStyled = styled.main`
   display: flex;
+  box-sizing: border-box;
 `;
 
 const AppContainer = styled.section`
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
   width: 100%;

@@ -22,8 +22,8 @@ export const EmptyState = ({
 }: Props) => {
   return (
     <EmptyStateStyled {...props}>
-      {image && <Image src={image} />}
       {title && <Header componentType="h2" text={title} />}
+      {image && <Image src={image} />}
       {description && <p>{description}</p>}
       {buttonText && (
         <Button text={buttonText} onClick={() => buttonOnClick?.()} />
@@ -38,7 +38,7 @@ const EmptyStateStyled = styled.section`
   justify-content: center;
   flex-direction: column;
   padding: 16px;
-  gap: 16px;
+  gap: 8px;
   max-width: 720px;
 
   p {
@@ -51,5 +51,6 @@ const EmptyStateStyled = styled.section`
     max-height: 300px;
     width: auto;
     border: none;
+    padding-bottom: 12px;
   }
 `;
