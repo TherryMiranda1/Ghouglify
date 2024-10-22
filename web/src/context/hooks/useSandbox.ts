@@ -9,6 +9,7 @@ import {
 import { Asset } from "../../types/Asset";
 
 export const useSandbox = (): UseSandboxOptions => {
+  const [stream, setStream] = useState<MediaStream | null>(null);
   const [originalImage, setOriginalImage] = useState<Post | null>(null);
   const [currentPrompt, setCurrentPrompt] = useState<string>("");
   const [imageSource, setImageSource] = useState<TagTypeBase>(IMAGE_SOURCES[0]);
@@ -38,5 +39,7 @@ export const useSandbox = (): UseSandboxOptions => {
     setCurrentAssetFilter,
     backgroundReplaceAsset,
     setBackgroundReplaceAsset,
+    stream,
+    setStream,
   };
 };

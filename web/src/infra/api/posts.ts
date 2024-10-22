@@ -17,6 +17,15 @@ export const getPostsRequest = async (): Promise<Post[] | null> => {
 
   return response.data as Post[];
 };
+export const getPostByIdRequest = async ({
+  postId,
+}: {
+  postId: string;
+}): Promise<Post | null> => {
+  const response = await axios.get(`${BASE_API_URL}/posts/${postId}`);
+
+  return response.data as Post;
+};
 
 export const getPostsByUserIdRequest = async ({
   userId,

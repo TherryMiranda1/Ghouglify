@@ -22,6 +22,7 @@ const CreateLazyImport = createFileRoute('/create')()
 const AssetsLazyImport = createFileRoute('/assets')()
 const AboutLazyImport = createFileRoute('/about')()
 const IndexLazyImport = createFileRoute('/')()
+const PostsPostIdLazyImport = createFileRoute('/posts/$postId')()
 
 // Create/Update Routes
 
@@ -54,6 +55,11 @@ const IndexLazyRoute = IndexLazyImport.update({
   path: '/',
   getParentRoute: () => rootRoute,
 } as any).lazy(() => import('./routes/index.lazy').then((d) => d.Route))
+
+const PostsPostIdLazyRoute = PostsPostIdLazyImport.update({
+  path: '/posts/$postId',
+  getParentRoute: () => rootRoute,
+} as any).lazy(() => import('./routes/posts/$postId.lazy').then((d) => d.Route))
 
 // Populate the FileRoutesByPath interface
 
@@ -101,6 +107,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MeLazyImport
       parentRoute: typeof rootRoute
     }
+    '/posts/$postId': {
+      id: '/posts/$postId'
+      path: '/posts/$postId'
+      fullPath: '/posts/$postId'
+      preLoaderRoute: typeof PostsPostIdLazyImport
+      parentRoute: typeof rootRoute
+    }
   }
 }
 
@@ -113,6 +126,7 @@ export interface FileRoutesByFullPath {
   '/create': typeof CreateLazyRoute
   '/gallery': typeof GalleryLazyRoute
   '/me': typeof MeLazyRoute
+  '/posts/$postId': typeof PostsPostIdLazyRoute
 }
 
 export interface FileRoutesByTo {
@@ -122,6 +136,7 @@ export interface FileRoutesByTo {
   '/create': typeof CreateLazyRoute
   '/gallery': typeof GalleryLazyRoute
   '/me': typeof MeLazyRoute
+  '/posts/$postId': typeof PostsPostIdLazyRoute
 }
 
 export interface FileRoutesById {
@@ -132,14 +147,37 @@ export interface FileRoutesById {
   '/create': typeof CreateLazyRoute
   '/gallery': typeof GalleryLazyRoute
   '/me': typeof MeLazyRoute
+  '/posts/$postId': typeof PostsPostIdLazyRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about' | '/assets' | '/create' | '/gallery' | '/me'
+  fullPaths:
+    | '/'
+    | '/about'
+    | '/assets'
+    | '/create'
+    | '/gallery'
+    | '/me'
+    | '/posts/$postId'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/assets' | '/create' | '/gallery' | '/me'
-  id: '__root__' | '/' | '/about' | '/assets' | '/create' | '/gallery' | '/me'
+  to:
+    | '/'
+    | '/about'
+    | '/assets'
+    | '/create'
+    | '/gallery'
+    | '/me'
+    | '/posts/$postId'
+  id:
+    | '__root__'
+    | '/'
+    | '/about'
+    | '/assets'
+    | '/create'
+    | '/gallery'
+    | '/me'
+    | '/posts/$postId'
   fileRoutesById: FileRoutesById
 }
 
@@ -150,6 +188,7 @@ export interface RootRouteChildren {
   CreateLazyRoute: typeof CreateLazyRoute
   GalleryLazyRoute: typeof GalleryLazyRoute
   MeLazyRoute: typeof MeLazyRoute
+  PostsPostIdLazyRoute: typeof PostsPostIdLazyRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
@@ -159,6 +198,7 @@ const rootRouteChildren: RootRouteChildren = {
   CreateLazyRoute: CreateLazyRoute,
   GalleryLazyRoute: GalleryLazyRoute,
   MeLazyRoute: MeLazyRoute,
+  PostsPostIdLazyRoute: PostsPostIdLazyRoute,
 }
 
 export const routeTree = rootRoute
@@ -178,7 +218,8 @@ export const routeTree = rootRoute
         "/assets",
         "/create",
         "/gallery",
-        "/me"
+        "/me",
+        "/posts/$postId"
       ]
     },
     "/": {
@@ -198,6 +239,9 @@ export const routeTree = rootRoute
     },
     "/me": {
       "filePath": "me.lazy.tsx"
+    },
+    "/posts/$postId": {
+      "filePath": "posts/$postId.lazy.tsx"
     }
   }
 }

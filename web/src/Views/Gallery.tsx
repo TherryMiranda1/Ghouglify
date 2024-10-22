@@ -9,6 +9,7 @@ import { GalleryContainer } from "../styles/Common.styles";
 import { filterUserPosts } from "../utils/filterUserPosts";
 import { sortByDate } from "../utils/sortByDate";
 import { IMAGES } from "../assets/images";
+import { useRouter } from "@tanstack/react-router";
 
 interface Props {
   onSelect?: (item: Post) => void;
@@ -17,6 +18,7 @@ interface Props {
 }
 
 export const Gallery = ({ onSelect, showTags }: Props) => {
+  const { navigate } = useRouter();
   const {
     user: { currentUser },
     posts: {
@@ -78,7 +80,13 @@ export const Gallery = ({ onSelect, showTags }: Props) => {
                 currentUserPostsFilter.id as UserPostsFilter
               )
             )}
-            onSelect={onSelect}
+            onSelect={(post) => {
+              if (onSelect) {
+                onSelect(post);
+              } else {
+                navigate({ to: `/posts/${post._id}` });
+              }
+            }}
             showTransformationInitialValue={showTransFormationsInitialValue}
           />
         </>
