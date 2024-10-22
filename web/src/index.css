@@ -204,9 +204,10 @@ button:focus-visible {
 }
 
 .primaryButton {
+  padding: 6px;
   background-color: var(--tint-color);
   color: var(--text-color);
-  border-radius: var(--tag-radius);
+  border-radius: var(--small-radius);
 }
 
 .secondaryButton {

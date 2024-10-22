@@ -66,7 +66,7 @@ export const ImagesGalleryCard = ({
   );
 };
 
-const CardStyled = styled.button<{ $aspectRatio: number }>`
+const CardStyled = styled.article<{ $aspectRatio: number }>`
   padding: 0;
   display: flex;
   position: relative;

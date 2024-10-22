@@ -1,10 +1,11 @@
 import styled from "styled-components";
 import toast from "react-hot-toast";
-import { Image, LoadingState } from "../../ui";
+import { Image, LoadingState, Section } from "../../ui";
 import { ICON_SIZES } from "../../../constants/sizes";
 import { IoCloseOutline } from "react-icons/io5";
 import { DEVICE_BREAKPOINTS } from "../../../constants/devices";
 import { useGlobalContext } from "../../../context/useGlobalContext";
+import { Link } from "@tanstack/react-router";
 
 interface Props {
   image: string;
@@ -37,7 +38,14 @@ export const ImageViewer = ({
         onLoad={() => {
           if (isGeneration) {
             setIsBackgroundLoaded(true);
-            toast.success("Se ha completado la transformación!");
+            toast(
+              <Section>
+                Se ha transformado tu imagen
+                <Link className="primaryButton" to="/gallery">
+                  Ver galeria
+                </Link>
+              </Section>
+            );
           }
         }}
         $width={width}

@@ -31,7 +31,7 @@ export const LoadingState = ({
     );
   return (
     <LoadingStateStyled
-      isButtonLoader={isButtonLoader}
+      $isButtonLoader={isButtonLoader}
       $transparent={transparent}
     >
       <WrapperStyled $width={width} $height={height}>
@@ -42,7 +42,7 @@ export const LoadingState = ({
 };
 
 const LoadingStateStyled = styled.section<{
-  isButtonLoader?: boolean;
+  $isButtonLoader?: boolean;
   $transparent?: boolean;
 }>`
   background-color: ${({ $transparent }) =>
@@ -52,7 +52,7 @@ const LoadingStateStyled = styled.section<{
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: ${({ isButtonLoader }) => (isButtonLoader ? "0px" : "16px")};
+  padding: ${({ $isButtonLoader }) => ($isButtonLoader ? "0px" : "16px")};
 `;
 
 const WrapperStyled = styled.div<{ $width: number; $height: number }>`

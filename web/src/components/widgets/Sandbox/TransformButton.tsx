@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { TransformationOptions } from "../../../context/types";
 import { useGlobalContext } from "../../../context/useGlobalContext";
 import { Button, LoadingState } from "../../ui";
+import toast from "react-hot-toast";
 
 export const TransformButton = () => {
   const {
@@ -54,6 +55,9 @@ export const TransformButton = () => {
           objectsPrompt: backgroundReplaceAsset?.originalImageUrl,
           transformedImageUrl: mergedImage,
         });
+        toast.success(
+          "Se ha transformado tu imagen, puedes verla en tu galeria"
+        );
       }
     }
     if (currentTransformationOption.id === TransformationOptions.FACE_SWAPING) {

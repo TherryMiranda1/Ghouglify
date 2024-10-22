@@ -14,7 +14,7 @@ const ImageOverlayContainer = styled.div`
 `;
 
 const ImageOverlay = styled.img<{
-  isVisible: boolean;
+  $isVisible: boolean;
   $width?: number;
   $height?: number;
 }>`
@@ -28,8 +28,8 @@ const ImageOverlay = styled.img<{
   opacity: 0;
   z-index: 1;
 
-  ${({ isVisible }) =>
-    isVisible &&
+  ${({ $isVisible }) =>
+    $isVisible &&
     css`
       opacity: 1;
       z-index: 2;
@@ -52,11 +52,11 @@ export const OverlaySwitcher: React.FC<ImageOverlaySwitcherProps> = ({
 
   return (
     <ImageOverlayContainer>
-      <ImageOverlay src={image1} alt="Image 1" isVisible={showFirstImage} />
+      <ImageOverlay src={image1} alt="Image 1" $isVisible={showFirstImage} />
       <ImageOverlay
         src={image2}
         alt="Image 2"
-        isVisible={!showFirstImage}
+        $isVisible={!showFirstImage}
         width={50}
         height={50}
       />
