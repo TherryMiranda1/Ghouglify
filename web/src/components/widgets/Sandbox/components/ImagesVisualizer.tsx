@@ -15,7 +15,7 @@ export const ImagesVisualizer = () => {
   } = useGlobalContext();
 
   if (!originalImage) return null;
-  
+
   return (
     <ImagesSectionStyled>
       {mergedImage ? (
@@ -51,6 +51,7 @@ const ImagesSectionStyled = styled.section`
   div {
     width: 100%;
     max-width: ${DEVICE_BREAKPOINTS["2xs"]};
+    max-height: 35vh;
   }
 
   @media screen and (min-width: ${DEVICE_BREAKPOINTS.lg}) {
