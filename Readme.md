@@ -2,7 +2,7 @@
 
 https://ghouglify.art
 
-Este proyecto consta de una plataforma completa para el procesamiento de imágenes que incluye un backend, un frontend, y dos servicios independientes para la eliminación de fondos y el intercambio de caras en imágenes. Desarrollada utilizando tecnologías modernas como Deno, React, Flask y Python, esta aplicación está diseñada para ofrecer una experiencia rápida y eficiente.
+Este proyecto consta de una plataforma completa para el procesamiento de imágenes que incluye un backend, un frontend, y dos servicios independientes para la eliminación de fondos y el intercambio de caras en imágenes. Desarrollada utilizando Deno, React y Python, esta aplicación está diseñada para ofrecer una experiencia rápida y eficiente.
 
 ## Tabla de Contenidos
 
