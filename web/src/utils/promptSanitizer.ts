@@ -1,1 +1,1 @@
-export const promptSanitizer = (prompt: string) => prompt.replace(",", " ");
+export const promptSanitizer = (prompt: string) => prompt.replace(/,/g, " ");

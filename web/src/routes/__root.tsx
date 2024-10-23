@@ -11,7 +11,7 @@ export const Route = createRootRoute({
         <Outlet />
         <Toaster
           toastOptions={{
-            duration: 5000,
+            duration: 3000,
             style: {
               marginTop: "64px",
               backgroundColor: "var(--background-color)",

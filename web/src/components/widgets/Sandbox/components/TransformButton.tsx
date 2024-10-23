@@ -5,7 +5,14 @@ import { Button, LoadingState } from "../../../ui";
 
 export const TransformButton = () => {
   const {
-    image: { mergedImage, transform, swapFace, replaceBackground, isLoading },
+    image: {
+      isBackgroundLoaded,
+      mergedImage,
+      transform,
+      swapFace,
+      replaceBackground,
+      isLoading,
+    },
     sandbox: {
       currentTransformationOption,
       originalImage,
@@ -15,9 +22,11 @@ export const TransformButton = () => {
     },
   } = useGlobalContext();
 
-  const generationDisabled = !originalImage || !currentPrompt;
+  const generationDisabled =
+    !originalImage || !currentPrompt || !isBackgroundLoaded;
   const replaceDisabled =
     !originalImage || !backgroundReplaceAsset || !mergedImage;
+
   const swapDisabled = !originalImage || !faceSwapTargetAsset;
 
   const isDisabled = () => {

@@ -139,6 +139,12 @@ button:focus,
 button:focus-visible {
   outline: none;
 }
+
+button:disabled {
+  background-color: var(--background-card);
+  opacity: 0.6;
+  cursor: not-allowed;
+}
 .truncate {
   @media (max-width: 490px) {
     white-space: nowrap;

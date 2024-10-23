@@ -30,7 +30,12 @@ export const ImageViewer = ({
 
   return (
     <ImageViewerStyled $isGeneration={!isBackgroundLoaded}>
-      <CloseButtonStyled onClick={() => onClose()}>
+      <CloseButtonStyled
+        onClick={() => {
+          setIsBackgroundLoaded(true);
+          onClose();
+        }}
+      >
         <IoCloseOutline size={ICON_SIZES.md} />
       </CloseButtonStyled>
       <Image

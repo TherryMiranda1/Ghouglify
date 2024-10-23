@@ -33,7 +33,7 @@ export const useImages = ({
   const [isLoading, setIsLoading] = useState(false);
   const [transformedImage, setTransformedImage] = useState("");
   const [mergedImage, setMergedImage] = useState("");
-  const [isBackgroundLoaded, setIsBackgroundLoaded] = useState(false);
+  const [isBackgroundLoaded, setIsBackgroundLoaded] = useState(true);
   const { cloudName } = cloudinaryConfig;
 
   const cloudy = new Cloudinary({

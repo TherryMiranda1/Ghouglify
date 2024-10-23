@@ -10,6 +10,7 @@ import { DEVICE_BREAKPOINTS } from "../../../../../constants/devices";
 
 export const TransformationsBoard = () => {
   const {
+    image: { setMergedImage },
     sandbox: {
       setCurrentTransformationOption,
       currentTransformationOption,
@@ -22,6 +23,7 @@ export const TransformationsBoard = () => {
     setCurrentTransformationOption(option);
     setFaceSwapTargetAsset(null);
     setBackgroundReplaceAsset(null);
+    setMergedImage("");
   };
   return (
     <TransformationsBoardStyled>
