@@ -10,8 +10,6 @@ import { PumpkingCorner } from "../../ui/decorations/PumpkinCorner";
 
 const EMPTY_DRAFT = {
   name: "",
-  profileImage: undefined,
-  loadedImage: undefined,
 };
 
 export const UserManager = () => {
@@ -76,7 +74,7 @@ export const UserManager = () => {
           <Header text="Foto de perfil" componentType="h4" />
           {draft.loadedImage ? (
             <ImageViewer
-              image={draft.loadedImagee}
+              image={draft.loadedImage}
               onClose={() => setDraft({ ...draft, loadedImage: undefined })}
             />
           ) : (
