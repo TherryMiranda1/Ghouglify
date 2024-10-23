@@ -42,7 +42,9 @@ export const ImageLoader = ({
           onSelect?.(post);
         }}
         src={
-          showTransformation ? post.transformedImageUrl : post.originalImageUrl
+          showTransformation && post.transformedImageUrl
+            ? post.transformedImageUrl
+            : post.originalImageUrl
         }
       />
     </>
