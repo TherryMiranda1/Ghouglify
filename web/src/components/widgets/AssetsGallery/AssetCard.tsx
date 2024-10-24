@@ -1,12 +1,15 @@
 import styled from "styled-components";
 import { Asset } from "../../../types/Asset";
 import { Header } from "../../ui";
+import { truncateText } from './../../../utils/truncateText';
 
 interface Props {
   asset: Asset;
   onSelect?: (asset: Asset) => void;
   selectedItem?: Asset | null;
 }
+
+
 
 export const AssetCard = ({ asset, onSelect, selectedItem }: Props) => {
   const assetSelected = selectedItem?._id === asset._id;
@@ -18,7 +21,7 @@ export const AssetCard = ({ asset, onSelect, selectedItem }: Props) => {
   return (
     <AssetCardStyled onClick={() => onSelect?.(asset)} $isSelected={isSelected}>
       <ContentStyled $isPrompt={isPrompt}>
-        <Header componentType="h4" text={asset.name} />
+        <Header componentType="h4" text={truncateText(asset.name)} />
       </ContentStyled>
       <AssetCardImageStyled src={asset.originalImageUrl} $isPrompt={isPrompt} />
     </AssetCardStyled>
