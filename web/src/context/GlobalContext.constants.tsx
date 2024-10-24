@@ -24,9 +24,9 @@ export const IMAGE_SOURCES = [
 
 export const TRANSFORMATION_OPTIONS = [
   {
-    id: TransformationOptions.BACKGROUND_GENERATION,
-    title: "Generar fondo",
-    icon: <FaMagic />,
+    id: TransformationOptions.FACE_SWAPING,
+    title: "Intercambiar rostro",
+    icon: <IoSwapHorizontalSharp />,
   },
   {
     id: TransformationOptions.BACKGROUND_REPLACE,
@@ -34,9 +34,9 @@ export const TRANSFORMATION_OPTIONS = [
     icon: <PiSelectionBackground />,
   },
   {
-    id: TransformationOptions.FACE_SWAPING,
-    title: "Intercambiar rostro",
-    icon: <IoSwapHorizontalSharp />,
+    id: TransformationOptions.BACKGROUND_GENERATION,
+    title: "Generar fondo",
+    icon: <FaMagic />,
   },
 ];
 

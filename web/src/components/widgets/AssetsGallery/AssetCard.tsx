@@ -9,14 +9,18 @@ interface Props {
 }
 
 export const AssetCard = ({ asset, onSelect, selectedItem }: Props) => {
-  const isSelected = selectedItem?._id === asset._id;
+  const assetSelected = selectedItem?._id === asset._id;
+  const promptSelected = selectedItem?.name === asset.name;
+  const isPrompt = asset.type === "prompt";
+
+  const isSelected = isPrompt ? promptSelected : assetSelected;
 
   return (
     <AssetCardStyled onClick={() => onSelect?.(asset)} $isSelected={isSelected}>
-      <ContentStyled>
+      <ContentStyled $isPrompt={isPrompt}>
         <Header componentType="h4" text={asset.name} />
       </ContentStyled>
-      <AssetCardImageStyled src={asset.originalImageUrl} />
+      <AssetCardImageStyled src={asset.originalImageUrl} $isPrompt={isPrompt} />
     </AssetCardStyled>
   );
 };
@@ -33,15 +37,15 @@ const AssetCardStyled = styled.button<{ $isSelected: boolean }>`
   overflow: hidden;
   transition: all 0.3s ease-in-out;
 `;
-const AssetCardImageStyled = styled.img`
+const AssetCardImageStyled = styled.img<{ $isPrompt?: boolean }>`
   width: 100%;
   aspect-ratio: 16/9;
   object-fit: cover;
-  object-position: top;
+  object-position: ${(props) => (props.$isPrompt ? "center" : "top")};
   border: var(--border);
 `;
 
-const ContentStyled = styled.section`
+const ContentStyled = styled.section<{ $isPrompt?: boolean }>`
   box-sizing: border-box;
   position: absolute;
   width: 100%;
@@ -58,4 +62,5 @@ const ContentStyled = styled.section`
   );
   color: var(--text-color);
   border-radius: var(--card-radius);
+  font-size: ${(props) => (props.$isPrompt ? "12px" : "14px")};
 `;

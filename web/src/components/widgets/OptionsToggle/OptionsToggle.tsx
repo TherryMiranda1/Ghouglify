@@ -54,7 +54,7 @@ export const OptionsToggle = ({
 
   const handleRemix = () => {
     if (post.facePrompt) {
-      setCurrentTransformationOption(TRANSFORMATION_OPTIONS[2]);
+      setCurrentTransformationOption(TRANSFORMATION_OPTIONS[0]);
       setFaceSwapTargetAsset({
         name: "",
         type: "",
@@ -71,7 +71,7 @@ export const OptionsToggle = ({
       });
     }
     if (post.backgroundPrompt) {
-      setCurrentTransformationOption(TRANSFORMATION_OPTIONS[0]);
+      setCurrentTransformationOption(TRANSFORMATION_OPTIONS[2]);
       setCurrentPrompt(post.backgroundPrompt);
     }
 
