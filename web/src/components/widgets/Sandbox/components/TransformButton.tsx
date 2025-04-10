@@ -24,10 +24,9 @@ export const TransformButton = () => {
 
   const generationDisabled =
     !originalImage || !currentPrompt || !isBackgroundLoaded;
-  const replaceDisabled =
-    !originalImage || !backgroundReplaceAsset || !mergedImage;
+  const replaceDisabled = true;
 
-  const swapDisabled = !originalImage || !faceSwapTargetAsset;
+  const swapDisabled = true;
 
   const isDisabled = () => {
     switch (currentTransformationOption.id) {
@@ -83,6 +82,7 @@ export const TransformButton = () => {
       ) : (
         "Transformar"
       )}
+      {isDisabled() ? ("(no disponible)") : ("")}
     </TransformButtonStyled>
   );
 };
